@@ -13,7 +13,9 @@ export default function SideBar() {
         <Image src={taskify} className="max-sm:hidden" alt="Taskify 텍스트 로고" />
       </Link>
       <DashboardList />
-      <Pagination />
+      <div className="absolute bottom-4 left-3 max-sm:hidden">
+        <Pagination />
+      </div>
     </aside>
   );
 }

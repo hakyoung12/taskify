@@ -1,4 +1,5 @@
 import addTaskButton from '../../public/addTaskButton.svg';
+import createByMe from '../../public/createByMe.svg';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -6,6 +7,7 @@ interface Todo {
   id: number;
   title: string;
   color: string;
+  createdByMe: boolean;
 }
 
 const mockData: Todo[] = [
@@ -13,26 +15,31 @@ const mockData: Todo[] = [
     id: 1,
     title: '비브리지',
     color: 'green',
+    createdByMe: true,
   },
   {
     id: 2,
     title: '코드잇',
-    color: 'purple',
+    color: 'red',
+    createdByMe: true,
   },
   {
     id: 3,
     title: '3분기 계획',
     color: 'orange',
+    createdByMe: false,
   },
   {
     id: 4,
     title: '회의록',
     color: 'blue',
+    createdByMe: false,
   },
   {
     id: 5,
     title: '중요문서함',
-    color: 'pink',
+    color: 'lime',
+    createdByMe: false,
   },
 ];
 
@@ -56,6 +63,11 @@ export default function DashboardList() {
           >
             <div className={`w-2 h-2 rounded-full bg-${todo.color}-500`} />
             <div className="max-sm:hidden">{todo.title}</div>
+            {todo.createdByMe && (
+              <div className="w-5 h-3.5 max-sm:hidden">
+                <Image src={createByMe} alt="내가 만든 대시보드" />
+              </div>
+            )}
           </Link>
         ))}
       </div>

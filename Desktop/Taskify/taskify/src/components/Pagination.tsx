@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function Pagination() {
   return (
-    <div className="absolute bottom-4 left-3 max-sm:hidden">
+    <div>
       <button className="w-10 h-10">
         <Image src={paginationLeft} alt="이전 페이지" />
       </button>
