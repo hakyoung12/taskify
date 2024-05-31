@@ -45,13 +45,13 @@ const mockData: Todo[] = [
 
 export default function DashboardList() {
   return (
-    <div className="p-0 px-3">
-      <div className="flex justify-between items-center mt-16 mx-3 mb-8 text-gray-500 font-Pretendard font-bold max-sm:mx-2">
-        <div className="text-gray-500 font-pretendard text-xs font-bold max-sm:hidden">
+    <div className='p-0 px-3'>
+      <div className='flex justify-between items-center mt-16 mx-3 mb-8 text-gray-500 font-Pretendard font-bold max-sm:mx-2'>
+        <div className='text-gray-500 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
-        <button className="w-5 h-5">
-          <Image src={addTaskButton} alt="할 일 추가하기" />
+        <button className='w-5 h-5'>
+          <Image src={addTaskButton} alt='할 일 추가하기' />
         </button>
       </div>
       <div>
@@ -59,13 +59,13 @@ export default function DashboardList() {
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
-            className="flex my-7 items-center gap-4 text-gray-700 font-Pretendard font-medium max-sm:justify-center"
+            className='flex my-7 items-center gap-4 text-gray-700 font-Pretendard font-medium max-sm:justify-center'
           >
             <div className={`w-2 h-2 rounded-full bg-${todo.color}-500`} />
-            <div className="max-sm:hidden">{todo.title}</div>
+            <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div className="w-5 h-3.5 max-sm:hidden">
-                <Image src={createByMe} alt="내가 만든 대시보드" />
+              <div className='w-5 h-3.5 max-sm:hidden'>
+                <Image src={createByMe} alt='내가 만든 대시보드' />
               </div>
             )}
           </Link>
