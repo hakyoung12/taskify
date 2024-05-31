@@ -44,7 +44,7 @@ const mockData: Todo[] = [
 export default function DashboardCard() {
   return (
     <section className='m-6 w-sreen'>
-      <div className='grid grid-cols-3 grid-rows-2 gap-3 h-[152px] sm:grid-cols-2 sm:grid-rows-3 sm:h-56 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
+      <div className='grid xl:grid-cols-3 xl:grid-rows-2 gap-3 h-[152px] sm:grid-cols-2 sm:grid-rows-3 sm:h-56 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
         <button className='flex items-center text-gray-800 justify-center gap-3 w-full h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-lg:w-56 max-sm:h-14'>
           새로운 대시보드
           <img
