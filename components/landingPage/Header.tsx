@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function Header() {
   return (
-    <nav className="flex flex-row justify-between items-center pt-5 pb-[17px] pl-[26px] pr-20 bg-black-_000000 max-lg:pr-10 ">
+    <nav className="sticky top-0 z-10 bg-black-_000000 flex flex-row justify-between items-center pt-5 pb-[17px] pl-[26px] pr-20 max-lg:pr-10 ">
       <Link href="/">
         <h1 className="flex items-center">
           <div className="w-[24px] sm:w-[29px]">
@@ -25,11 +25,11 @@ export default function Header() {
           </div>
         </h1>
       </Link>
-      <div className="flex gap-9 text-base text-white max-sm:text-sm max-sm:gap-[20px]">
+      <div className="flex gap-9 text-base max-sm:text-sm max-sm:gap-[20px]">
         <Link href="/login" className="">
           로그인
         </Link>
-        <Link href="/signup">로그아웃</Link>
+        <Link href="/signup">회원가입</Link>
       </div>
     </nav>
   );
