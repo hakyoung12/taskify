@@ -1,4 +1,4 @@
-import { WhiteButton } from './Button';
+import { DeleteButton } from './DeleteButton';
 import EditMenuTitle from './EditMenuTitle';
 
 export default function InvitationList() {
@@ -12,31 +12,31 @@ export default function InvitationList() {
           <div className='flex items-center gap-3 max-sm:text-sm'>
             codeitA@codeit.com
           </div>
-          <WhiteButton title='삭제' />
+          <DeleteButton title='삭제' />
         </div>
         <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
           <div className='flex items-center gap-3 max-sm:text-sm'>
             codeitB@codeit.com
           </div>
-          <WhiteButton title='삭제' />
+          <DeleteButton title='삭제' />
         </div>
         <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
           <div className='flex items-center gap-3 max-sm:text-sm'>
             codeitC@codeit.com
           </div>
-          <WhiteButton title='삭제' />
+          <DeleteButton title='삭제' />
         </div>
         <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
           <div className='flex items-center gap-3 max-sm:text-sm'>
             codeitD@codeit.com
           </div>
-          <WhiteButton title='삭제' />
+          <DeleteButton title='삭제' />
         </div>
         <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
           <div className='flex items-center gap-3 max-sm:text-sm'>
             codeitE@codeit.com
           </div>
-          <WhiteButton title='삭제' />
+          <DeleteButton title='삭제' />
         </div>
       </div>
     </div>
