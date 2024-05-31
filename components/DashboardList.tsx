@@ -1,6 +1,3 @@
-import addTaskButton from '../../public/addTaskButton.svg';
-import createByMe from '../../public/createByMe.svg';
-import Image from 'next/image';
 import Link from 'next/link';
 
 interface Todo {
@@ -50,8 +47,12 @@ export default function DashboardList() {
         <div className='text-gray-500 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
-        <button className='w-5 h-5'>
-          <Image src={addTaskButton} alt='할 일 추가하기' />
+        <button>
+          <img
+            className='w-5 h-5'
+            src='/images/addTaskButton.svg'
+            alt='할 일 추가하기'
+          />
         </button>
       </div>
       <div>
@@ -64,8 +65,12 @@ export default function DashboardList() {
             <div className={`w-2 h-2 rounded-full bg-${todo.color}-500`} />
             <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div className='w-5 h-3.5 max-sm:hidden'>
-                <Image src={createByMe} alt='내가 만든 대시보드' />
+              <div>
+                <img
+                  className='w-5 h-3.5 max-sm:hidden'
+                  src='/images/createByMe.svg'
+                  alt='내가 만든 대시보드'
+                />
               </div>
             )}
           </Link>
