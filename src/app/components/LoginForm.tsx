@@ -32,7 +32,7 @@ export default function LoginForm() {
         email: getValues('Id'),
         password: getValues('password'),
       });
-      router.push('/myDashBoard');
+      router.push('/mydashboard');
     } catch (err: any) {
       alert(err.response.data.message);
     }
