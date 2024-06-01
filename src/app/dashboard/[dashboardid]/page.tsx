@@ -22,7 +22,7 @@ const columnMockData = {
 
 export default function dashboardPage() {
   return (
-    <div className='flex flex-wrap bg-gray-_fafafa '>
+    <div className='flex flex-wrap bg-custom_gray-_fafafa'>
       {columnMockData.data.map((column: any, index: number) => {
         return <Column key={index} title={column.title} />;
       })}

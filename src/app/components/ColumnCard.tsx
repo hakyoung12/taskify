@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import CustomAvatar from './CustomAvatar';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -19,7 +20,7 @@ export default function ColumnCard({
 }: ColumnCardProps) {
   return (
     <>
-      <div className='bg-white rounded-md border border-gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'>
+      <div className='bg-white rounded-md border border-custom_gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'>
         {/* 카드 이미지 설정 */}
         {imageUrl && (
           <Image
@@ -33,28 +34,28 @@ export default function ColumnCard({
         {/* 제목 */}
         <span>{title}</span>
         {/* 태그 */}
-        {tags.map((tag: any, index: number) => {
-          return (
-            <div
-              className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
-              key={index}
-            >
-              {tag}
-            </div>
-          );
-        })}
+        <div className='flex'>
+          {tags.map((tag: any, index: number) => {
+            return (
+              <div
+                className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
+                key={index}
+              >
+                {tag}
+              </div>
+            );
+            1;
+          })}
+        </div>
         {/* 카드 마감날짜와 관리자 아이콘 */}
-        <div className='flex text-gray-_787486 text-[12px] relative flex justify-between justify-center items-center'>
+        <div className='flex text-custom_gray-_787486 text-[12px] relative flex justify-between justify-center items-center'>
           <div className='flex gap-[6px]'>
             <img src='/images/calender-icon.svg' alt='캘린더 아이콘' />
-            <span>{dueDate}</span>
+            {dueDate}
           </div>
-          <Image
-            width={24}
-            height={24}
-            className='object-cover'
-            src={assignerProfileUrl}
-            alt='프로필 이미지 테스트'
+          <CustomAvatar
+            assignerNickname={assignerNickname}
+            assignerProfileUrl={assignerProfileUrl}
           />
         </div>
       </div>
