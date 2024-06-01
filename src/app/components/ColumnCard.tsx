@@ -54,8 +54,8 @@ export default function ColumnCard({
             {dueDate}
           </div>
           <CustomAvatar
-            assignerNickname={assignerNickname}
-            assignerProfileUrl={assignerProfileUrl}
+            nickName={assignerNickname}
+            profileUrl={assignerProfileUrl}
           />
         </div>
       </div>

@@ -1,28 +1,30 @@
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 
 interface CustomAvatarProps {
-  assignerProfileUrl: string | null;
-  assignerNickname: string;
+  profileUrl: string | null; //유저 프로필 이미지
+  nickName: string; //유지 닉네임
 }
 
+// 유저 프로필 이미지가 없다면 프로필이 랜덤으로 지정된 배경색과 닉네임의 첫글자로 지정됩니다
 export default function CustomAvatar({
-  assignerProfileUrl,
-  assignerNickname,
+  profileUrl,
+  nickName,
 }: CustomAvatarProps) {
   return (
     <div>
       <Avatar className='w-[24px] h-[24px]'>
-        {assignerProfileUrl ? (
+        {profileUrl ? (
           <AvatarImage
-            src={assignerProfileUrl}
+            src={profileUrl}
             alt='Profile Image'
             className='object-cover'
           />
         ) : (
           <>
             <AvatarImage />
+            {/* 랜덤으로 색깔 지정하는 로직 추가 예정 */}
             <AvatarFallback className='bg-custom_green-_a3c4a2 text-white justify-center items-center'>
-              {assignerNickname[0].toUpperCase()}
+              {nickName[0].toUpperCase()}
             </AvatarFallback>
           </>
         )}
