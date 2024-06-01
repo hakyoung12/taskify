@@ -22,21 +22,21 @@ export default function LandingMain() {
           <span className='text-[76px] leading-[100px] tracking-[-2px] font-bold max-xl:text-[56px] max-sm:text-[40px] max-sm:leading-normal'>
             새로운 일정 관리
           </span>
-          <strong className='text-violet-_5534da text-[90px] leading-[65px] tracking-[-1px] max-xl:text-[70px] max-sm:text-[42px]'>
+          <strong className='text-custom_violet-_5534da text-[90px] leading-[65px] tracking-[-1px] max-xl:text-[70px] max-sm:text-[42px]'>
             Taskify
           </strong>
         </h2>
         <span className='text-lg pt-6'>서비스의 메인 설명 들어갑니다.</span>
         <Link
           href='/login'
-          className='w-[280px] h-[50px] pt-[15px] mt-[66px] pb-3.5 bg-violet-_5534da rounded-lg justify-center items-center inline-flex'
+          className='w-[280px] h-[50px] pt-[15px] mt-[66px] pb-3.5 bg-custom_violet-_5534da rounded-lg justify-center items-center inline-flex'
         >
           <div className='text-center text-lg font-medium'>로그인하기</div>
         </Link>
       </div>
-      <div className='relative rounded-lg mt-[184px] w-[1200px] h-[600px] bg-black-_171717 max-xl:w-[100%] max-xl:h-[972px] max-sm:h-[686px] max-sm:mt-[80px]'>
+      <div className='relative rounded-lg mt-[184px] w-[1200px] h-[600px] bg-custom_black-_171717 max-xl:w-[100%] max-xl:h-[972px] max-sm:h-[686px] max-sm:mt-[80px]'>
         <h3 className='mt-[123px] ml-[60px] flex flex-col gap-y-[100px] max-xl:mt-[63px] max-sm:mt-[60px] max-sm:items-center max-sm:ml-0 max-sm:gap-y-[61px] max-sm:text-center'>
-          <span className='text-gray-_9fa6b2 text-[22px] font-medium max-sm:text-lg'>
+          <span className='text-custom_gray-_9fa6b2 text-[22px] font-medium max-sm:text-lg'>
             Point 1
           </span>
           <span className='text-[48px] font-bold lading-[64px] w-[360px] max-sm:text-[36px] max-sm:leading-[50px] max-sm:w-[270px]'>
@@ -53,9 +53,9 @@ export default function LandingMain() {
           />
         </div>
       </div>
-      <div className='flex flex-row-reverse justify-end rounded-lg mt-[90px] w-[1200px] h-[600px] bg-black-_171717 max-xl:flex-col max-xl:justify-between max-xl:w-[100%] max-xl:h-[972px] max-sm:h-[686px] max-sm:mt-[59px]'>
+      <div className='flex flex-row-reverse justify-end rounded-lg mt-[90px] w-[1200px] h-[600px] bg-custom_black-_171717 max-xl:flex-col max-xl:justify-between max-xl:w-[100%] max-xl:h-[972px] max-sm:h-[686px] max-sm:mt-[59px]'>
         <h3 className='mt-[123px] ml-[100px] flex flex-col gap-y-[100px] max-xl:ml-[60px] max-xl:mt-[63px] max-sm:mt-[60px] max-sm:items-center max-sm:ml-0 max-sm:gap-y-[61px] max-sm:text-center'>
-          <span className='text-gray-_9fa6b2 text-[22px] font-medium max-sm:text-lg'>
+          <span className='text-custom_gray-_9fa6b2 text-[22px] font-medium max-sm:text-lg'>
             Point 2
           </span>
           <span className='text-[48px] font-bold lading-[64px] w-[320px] max-sm:text-[36px] max-sm:leading-[50px] max-sm:w-[240px]'>

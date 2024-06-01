@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 export default function LandingHeader() {
   return (
-    <nav className='sticky top-0 z-10 bg-black-_000000 flex flex-row justify-between items-center pt-5 pb-[17px] pl-[26px] pr-20 max-lg:pr-10 '>
+    <nav className='sticky top-0 z-10 bg-custom_black-_000000 flex flex-row justify-between items-center pt-5 pb-[17px] pl-[26px] pr-20 max-lg:pr-10 '>
       <Link href='/'>
         <h1 className='flex items-center'>
           <div className='w-[24px] sm:w-[29px]'>

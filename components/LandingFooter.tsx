@@ -2,12 +2,10 @@ import Image from 'next/image';
 import Link from 'next/link';
 
 export default function LandingFooter() {
-  const YEAR = new Date().getFullYear();
-
   return (
-    <footer className='flex justify-center items-center h-[100px] mt-[160px] text-gray-_9fa6b2 max-sm:text-xs max-sm:h-[216px] max-sm:items-start max-sm:mt-[120px]'>
+    <footer className='flex justify-center items-center h-[100px] mt-[160px] text-custom_gray-_9fa6b2 max-sm:text-xs max-sm:h-[216px] max-sm:items-start max-sm:mt-[120px]'>
       <div className='flex justify-between items-center px-10 max-w-[1720px] w-[100%] max-sm:flex-col'>
-        <div className='max-sm:mb-3'>@codeit-{YEAR}</div>
+        <div className='max-sm:mb-3'>@codeit-2023</div>
         <div className='flex gap-8 max-sm:gap-5 max-sm:mb-[68px]'>
           <Link href='https://www.naver.com/'>Privacy Policy</Link>
           <Link href='https://www.naver.com/'>FAQ</Link>
