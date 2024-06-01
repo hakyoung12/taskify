@@ -1,50 +1,44 @@
+'use client';
 import Link from 'next/link';
+import { useState } from 'react';
+import Pagination from './Pagination';
+import { mockData } from './mockdata/DashboardMock';
 
-interface Todo {
-  id: number;
-  title: string;
-  color: string;
-  createdByMe: boolean;
-}
+type ColorPalette = {
+  [key: string]: string;
+};
 
-const mockData: Todo[] = [
-  {
-    id: 1,
-    title: '비브리지',
-    color: 'green',
-    createdByMe: true,
-  },
-  {
-    id: 2,
-    title: '코드잇',
-    color: 'red',
-    createdByMe: true,
-  },
-  {
-    id: 3,
-    title: '3분기 계획',
-    color: 'orange',
-    createdByMe: false,
-  },
-  {
-    id: 4,
-    title: '회의록',
-    color: 'blue',
-    createdByMe: false,
-  },
-  {
-    id: 5,
-    title: '중요문서함',
-    color: 'lime',
-    createdByMe: false,
-  },
-];
+const ColorPalette: ColorPalette = {
+  green: 'bg-custom_green-_7ac555',
+  purple: 'bg-custom_purple',
+  orange: 'bg-custom_orange',
+  blue: 'bg-custom_blue',
+  pink: 'bg-custom_pink',
+};
 
 export default function DashboardList() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextPage = () => {
+    if (currentPage * 10 < mockData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const startIndex = (currentPage - 1) * 10;
+  const selectedTodos = mockData.slice(startIndex, startIndex + 10);
+  const totalPage = Math.ceil(mockData.length / 10);
+
   return (
     <div className='p-0 px-3'>
       <div className='flex justify-between items-center mt-16 mx-3 mb-8 text-gray-500 font-Pretendard font-bold max-sm:mx-2'>
-        <div className='text-gray-500 font-pretendard text-xs font-bold max-sm:hidden'>
+        <div className='text-custom_black-_333236 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
         <button>
@@ -56,18 +50,20 @@ export default function DashboardList() {
         </button>
       </div>
       <div>
-        {mockData.map((todo) => (
+        {selectedTodos.map((todo) => (
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
-            className='flex my-7 items-center gap-4 text-gray-700 font-Pretendard font-medium max-sm:justify-center'
+            className='flex my-7 items-center gap-4 text-custom_black-_333236 font-Pretendard font-medium max-sm:justify-center'
           >
-            <div className={`w-2 h-2 rounded-full bg-${todo.color}-500`} />
+            <div
+              className={`w-2 h-2 rounded-full ${ColorPalette[todo.color]}`}
+            />
             <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div>
+              <div className='max-sm:hidden'>
                 <img
-                  className='w-5 h-3.5 max-sm:hidden'
+                  className='w-5 h-3.5'
                   src='/images/createByMe.svg'
                   alt='내가 만든 대시보드'
                 />
@@ -75,6 +71,14 @@ export default function DashboardList() {
             )}
           </Link>
         ))}
+      </div>
+      <div className='max-sm:hidden'>
+        <Pagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPrev={handlePrevPage}
+          onNext={handleNextPage}
+        />
       </div>
     </div>
   );

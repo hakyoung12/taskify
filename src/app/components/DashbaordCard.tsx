@@ -1,47 +1,40 @@
+'use client';
 import Link from 'next/link';
 import Pagination from './Pagination';
+import { useState } from 'react';
+import { mockData } from './mockdata/DashboardMock';
 
-interface Todo {
-  id: number;
-  title: string;
-  color: string;
-  createdByMe: boolean;
-}
+type ColorPalette = {
+  [key: string]: string;
+};
 
-const mockData: Todo[] = [
-  {
-    id: 1,
-    title: '비브리지',
-    color: 'green',
-    createdByMe: true,
-  },
-  {
-    id: 2,
-    title: '코드잇',
-    color: 'red',
-    createdByMe: true,
-  },
-  {
-    id: 3,
-    title: '3분기 계획',
-    color: 'orange',
-    createdByMe: false,
-  },
-  {
-    id: 4,
-    title: '회의록',
-    color: 'blue',
-    createdByMe: false,
-  },
-  {
-    id: 5,
-    title: '중요문서함',
-    color: 'lime',
-    createdByMe: false,
-  },
-];
+const ColorPalette: ColorPalette = {
+  green: 'bg-custom_green-_7ac555',
+  purple: 'bg-custom_purple',
+  orange: 'bg-custom_orange',
+  blue: 'bg-custom_blue',
+  pink: 'bg-custom_pink',
+};
 
 export default function DashboardCard() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextPage = () => {
+    if (currentPage * 5 < mockData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const startIndex = (currentPage - 1) * 5;
+  const selectedTodos = mockData.slice(startIndex, startIndex + 5);
+  const totalPage = Math.ceil(mockData.length / 5);
+
   return (
     <section className='mt-6 ml-6 w-sreen'>
       <div className='grid xl:grid-cols-3 xl:grid-rows-2 gap-3 sm:grid-cols-2 sm:grid-rows-3 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
@@ -53,7 +46,7 @@ export default function DashboardCard() {
             alt='대시보드 바로가기'
           />
         </button>
-        {mockData.map((todo) => (
+        {selectedTodos.map((todo) => (
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
@@ -61,7 +54,9 @@ export default function DashboardCard() {
           >
             <div className='flex items-center gap-2'>
               <div className='flex items-center gap-4'>
-                <div className={`w-2 h-2 rounded-full bg-${todo.color}-500`} />
+                <div
+                  className={`w-2 h-2 rounded-full ${ColorPalette[todo.color]}`}
+                />
                 <div>{todo.title}</div>
               </div>
               {todo.createdByMe && (
@@ -84,9 +79,14 @@ export default function DashboardCard() {
       </div>
       <div className='flex justify-end items-center gap-3 pt-2 pr-0 max-sm:pt-3'>
         <div className='text-gray-800 font-Pretendard text-base font-normal'>
-          1 페이지 중 1
+          {currentPage} 페이지 중 {totalPage}
         </div>
-        <Pagination />
+        <Pagination
+          currentPage={currentPage}
+          totalPage={totalPage}
+          onPrev={handlePrevPage}
+          onNext={handleNextPage}
+        />
       </div>
     </section>
   );
