@@ -1,4 +1,4 @@
-import ColumnCard from '@/components/ColumnCard';
+import ColumnCard from '@/app/components/ColumnCard';
 import Image from 'next/image';
 
 const cardsMockDataByColumnId = {
@@ -32,7 +32,7 @@ const cardsMockDataByColumnId = {
         nickname: 'string',
         id: 0,
       },
-      imageUrl: '/images/card-image-test.jpg',
+      imageUrl: '/images/test/card-image-test.jpg',
       teamId: 'string',
       columnId: 0,
       createdAt: '2024-05-31T16:45:45.608Z',

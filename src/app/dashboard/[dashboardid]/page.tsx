@@ -1,4 +1,4 @@
-import Column from '@/components/Column';
+import Column from '@/app/components/Column';
 
 const columnMockData = {
   result: 'SUCCESS',

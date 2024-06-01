@@ -1,4 +1,5 @@
-import { NewDashboardModal } from './NewDashboardModal';
+import { NewDashboardModal } from './modals/NewDashboardModal';
+import { UpdateColumnModal } from './modals/UpdateColumnModal';
 
 const InvitedDashboardList = () => {
   const data = [
@@ -10,7 +11,8 @@ const InvitedDashboardList = () => {
   return (
     <>
       <NewDashboardModal />
-      <div className='hidden md:block ml-[60px] md:ml-[160px] px-7 py-8 border border-black'>
+      <UpdateColumnModal />
+      <div className='hidden sm:block ml-[60px] sm:ml-[160px] px-7 py-8 border border-black'>
         <div className='text-custom_black-_333236 text-2xl font-bold'>
           초대받은 대시보드
         </div>
