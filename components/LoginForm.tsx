@@ -2,6 +2,9 @@
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import axios from '@/api/axios';
+import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { useState } from 'react';
 
 type Inputs = {
   Id: string;
@@ -15,6 +18,8 @@ export default function LoginForm() {
     getValues,
     formState: { errors, isDirty, isValid },
   } = useForm<Inputs>({ mode: 'onBlur' });
+  const router = useRouter();
+  const [passShow, setPassShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
     'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
@@ -27,10 +32,9 @@ export default function LoginForm() {
         email: getValues('Id'),
         password: getValues('password'),
       });
-    } catch (err) {
-      console.log(err);
-    } finally {
-      console.log('아이');
+      router.push('/myDashBoard');
+    } catch (err: any) {
+      alert(err.response.data.message);
     }
   };
 
@@ -64,11 +68,11 @@ export default function LoginForm() {
       <label htmlFor='password' className='mb-2'>
         비밀번호
       </label>
-      <div className='mb-5 flex flex-col gap-y-2'>
+      <div className='relative mb-5 flex flex-col gap-y-2'>
         <input
           id='password'
           placeholder='비밀번호를 입력해주세요'
-          type={'password'}
+          type={passShow ? 'string' : 'password'}
           className={`${INPUT_STYLE} ${
             errors.password ? 'border-custom_red' : ''
           }`}
@@ -76,12 +80,32 @@ export default function LoginForm() {
           {...register('password', {
             required: '비밀번호를 입력해주세요',
             pattern: {
-              value: /^[?a-zA-Z0-9#?!@$ %^&*-/].{8,}$/,
+              value: /^[?a-zA-Z0-9#?!@$ %^&*-/].{7,}$/,
               message: '8자 이상 작성해 주세요',
             },
           })}
         />
-        <button />
+        <button
+          className='absolute top-3 right-4'
+          type='button'
+          onClick={() => setPassShow(!passShow)}
+        >
+          {passShow ? (
+            <Image
+              src='/AuthPage/eyeOn.svg'
+              width={24}
+              height={24}
+              alt='비밀번호 보여짐'
+            />
+          ) : (
+            <Image
+              src='/AuthPage/eyeOff.svg'
+              width={24}
+              height={24}
+              alt='비밀번호 숨겨짐'
+            />
+          )}
+        </button>
         {errors.password && (
           <strong className={ERROR_STYLE}>{errors?.password?.message}</strong>
         )}
