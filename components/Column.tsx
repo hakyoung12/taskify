@@ -12,7 +12,7 @@ const cardsMockDataByColumnId = {
       tags: ['프로젝트', '백엔드'],
       dueDate: '2024-05-31',
       assignee: {
-        profileImageUrl: '/images/profile-test.jpeg',
+        profileImageUrl: '/images/test/profile-test.jpeg',
         nickname: 'string',
         id: 0,
       },
@@ -28,7 +28,7 @@ const cardsMockDataByColumnId = {
       tags: ['백엔드', '상'],
       dueDate: '2024-05-31',
       assignee: {
-        profileImageUrl: '/images/profile-test.jpeg',
+        profileImageUrl: '/images/test/profile-test.jpeg',
         nickname: 'string',
         id: 0,
       },
