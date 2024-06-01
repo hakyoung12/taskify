@@ -1,6 +1,5 @@
 import DashboardList from './DashboardList';
 import Link from 'next/link';
-import Pagination from './Pagination';
 
 export default function SideBar() {
   return (
@@ -18,9 +17,6 @@ export default function SideBar() {
         />
       </Link>
       <DashboardList />
-      <div className='absolute bottom-4 left-3 max-sm:hidden'>
-        <Pagination />
-      </div>
     </aside>
   );
 }

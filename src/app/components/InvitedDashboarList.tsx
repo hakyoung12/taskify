@@ -12,7 +12,7 @@ const InvitedDashboardList = () => {
     <>
       <NewDashboardModal />
       <UpdateColumnModal />
-      <div className='hidden sm:block ml-[60px] sm:ml-[160px] px-7 py-8 border border-black'>
+      <div className='hidden sm:block px-7 py-8 border-t border-r border-b botder-custom_gray-_d9d9d9'>
         <div className='text-custom_black-_333236 text-2xl font-bold'>
           초대받은 대시보드
         </div>

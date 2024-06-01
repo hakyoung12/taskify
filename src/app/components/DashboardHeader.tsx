@@ -2,7 +2,7 @@ import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 
 const DashboardHeader = () => {
   return (
-    <div className='flex justify-between ml-[60px] sm:ml-[160px] py-6 border border-black'>
+    <div className='flex justify-between py-6 border-t border-r border-b botder-custom_gray-_d9d9d9'>
       <div className='ml-10 text-custom_black-_333236 text-lg font-bold'>
         내 대시보드
       </div>
