@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Card from './Card';
+import Card from './LandingCard';
 
-export default function Main() {
+export default function LandingMain() {
   const DASH_INFO = '대시보드 사진과 이름을 변경할 수 있어요.';
   const INVITE_INFO = '새로운 팀원을 초대할 수 있어요.';
   const MEMBER_INFO = '구성원을 초대하고 내보낼 수 있어요.';
@@ -29,7 +29,7 @@ export default function Main() {
         <span className='text-lg pt-6'>서비스의 메인 설명 들어갑니다.</span>
         <Link
           href='/login'
-          className='w-[280px] h-[50px] pt-[15px] mt-[66px] pb-3.5 bg-indigo-600 rounded-lg justify-center items-center inline-flex'
+          className='w-[280px] h-[50px] pt-[15px] mt-[66px] pb-3.5 bg-violet-_5534da rounded-lg justify-center items-center inline-flex'
         >
           <div className='text-center text-lg font-medium'>로그인하기</div>
         </Link>

@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 
-export default function Header() {
+export default function LandingHeader() {
   return (
     <nav className='sticky top-0 z-10 bg-black-_000000 flex flex-row justify-between items-center pt-5 pb-[17px] pl-[26px] pr-20 max-lg:pr-10 '>
       <Link href='/'>
