@@ -3,6 +3,7 @@ import InvitedDashboardList from '../components/InvitedDashboarList';
 import InvitedDashboardListMobile from '../components/InvitedDashboardListMobile';
 import SideBar from '../components/SideBar';
 import DashboardCard from '../components/DashbaordCard';
+import UpdateDashboardName from '../components/UpdateDashboardName';
 
 const MyDashboard = () => {
   return (
@@ -14,6 +15,7 @@ const MyDashboard = () => {
           <DashboardCard />
           <InvitedDashboardList />
           <InvitedDashboardListMobile />
+          <UpdateDashboardName />
         </div>
       </div>
     </>
