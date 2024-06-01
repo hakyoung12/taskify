@@ -1,8 +1,4 @@
-import arrowButton from '../../public/arrowButton.svg';
-import addTaskButton2 from '../../public/addTaskButton2.svg';
-import createByMe from '../../public/createByMe.svg';
 import Link from 'next/link';
-import Image from 'next/image';
 import Pagination from './Pagination';
 
 interface Todo {
@@ -47,19 +43,21 @@ const mockData: Todo[] = [
 
 export default function DashboardCard() {
   return (
-    <section className='m-6'>
-      <div className='grid grid-cols-3 grid-rows-2 gap-3 h-32 max-lg:grid-cols-2 max-lg:grid-rows-3 max-lg:h-56 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
-        <button className='flex items-center text-gray-800 justify-center gap-3 w-80 h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-lg:w-56 max-sm:h-14'>
+    <section className='m-6 w-sreen'>
+      <div className='grid xl:grid-cols-3 xl:grid-rows-2 gap-3 h-[152px] sm:grid-cols-2 sm:grid-rows-3 sm:h-56 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
+        <button className='flex items-center text-gray-800 justify-center gap-3 w-full h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-lg:w-56 max-sm:h-14'>
           새로운 대시보드
-          <div className='w-5 h-5'>
-            <Image src={addTaskButton2} alt='대시보드 바로가기' />
-          </div>
+          <img
+            className='w-5 h-5'
+            src='/images/arrowButton.svg'
+            alt='대시보드 바로가기'
+          />
         </button>
         {mockData.map((todo) => (
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
-            className='flex items-center text-gray-800 justify-between w-80 h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-lg:w-56 max-sm:h-14'
+            className='flex items-center text-gray-800 justify-between w-full h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-lg:w-56 max-sm:h-14'
           >
             <div className='flex items-center gap-2'>
               <div className='flex items-center gap-4'>
@@ -67,19 +65,27 @@ export default function DashboardCard() {
                 <div>{todo.title}</div>
               </div>
               {todo.createdByMe && (
-                <div className='w-5 h-3.5'>
-                  <Image src={createByMe} alt='내가 만든 대시보드' />
-                </div>
+                <img
+                  className='w-5 h-3.5'
+                  src='/images/createByMe.svg'
+                  alt='내가 만든 대시보드'
+                />
               )}
             </div>
-            <button className='w-5 h-5'>
-              <Image src={arrowButton} alt='대시보드 바로가기' />
+            <button>
+              <img
+                className='w-5 h-5'
+                src='/images/addTaskButton2.svg'
+                alt='대시보드 바로가기'
+              />
             </button>
           </Link>
         ))}
       </div>
       <div className='flex justify-end items-center gap-3 pt-2 pr-0 max-sm:pt-3'>
-        <div className='text-gray-800 font-Pretendard text-base font-normal'>1 페이지 중 1</div>
+        <div className='text-gray-800 font-Pretendard text-base font-normal'>
+          1 페이지 중 1
+        </div>
         <Pagination />
       </div>
     </section>
