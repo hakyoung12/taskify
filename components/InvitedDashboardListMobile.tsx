@@ -6,7 +6,7 @@ const InvitedDashboardListMobile = () => {
   ];
 
   return (
-    <div className='md:hidden ml-[60px] md:ml-[160px] px-7 py-8 border border-black'>
+    <div className='sm:hidden ml-[60px] sm:ml-[160px] px-7 py-8 border border-black'>
       <div className='text-custom_black-_333236 text-2xl font-bold'>
         초대받은 대시보드
       </div>
