@@ -1,5 +1,6 @@
 import ColumnCard from '@/app/components/ColumnCard';
 import Image from 'next/image';
+import ChipAddIcon from './ui/chipAddIcon';
 
 const cardsMockDataByColumnId = {
   cursorId: 0,
@@ -67,9 +68,7 @@ export default function Column({ title }: { title: string }) {
       <div className='flex flex-col gap-[16px]'>
         {/* 카드 추가 버튼 */}
         <div className='bg-white rounded-md border border-gray-_d9d9d9 h-[40px] flex justify-center items-center'>
-          <div className='w-[22px] h-[22px] rounded p-[3px] bg-[#F1EFFD]'>
-            <img src='/images/add-card-icon.svg' />
-          </div>
+          <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}
         {cardsMockDataByColumnId.cards.map((card: any, index: number) => {
