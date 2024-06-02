@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/app/components/ui/button';
 import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import {
@@ -11,10 +13,20 @@ import {
 } from '@/app/components/ui/dialog';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
+import { ChangeEvent, useState } from 'react';
 
-const modalButtonStyle = 'text-center w-[120px] h-[48px] text-[16px]';
+const modalButtonStyle =
+  'text-center w-[120px] h-[48px] text-[16px] rounded-lg';
 
 export default function NewColumnModal() {
+  const [value, setValue] = useState<string>();
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const newvalue = e.target.value;
+    setValue(newvalue);
+    console.log(value);
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -39,6 +51,7 @@ export default function NewColumnModal() {
               id='name'
               placeholder='새로운 프로젝트'
               className='col-span-3'
+              onChange={handleChange}
             />
           </div>
         </div>
@@ -49,10 +62,15 @@ export default function NewColumnModal() {
               variant='secondary'
               className={`${modalButtonStyle} text-[#787486] bg-white border border-[#d9d9d9]`}
             >
-              Close
+              취소
             </Button>
           </DialogClose>
-          <Button type='submit' className={`${modalButtonStyle} bg-[#5534DA]`}>
+          {/* value가 있을떄 버튼 활성화*/}
+          <Button
+            type='submit'
+            className={`${modalButtonStyle} bg-[#5534DA]`}
+            disabled={!value}
+          >
             생성
           </Button>
         </DialogFooter>
