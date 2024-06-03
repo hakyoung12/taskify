@@ -13,38 +13,24 @@ export default function LandingFooter() {
         <div className='flex items-center gap-3.5 max-sm:gap-5'>
           <Link
             href='https://www.naver.com/'
-            className='w-[20px] max-sm:w-[16px]'
+            className='relative w-5 h-5 max-sm:w-4 max-sm:h-4'
           >
-            <Image
-              src='/LandingPage/footerEmail.svg'
-              width={20}
-              height={20}
-              alt='이메일'
-              layout='responsive'
-            />
+            <Image src='/LandingPage/footerEmail.svg' alt='이메일' fill />
           </Link>
           <Link
             href='https://www.facebook.com/'
-            className='w-[22px] max-sm:w-[18px]'
+            className='relative w-[22px] h-[22px] max-sm:w-[18px] max-sm:h-[18px]'
           >
-            <Image
-              src='/LandingPage/footerFacebook.svg'
-              width={22}
-              height={22}
-              alt='페이스북'
-              layout='responsive'
-            />
+            <Image src='/LandingPage/footerFacebook.svg' alt='페이스북' fill />
           </Link>
           <Link
             href='https://www.instagram.com/'
-            className='w-[22px] max-sm:w-[18px]'
+            className='relative w-[22px] h-[22px] max-sm:w-[18px] max-sm:h-[18px]'
           >
             <Image
               src='/LandingPage/footerInstagram.svg'
-              width={22}
-              height={22}
               alt='인스타그램'
-              layout='responsive'
+              fill
             />
           </Link>
         </div>
