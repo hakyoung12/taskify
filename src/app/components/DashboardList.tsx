@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Pagination from './Pagination';
 import { mockData } from './mockdata/DashboardMock';
+import Image from 'next/image';
 
 type ColorPalette = {
   [key: string]: string;
@@ -41,12 +42,8 @@ export default function DashboardList() {
         <div className='text-custom_black-_333236 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
-        <button>
-          <img
-            className='w-5 h-5'
-            src='/images/addTaskButton.svg'
-            alt='할 일 추가하기'
-          />
+        <button className='relative w-5 h-5'>
+          <Image fill src='/images/addTaskButton.svg' alt='할 일 추가하기' />
         </button>
       </div>
       <div>
@@ -61,9 +58,9 @@ export default function DashboardList() {
             />
             <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div className='max-sm:hidden'>
-                <img
-                  className='w-5 h-3.5'
+              <div className='relative w-5 h-3.5 max-sm:hidden'>
+                <Image
+                  fill
                   src='/images/createByMe.svg'
                   alt='내가 만든 대시보드'
                 />

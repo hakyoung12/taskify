@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { DeleteButton } from './DeleteButton';
 import EditMenuTitle from './EditMenuTitle';
 import { mockData } from './mockdata/InvitationMock';
+import Image from 'next/image';
 
 export default function InvitationList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,11 +36,13 @@ export default function InvitationList() {
           onNext={handleNextPage}
         />
         <button className='flex items-center gap-2 mt-8 py-2 px-3 w-[105px] h-8 text-white rounded-md bg-custom_violet-_5534da font-Pretendard font-medium text-base max-sm:absolute max-sm:bottom-4 max-sm:right-7 max-sm:text-sx py-2 px-3'>
-          <img
-            src='/images/inviteMemberButton.svg'
-            className='w-4 h-4 max-sm:w-3.5 max-sm:h-3.5'
-            alt='초대하기 버튼'
-          />
+          <div className='relative w-4 h-4 max-sm:w-3.5 max-sm:h-3.5'>
+            <Image
+              fill
+              src='/images/inviteMemberButton.svg'
+              alt='초대하기 버튼'
+            />
+          </div>
           초대하기
         </button>
       </div>
