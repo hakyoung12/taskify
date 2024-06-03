@@ -47,7 +47,7 @@ export default function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit(trySignup)}
-      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] leading-[19px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
+      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
     >
       {/*아이디 부분 */}
       <label htmlFor='Id' className='mb-2'>

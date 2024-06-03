@@ -5,6 +5,8 @@ import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
+import { loginRes } from '../api/apiTypes/authType';
+import { LOGIN_TOKEN } from '../api/apiStrings';
 
 type Inputs = {
   Id: string;
@@ -26,12 +28,13 @@ export default function LoginForm() {
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const tryLogin: SubmitHandler<Inputs> = async () => {
-    let res;
     try {
-      res = await axios.post('/auth/login', {
+      const { data }: { data: loginRes } = await axios.post('/auth/login', {
         email: getValues('Id'),
         password: getValues('password'),
       });
+      const { accessToken } = data;
+      localStorage.setItem(LOGIN_TOKEN, accessToken);
       router.push('/mydashboard');
     } catch (err: any) {
       alert(err.response.data.message);
@@ -41,7 +44,7 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(tryLogin)}
-      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] leading-[19px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
+      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
     >
       <label htmlFor='Id' className='mb-2'>
         아이디
