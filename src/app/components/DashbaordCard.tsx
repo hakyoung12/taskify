@@ -3,6 +3,7 @@ import Link from 'next/link';
 import Pagination from './Pagination';
 import { useState } from 'react';
 import { mockData } from './mockdata/DashboardMock';
+import Image from 'next/image';
 
 type ColorPalette = {
   [key: string]: string;
@@ -40,11 +41,9 @@ export default function DashboardCard() {
       <div className='grid xl:grid-cols-3 xl:grid-rows-2 gap-3 sm:grid-cols-2 sm:grid-rows-3 max-sm:grid-cols-1 max-sm:grid-rows-6 max-sm:h-96'>
         <button className='flex items-center text-gray-800 justify-center gap-3 w-full h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-sm:h-14'>
           새로운 대시보드
-          <img
-            className='w-5 h-5'
-            src='/images/arrowButton.svg'
-            alt='대시보드 바로가기'
-          />
+          <div className='relative w-5 h-5'>
+            <Image fill src='/images/arrowButton.svg' alt='대시보드 바로가기' />
+          </div>
         </button>
         {selectedTodos.map((todo) => (
           <Link
@@ -60,16 +59,18 @@ export default function DashboardCard() {
                 <div>{todo.title}</div>
               </div>
               {todo.createdByMe && (
-                <img
-                  className='w-5 h-3.5'
-                  src='/images/createByMe.svg'
-                  alt='내가 만든 대시보드'
-                />
+                <div className='relative w-5 h-3.5'>
+                  <Image
+                    fill
+                    src='/images/createByMe.svg'
+                    alt='내가 만든 대시보드'
+                  />
+                </div>
               )}
             </div>
-            <button>
-              <img
-                className='w-5 h-5'
+            <button className='relative w-5 h-5'>
+              <Image
+                fill
                 src='/images/addTaskButton2.svg'
                 alt='대시보드 바로가기'
               />
