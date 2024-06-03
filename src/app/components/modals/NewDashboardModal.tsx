@@ -20,6 +20,8 @@ const Content = (
           className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
           src='/images/check.svg'
           alt='check'
+          width={24}
+          height={24}
         />
       </div>
       <div className='bg-custom_purple w-[30px] h-[30px] rounded-full'></div>

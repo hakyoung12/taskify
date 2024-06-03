@@ -7,7 +7,12 @@ const DashboardHeaderInSettings = () => {
       <div className='invisible xl:visible flex items-center'>
         <span className='text-lg font-bold'>비브리지</span>
         <span className='ml-2 text-yellow-500'>
-          <Image src='/images/createByMe.svg' alt='crown' />
+          <Image
+            src='/images/createByMe.svg'
+            alt='crown'
+            width={20}
+            height={16}
+          />
         </span>
       </div>
       <div className='flex items-center space-x-2'>
@@ -17,6 +22,8 @@ const DashboardHeaderInSettings = () => {
               className='hidden sm:block mr-2'
               src='/images/settings.svg'
               alt='settings'
+              width={20}
+              height={20}
             />
             <p>관리</p>
           </button>
@@ -25,6 +32,8 @@ const DashboardHeaderInSettings = () => {
               className='hidden sm:block mr-2'
               src='/images/addTaskButton.svg'
               alt='add'
+              width={20}
+              height={20}
             />
             <p>초대하기</p>
           </button>
