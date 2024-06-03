@@ -47,7 +47,10 @@ export default function InvitationList() {
         <div>
           {selectedTodos.map((email) => {
             return (
-              <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
+              <div
+                key={email.id}
+                className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'
+              >
                 <div className='flex items-center gap-3 max-sm:text-sm'>
                   {email.email}
                 </div>

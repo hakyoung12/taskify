@@ -37,7 +37,10 @@ export default function MemberList() {
         <div>
           {selectedTodos.map((member) => {
             return (
-              <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
+              <div
+                key={member.id}
+                className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'
+              >
                 <div className='flex items-center gap-3 max-sm:text-sm'>
                   <img src='/images/mockprofile4.svg' alt='프로필 사진' />
                   {member.name}
