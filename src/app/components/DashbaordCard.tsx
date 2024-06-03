@@ -42,7 +42,11 @@ export default function DashboardCard() {
         <button className='flex items-center text-gray-800 justify-center gap-3 w-full h-16 font-Pretendard font-semibold px-5 py-7 text-base rounded-lg border border-gray-300 bg-white max-sm:h-14'>
           새로운 대시보드
           <div className='relative w-5 h-5'>
-            <Image fill src='/images/arrowButton.svg' alt='대시보드 바로가기' />
+            <Image
+              fill
+              src='/images/addTaskButton2.svg'
+              alt='대시보드 바로가기'
+            />
           </div>
         </button>
         {selectedTodos.map((todo) => (
@@ -71,7 +75,7 @@ export default function DashboardCard() {
             <button className='relative w-5 h-5'>
               <Image
                 fill
-                src='/images/addTaskButton2.svg'
+                src='/images/rightArrowButton.svg'
                 alt='대시보드 바로가기'
               />
             </button>
