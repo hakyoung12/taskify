@@ -5,10 +5,13 @@ import SideBar from '../components/SideBar';
 import DashboardCard from '../components/DashbaordCard';
 import InvitationList from '../components/InvitationList';
 import MemberList from '../components/MemberList';
+import UpdateDashboardName from '../components/UpdateDashboardName';
+import DashboardHeaderInSettings from '../components/DashboardHeaderInSettings';
 
 const MyDashboard = () => {
   return (
     <>
+      <DashboardHeaderInSettings />
       <div className='flex'>
         <SideBar />
         <div className='w-3/4'>
@@ -16,6 +19,7 @@ const MyDashboard = () => {
           <DashboardCard />
           <InvitedDashboardList />
           <InvitedDashboardListMobile />
+          <UpdateDashboardName />
         </div>
       </div>
     </>
