@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const UpdateDashboardName = () => {
   return (
     <div className='w-[620px] p-7 border border-black'>
@@ -5,7 +7,7 @@ const UpdateDashboardName = () => {
         <div className='text-xl font-bold'>비브리지</div>
         <div className='flex gap-x-3'>
           <div className='relative bg-custom_green-_7ac555 w-[30px] h-[30px] rounded-full'>
-            <img
+            <Image
               className='absolute top-1/2 left-1/2 transfrom -translate-x-1/2 -translate-y-1/2'
               src='/images/check.svg'
               alt='check'

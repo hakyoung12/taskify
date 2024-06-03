@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Button } from '../ui/button';
 import { DialogClose } from '../ui/dialog';
 import Modal from './Modal';
@@ -15,7 +16,7 @@ const Content = (
     />
     <div className='flex gap-x-3'>
       <div className='relative bg-custom_green-_7ac555 w-[30px] h-[30px] rounded-full'>
-        <img
+        <Image
           className='absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2'
           src='/images/check.svg'
           alt='check'

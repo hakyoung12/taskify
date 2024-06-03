@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 
 const DashboardHeaderInSettings = () => {
@@ -6,13 +7,13 @@ const DashboardHeaderInSettings = () => {
       <div className='invisible xl:visible flex items-center'>
         <span className='text-lg font-bold'>비브리지</span>
         <span className='ml-2 text-yellow-500'>
-          <img src='/images/createByMe.svg' alt='crown' />
+          <Image src='/images/createByMe.svg' alt='crown' />
         </span>
       </div>
       <div className='flex items-center space-x-2'>
         <div className='flex mr-10 space-x-4 text-custom_gray-_787486 text-[14px] sm:text-[16px]'>
           <button className='flex items-center px-2 py-1 bg-white border rounded-md'>
-            <img
+            <Image
               className='hidden sm:block mr-2'
               src='/images/settings.svg'
               alt='settings'
@@ -20,7 +21,7 @@ const DashboardHeaderInSettings = () => {
             <p>관리</p>
           </button>
           <button className='flex items-center px-2 py-1 bg-white border rounded-md'>
-            <img
+            <Image
               className='hidden sm:block mr-2'
               src='/images/addTaskButton.svg'
               alt='add'
