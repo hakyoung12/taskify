@@ -10,13 +10,11 @@ import {
 import { ReactNode } from 'react';
 
 const Modal = ({
-  trigger,
   title,
   description,
   content,
   footer,
 }: {
-  trigger: ReactNode;
   title?: ReactNode;
   description?: ReactNode;
   content?: ReactNode;
@@ -24,7 +22,6 @@ const Modal = ({
 }) => {
   return (
     <Dialog>
-      <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>

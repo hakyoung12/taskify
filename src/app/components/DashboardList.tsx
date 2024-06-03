@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Pagination from './Pagination';
 import { mockData } from './mockdata/DashboardMock';
+import { Dialog, DialogTrigger } from './ui/dialog';
+import { NewDashboardModal } from './modals/NewDashboardModal';
 
 type ColorPalette = {
   [key: string]: string;
@@ -41,13 +43,18 @@ export default function DashboardList() {
         <div className='text-custom_black-_333236 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
-        <button>
-          <img
-            className='w-5 h-5'
-            src='/images/addTaskButton.svg'
-            alt='할 일 추가하기'
-          />
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button>
+              <img
+                className='w-5 h-5'
+                src='/images/addTaskButton.svg'
+                alt='할 일 추가하기'
+              />
+            </button>
+          </DialogTrigger>
+          <NewDashboardModal />
+        </Dialog>
       </div>
       <div>
         {selectedTodos.map((todo) => (
