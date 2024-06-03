@@ -25,6 +25,8 @@ const InvitedDashboardList = () => {
             className='absolute top-[15px] ml-4'
             src='/images/search.svg'
             alt='search'
+            width={24}
+            height={24}
           />
         </div>
         <div>

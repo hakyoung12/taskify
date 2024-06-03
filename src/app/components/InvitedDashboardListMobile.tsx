@@ -21,6 +21,8 @@ const InvitedDashboardListMobile = () => {
           className='absolute top-[15px] ml-4'
           src='/images/search.svg'
           alt='search'
+          width={15}
+          height={15}
         />
       </div>
       <div>
