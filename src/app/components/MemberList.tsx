@@ -1,41 +1,51 @@
+'use client';
 import EditMenuTitle from './EditMenuTitle';
 import { DeleteButton } from './DeleteButton';
+import { mockData } from './mockdata/MemberMock';
+import { useState } from 'react';
 
 export default function MemberList() {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const handleNextPage = () => {
+    if (currentPage * 4 < mockData.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const startIndex = (currentPage - 1) * 4;
+  const selectedTodos = mockData.slice(startIndex, startIndex + 4);
+  const totalPage = Math.ceil(mockData.length / 4);
+
   return (
     <div className='w-auto rounded-lg bg-white-_ffffff m-5'>
-      <EditMenuTitle title='구성원' subtitle='이름' />
-      {/* 초대하기 버튼 추가예정 */}
+      <EditMenuTitle
+        title='구성원'
+        subtitle='이름'
+        currentPage={currentPage}
+        totalPage={totalPage}
+        onPrev={handlePrevPage}
+        onNext={handleNextPage}
+      />
       <div className='flex flex-col px-[28px] pb-[28px]'>
-        {/* 멤버 리스트 <- 리팩토링예정 */}
-
-        <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
-          <div className='flex items-center gap-3 max-sm:text-sm'>
-            <img src='/images/mockprofile1.svg' alt='프로필 사진' />
-            정만철
-          </div>
-          <DeleteButton title='삭제' />
-        </div>
-        <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
-          <div className='flex items-center gap-3 max-sm:text-sm'>
-            <img src='/images/mockprofile2.svg' alt='프로필 사진' />
-            김태순
-          </div>
-          <DeleteButton title='삭제' />
-        </div>
-        <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
-          <div className='flex items-center gap-3 max-sm:text-sm'>
-            <img src='/images/mockprofile3.svg' alt='프로필 사진' />
-            최주협
-          </div>
-          <DeleteButton title='삭제' />
-        </div>
-        <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
-          <div className='flex items-center gap-3 max-sm:text-sm'>
-            <img src='/images/mockprofile4.svg' alt='프로필 사진' />
-            윤지현
-          </div>
-          <DeleteButton title='삭제' />
+        <div>
+          {selectedTodos.map((member) => {
+            return (
+              <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
+                <div className='flex items-center gap-3 max-sm:text-sm'>
+                  <img src='/images/mockprofile4.svg' alt='프로필 사진' />
+                  {member.name}
+                </div>
+                <DeleteButton title='삭제' />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
