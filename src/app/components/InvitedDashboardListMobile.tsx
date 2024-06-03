@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 const InvitedDashboardListMobile = () => {
   const data = [
     { id: 1, name: '프로덕트 디자인', inviter: '손동희' },
@@ -6,7 +8,7 @@ const InvitedDashboardListMobile = () => {
   ];
 
   return (
-    <div className='sm:hidden ml-[60px] sm:ml-[160px] px-7 py-8 border border-black'>
+    <div className='sm:hidden px-7 py-8 border-t border-r border-b botder-custom_gray-_d9d9d9'>
       <div className='text-custom_black-_333236 text-2xl font-bold'>
         초대받은 대시보드
       </div>
@@ -15,10 +17,12 @@ const InvitedDashboardListMobile = () => {
           className='w-full p-3 border border-custom_gray-_d9d9d9 rounded-md indent-8 text-[16px]'
           placeholder='검색'
         />
-        <img
+        <Image
           className='absolute top-[15px] ml-4'
           src='/images/search.svg'
           alt='search'
+          width={15}
+          height={15}
         />
       </div>
       <div>
