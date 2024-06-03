@@ -1,12 +1,6 @@
 import { Button } from '../ui/button';
-import {
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-  DialogFooter,
-  DialogClose,
-} from '../ui/dialog';
+import { DialogClose } from '../ui/dialog';
+import Modal from './Modal';
 
 const Title = <div>새로운 대시보드</div>;
 
@@ -50,16 +44,5 @@ const Footer = (
 );
 
 export function NewDashboardModal() {
-  return (
-    <DialogContent className='sm:max-w-[425px]'>
-      <DialogHeader>
-        <DialogTitle>{Title}</DialogTitle>
-        <DialogDescription>
-          {/* Description here if needed */}
-        </DialogDescription>
-      </DialogHeader>
-      {Content}
-      <DialogFooter>{Footer}</DialogFooter>
-    </DialogContent>
-  );
+  return <Modal title={Title} content={Content} footer={Footer} />;
 }

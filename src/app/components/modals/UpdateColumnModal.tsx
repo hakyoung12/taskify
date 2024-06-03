@@ -37,7 +37,5 @@ const Footer = (
 );
 
 export function UpdateColumnModal() {
-  return (
-    <Modal trigger={Trigger} title={Title} content={Content} footer={Footer} />
-  );
+  return <Modal title={Title} content={Content} footer={Footer} />;
 }

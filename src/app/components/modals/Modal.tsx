@@ -20,16 +20,14 @@ const Modal = ({
   footer?: ReactNode;
 }) => {
   return (
-    <Dialog>
-      <DialogContent className='sm:max-w-[425px]'>
-        <DialogHeader>
-          <DialogTitle>{title}</DialogTitle>
-          <DialogDescription>{description}</DialogDescription>
-        </DialogHeader>
-        {content}
-        <DialogFooter>{footer}</DialogFooter>
-      </DialogContent>
-    </Dialog>
+    <DialogContent className='sm:max-w-[425px]'>
+      <DialogHeader>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription>{description}</DialogDescription>
+      </DialogHeader>
+      {content}
+      <DialogFooter>{footer}</DialogFooter>
+    </DialogContent>
   );
 };
 
