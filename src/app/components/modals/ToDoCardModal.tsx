@@ -11,7 +11,6 @@ import {
 } from '@/app/components/ui/dialog';
 import ToDoCardDropDown from '../ToDoCardDropDown';
 import Image from 'next/image';
-import { Textarea } from '../ui/textarea';
 import { ChangeEvent, useState } from 'react';
 import CommentsList from '../CommentsList';
 import CustomAvatar from '../CustomAvatar';
@@ -109,7 +108,10 @@ export default function ToDoCardModal({
             {/* 댓글 */}
             <div className='relative'>
               <p className='text-[16px] font-medium mb-[10px]'>댓글</p>
-              <Textarea onChange={handleChange}></Textarea>
+              <textarea
+                onChange={handleChange}
+                className='w-full resize-none h-[110px] border border-[#d9d9d9] rounded-md'
+              ></textarea>
               <Button
                 type='submit'
                 className={modalButtonStyle}
@@ -146,7 +148,7 @@ export default function ToDoCardModal({
 }
 
 const modalButtonStyle =
-  'text-center w-[83px] h-[32px] text-[12px] rounded-md bg-white text-[#5534DA] border border-[#D9D9D9] absolute right-[10px] bottom-[10px]';
+  'text-center w-[83px] h-[32px] text-[12px] rounded-md bg-white text-[#5534DA] border border-[#D9D9D9] absolute right-[10px] bottom-[15px]';
 
 const commentsList = {
   cursorId: 0,
