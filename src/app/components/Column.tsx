@@ -46,7 +46,7 @@ export default function Column({ title }: { title: string }) {
   return (
     <div className='w-[354px] h-[1000px] flex flex-col p-[20px] gap-[25px] border-r border-gray-_eeeeee'>
       {/* 카드 info */}
-      <div className='flex justify-between justify-center items-center'>
+      <div className='flex justify-between items-center'>
         <div className='text-[16px] font-bold flex justify-center items-center'>
           <img
             className='mr-[8px]'

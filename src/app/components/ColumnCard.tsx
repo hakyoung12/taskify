@@ -48,7 +48,7 @@ export default function ColumnCard({
           })}
         </div>
         {/* 카드 마감날짜와 관리자 아이콘 */}
-        <div className='flex text-custom_gray-_787486 text-[12px] relative flex justify-between justify-center items-center'>
+        <div className='text-custom_gray-_787486 text-[12px] relative flex justify-between items-center'>
           <div className='flex gap-[6px]'>
             <img src='/images/calender-icon.svg' alt='캘린더 아이콘' />
             {dueDate}
