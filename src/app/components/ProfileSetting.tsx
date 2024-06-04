@@ -22,8 +22,10 @@ export default function ProfileSetting() {
     formState: { errors },
   } = useForm<ProfileSettingValues>();
 
+  /** submit 이벤트 추가 예정 */
   const onSubmit: SubmitHandler<ProfileSettingValues> = (data) => {
     console.log(data.email, data.nickname);
+    handleOpenModal(<SettingChangedModal text='프로필이 변경되었습니다.' />);
   };
 
   /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
@@ -118,7 +120,6 @@ export default function ProfileSetting() {
       <Button
         className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
         type='submit'
-        onClick={() => handleOpenModal(<SettingChangedModal />)}
       >
         저장
       </Button>
