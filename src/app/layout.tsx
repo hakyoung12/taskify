@@ -1,4 +1,6 @@
 import './globals.css';
+import { ModalProvider } from '@/context/ModalContext';
+import CommonModal from './components/modals/CommonModal';
 
 export default function RootLayout({
   children,
@@ -7,7 +9,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='ko'>
-      <body>{children}</body>
+      <body>
+        <ModalProvider>
+          {children}
+          <CommonModal />
+        </ModalProvider>
+      </body>
     </html>
   );
 }
