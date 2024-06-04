@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Pagination from './Pagination';
 import { mockData } from './mockdata/DashboardMock';
+import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
 
@@ -70,9 +71,9 @@ export default function DashboardList() {
             />
             <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div className='max-sm:hidden'>
-                <img
-                  className='w-5 h-3.5'
+              <div className='relative w-5 h-3.5 max-sm:hidden'>
+                <Image
+                  fill
                   src='/images/createByMe.svg'
                   alt='내가 만든 대시보드'
                 />

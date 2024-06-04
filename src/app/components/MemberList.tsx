@@ -3,6 +3,7 @@ import EditMenuTitle from './EditMenuTitle';
 import { DeleteButton } from './DeleteButton';
 import { mockData } from './mockdata/MemberMock';
 import { useState } from 'react';
+import Image from 'next/image';
 
 export default function MemberList() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,9 +38,18 @@ export default function MemberList() {
         <div>
           {selectedTodos.map((member) => {
             return (
-              <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
+              <div
+                key={member.id}
+                className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'
+              >
                 <div className='flex items-center gap-3 max-sm:text-sm'>
-                  <img src='/images/mockprofile4.svg' alt='프로필 사진' />
+                  <div className='relative w-[38px] h-[38px]'>
+                    <Image
+                      fill
+                      src='/images/mockprofile4.svg'
+                      alt='프로필 사진'
+                    />
+                  </div>
                   {member.name}
                 </div>
                 <DeleteButton title='삭제' />

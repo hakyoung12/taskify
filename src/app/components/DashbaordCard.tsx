@@ -4,8 +4,9 @@ import Link from 'next/link';
 import Pagination from './Pagination';
 import { useState } from 'react';
 import { mockData } from './mockdata/DashboardMock';
+import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
-import NewDashboardModal from './modals/NewDashboardModal';
+import NewDashboardModal from './modals/NewDashboardModal';\
 
 type ColorPalette = {
   [key: string]: string;
@@ -52,11 +53,13 @@ export default function DashboardCard() {
           onClick={() => handleOpenModal(<NewDashboardModal />)}
         >
           새로운 대시보드
-          <img
-            className='w-5 h-5'
-            src='/images/arrowButton.svg'
-            alt='대시보드 바로가기'
-          />
+          <div className='relative w-5 h-5'>
+            <Image
+              fill
+              src='/images/addTaskButton2.svg'
+              alt='대시보드 바로가기'
+            />
+          </div>
         </button>
         {selectedTodos.map((todo) => (
           <Link
@@ -72,17 +75,19 @@ export default function DashboardCard() {
                 <div>{todo.title}</div>
               </div>
               {todo.createdByMe && (
-                <img
-                  className='w-5 h-3.5'
-                  src='/images/createByMe.svg'
-                  alt='내가 만든 대시보드'
-                />
+                <div className='relative w-5 h-3.5'>
+                  <Image
+                    fill
+                    src='/images/createByMe.svg'
+                    alt='내가 만든 대시보드'
+                  />
+                </div>
               )}
             </div>
-            <button>
-              <img
-                className='w-5 h-5'
-                src='/images/addTaskButton2.svg'
+            <button className='relative w-5 h-5'>
+              <Image
+                fill
+                src='/images/rightArrowButton.svg'
                 alt='대시보드 바로가기'
               />
             </button>
