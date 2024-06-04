@@ -38,7 +38,7 @@ export default function PasswordChangeForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='relative w-[620px] h-[454px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'
+      className='relative w-[620px] h-[454px] mt-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'
     >
       <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
         비밀번호 변경

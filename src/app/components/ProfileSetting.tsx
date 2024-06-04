@@ -54,12 +54,12 @@ export default function ProfileSetting() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='relative w-[620px] h-[355px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'
+      className='flex flex-col gap-8 w-[620px] my-[25px] mx-5 py-7 px-7 flex-shrink-0 rounded-lg bg-custom_white max-sm:flex max-sm:flex-col max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'
     >
-      <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
+      <div className='text-4xl font-bold font-Pretendard text-custom_black-_333236'>
         프로필
       </div>
-      <div className='flex gap-4'>
+      <div className='flex gap-4 max-sm:flex-col'>
         <label htmlFor='imageUpload'>
           <input
             type='file'
@@ -74,7 +74,7 @@ export default function ProfileSetting() {
               className='hidden'
               onChange={onchangeImageUpload}
             />
-            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa cursor-pointer'>
+            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa cursor-pointer max-sm:w-[100px] max-sm:h-[100px] '>
               <Image
                 fill
                 src={uploadedImage || '/images/no_Profile.svg'}
@@ -118,7 +118,7 @@ export default function ProfileSetting() {
         </div>
       </div>
       <Button
-        className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
+        className='px-[30px] py-2 bg-custom_violet-_5534da text-white rounded ml-auto'
         type='submit'
       >
         저장
