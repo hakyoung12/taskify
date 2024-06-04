@@ -1,5 +1,8 @@
 import Image from 'next/image';
 import CustomAvatar from './CustomAvatar';
+import ToDoCardModal from './modals/ToDoCardModal';
+import { CreateCardRes } from '../api/apiTypes/cardType';
+import { mock } from 'node:test';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -9,6 +12,25 @@ interface ColumnCardProps {
   assignerNickname: string;
   assignerProfileUrl: string;
 }
+
+const mockCardData: CreateCardRes = {
+  id: 0,
+  title: '새로운 일정 관리 Taskify',
+  description:
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo!',
+  tags: ['프로젝트', '백엔드'],
+  dueDate: '2024-05-31',
+  assignee: {
+    profileImageUrl: '',
+    nickname: 'string',
+    id: 0,
+  },
+  imageUrl: '/images/test/card-image-test.jpg',
+  teamId: 'string',
+  columnId: 0,
+  createdAt: '2024-05-31T16:45:45.608Z',
+  updatedAt: '2024-05-31T16:45:45.608Z',
+};
 
 export default function ColumnCard({
   imageUrl,
@@ -58,6 +80,14 @@ export default function ColumnCard({
             profileUrl={assignerProfileUrl}
           />
         </div>
+        <ToDoCardModal
+          title={mockCardData.title}
+          description={mockCardData.description}
+          tags={mockCardData.tags}
+          dueDate={mockCardData.dueDate}
+          assignee={mockCardData.assignee}
+          imageUrl={mockCardData.imageUrl}
+        />
       </div>
     </>
   );
