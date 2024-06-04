@@ -3,8 +3,8 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Pagination from './Pagination';
 import { mockData } from './mockdata/DashboardMock';
-import { Dialog, DialogTrigger } from './ui/dialog';
-import { NewDashboardModal } from './modals/NewDashboardModal';
+import { useModal } from '@/context/ModalContext';
+import NewDashboardModal from './modals/NewDashboardModal';
 
 type ColorPalette = {
   [key: string]: string;
@@ -20,6 +20,12 @@ const ColorPalette: ColorPalette = {
 
 export default function DashboardList() {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
 
   const handleNextPage = () => {
     if (currentPage * 10 < mockData.length) {
@@ -43,18 +49,14 @@ export default function DashboardList() {
         <div className='text-custom_black-_333236 font-pretendard text-xs font-bold max-sm:hidden'>
           Dash Boards
         </div>
-        <Dialog>
-          <DialogTrigger asChild>
-            <button>
-              <img
-                className='w-5 h-5'
-                src='/images/addTaskButton.svg'
-                alt='할 일 추가하기'
-              />
-            </button>
-          </DialogTrigger>
-          <NewDashboardModal />
-        </Dialog>
+        <button>
+          <img
+            className='w-5 h-5'
+            src='/images/addTaskButton.svg'
+            alt='할 일 추가하기'
+            onClick={() => handleOpenModal(<NewDashboardModal />)}
+          />
+        </button>
       </div>
       <div>
         {selectedTodos.map((todo) => (
