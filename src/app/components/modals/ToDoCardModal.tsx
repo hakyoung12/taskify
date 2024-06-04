@@ -24,7 +24,7 @@ export default function ToDoCardModal({
 }) {
   const [value, setValue] = useState<string>();
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newvalue = e.target.value;
     setValue(newvalue);
   };
