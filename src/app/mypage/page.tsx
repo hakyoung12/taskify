@@ -9,7 +9,7 @@ export default function MyPage() {
     <>
       <div className='flex'>
         <SideBar />
-        <div className='w-3/4'>
+        <div className='w-screen'>
           <DashboardHeaderInSettings />
           <div className='bg-custom_gray-_fafafa w-full h-full'>
             <BackButton link='/mydashboard' />

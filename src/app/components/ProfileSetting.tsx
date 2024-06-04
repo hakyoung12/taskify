@@ -7,8 +7,24 @@ import { useState } from 'react';
 import Image from 'next/image';
 
 export default function ProfileSetting() {
-  const [uploadedImage, setUploadedImage] = useState(null);
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
 
+  /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
+  const onchangeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { files } = e.target;
+
+    if (!files || files.length === 0) {
+      setUploadedImage(null);
+      return;
+    }
+
+    const uploadFile = files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(uploadFile);
+    reader.onloadend = () => {
+      setUploadedImage(reader.result as string);
+    };
+  };
   return (
     <form className='relative w-[620px] h-[355px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'>
       <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
@@ -16,19 +32,27 @@ export default function ProfileSetting() {
       </div>
       <div className='flex gap-4'>
         <label htmlFor='imageUpload'>
-          {uploadedImage ? (
-            <div className='relative w-[182px] h-[182px]'>
-              <Image fill src={uploadedImage} alt='프로필 없을때' />
-            </div>
-          ) : (
-            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa'>
+          <input
+            type='file'
+            accept='image/png, image/jpeg'
+            className='hidden'
+            onChange={onchangeImageUpload}
+          />
+          <label className='preview'>
+            <input
+              type='file'
+              accept='image/png, image/jpeg'
+              className='hidden'
+              onChange={onchangeImageUpload}
+            />
+            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa cursor-pointer'>
               <Image
                 fill
-                src='/images/no_Profile.svg'
+                src={uploadedImage || '/images/no_Profile.svg'}
                 alt='프로필 이미지 수정하기'
               />
             </div>
-          )}
+          </label>
         </label>
         <div className='flex flex-col w-full gap-5'>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg'>
@@ -41,10 +65,10 @@ export default function ProfileSetting() {
             />
           </div>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg font-medium font-Pretendard'>
-            <Label htmlFor='email'>닉네임</Label>
+            <Label htmlFor='nickname'>닉네임</Label>
             <Input
               type='text'
-              id='email'
+              id='nickname'
               className='h-12'
               placeholder='배유철'
             />
