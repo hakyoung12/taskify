@@ -9,13 +9,13 @@ export default function LandingMain() {
   return (
     <main className='px-10 flex flex-col items-center'>
       <div className='flex flex-col items-center pt-[94px]'>
-        <div className='w-[722px] max-xl:w-[537px] max-sm:w-[287px]'>
+        <div className='relative w-[722px] h-[422px] max-xl:w-[537px] max-xl:h-[315px] max-sm:w-[287px] max-sm:h-[168px]'>
           <Image
             src='/LandingPage/topImage.png'
-            width={722}
-            height={422}
             alt='소개 페이지'
-            layout='responsive'
+            fill
+            priority
+            sizes='75vw'
           />
         </div>
         <h2 className='flex items-center gap-x-7 pt-12 max-xl:gap-x-6 max-md:flex-col max-sm:gap-y-[5px]'>
@@ -43,13 +43,13 @@ export default function LandingMain() {
             일의 우선순위를 관리하세요
           </span>
         </h3>
-        <div className='absolute right-0 bottom-0 w-[594px] max-xl:w-[519px] max-sm:w-[296px] '>
+        <div className='absolute right-0 bottom-0 w-[594px] h-[497px] max-xl:w-[519px] max-xl:h-[435px] max-sm:w-[296px] max-sm:h-[248px]'>
           <Image
             src='/LandingPage/orderToDo.png'
-            width={594}
-            height={498}
             alt='우선순위'
-            layout='responsive'
+            fill
+            sizes='75vw'
+            priority
           />
         </div>
       </div>
@@ -62,13 +62,12 @@ export default function LandingMain() {
             해야 할 일을 등록하세요
           </span>
         </h3>
-        <div className='w-[436px] mt-[98px] ml-[108px] border-0 overflow-hidden rounded-t-lg max-xl:w-[360px] max-sm:w-[217px] self-end max-xl:self-center max-xl:ml-0'>
+        <div className='relative w-[436px] h-[502px] mt-[98px] ml-[108px] border-0 overflow-hidden rounded-t-lg max-xl:w-[360px] max-xl:h-[415px] max-sm:w-[217px] max-sm:h-[205px] self-end max-xl:self-center max-xl:ml-0'>
           <Image
             src='/LandingPage/createToDo.png'
-            width={436}
-            height={502}
             alt='할 일 등록'
-            layout='responsive'
+            fill
+            sizes='50vw'
           />
         </div>
       </div>
@@ -78,31 +77,24 @@ export default function LandingMain() {
         </h3>
         <div className='mt-9 flex gap-x-[33px] items-center max-xl:flex-col max-xl:gap-y-12 max-sm:gap-y-10 max-sm:mt-[42px] '>
           <Card name='대시보드 설정' info={DASH_INFO}>
-            <Image
-              src='/LandingPage/dashboard.png'
-              width={300}
-              height={124}
-              alt=''
-              layout='responsive'
-            />
+            <div className='relative w-[300px] h-[124px] max-sm:w-[260px] max-sm:h-[107px]'>
+              <Image
+                src='/LandingPage/dashboard.png'
+                alt=''
+                fill
+                sizes='33vw'
+              />
+            </div>
           </Card>
           <Card name='초대' info={INVITE_INFO}>
-            <Image
-              src='/LandingPage/invite.png'
-              width={300}
-              height={231}
-              alt=''
-              layout='responsive'
-            />
+            <div className='relative w-[300px] h-[231px] max-sm:w-[260px] max-sm:h-[200px]'>
+              <Image src='/LandingPage/invite.png' alt='' fill sizes='33vw' />
+            </div>
           </Card>
           <Card name='구성원' info={MEMBER_INFO}>
-            <Image
-              src='/LandingPage/members.png'
-              width={300}
-              height={195}
-              alt=''
-              layout='responsive'
-            />
+            <div className='relative w-[300px] h-[195px] max-sm:w-[260px] max-sm:h-[179px]'>
+              <Image src='/LandingPage/members.png' alt='' fill sizes='33vw' />
+            </div>
           </Card>
         </div>
       </div>
