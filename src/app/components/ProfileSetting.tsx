@@ -1,13 +1,30 @@
 'use client';
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@radix-ui/themes';
 import { useState } from 'react';
 import Image from 'next/image';
+import { useModal } from '@/context/ModalContext';
+import SettingChangedModal from './modals/SettingChangedModal';
+
+interface ProfileSettingValues {
+  email: string;
+  nickname: string;
+}
 
 export default function ProfileSetting() {
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<ProfileSettingValues>();
+
+  const onSubmit: SubmitHandler<ProfileSettingValues> = (data) => {
+    console.log(data.email, data.nickname);
+  };
 
   /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
   const onchangeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -25,8 +42,18 @@ export default function ProfileSetting() {
       setUploadedImage(reader.result as string);
     };
   };
+
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
   return (
-    <form className='relative w-[620px] h-[355px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'>
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className='relative w-[620px] h-[355px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'
+    >
       <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
         프로필
       </div>
@@ -62,7 +89,19 @@ export default function ProfileSetting() {
               id='email'
               className='h-12'
               placeholder='이메일을 입력해주세요'
+              {...register('email', {
+                required: { value: true, message: '이메일을 입력해주세요' },
+                pattern: {
+                  value: /^\S+@\S+$/i,
+                  message: '이메일 형식이 올바르지 않습니다',
+                },
+              })}
             />
+            {
+              <p className='text-custom_red font-pretendard text-sm font-normal'>
+                {errors.email?.message}
+              </p>
+            }
           </div>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg font-medium font-Pretendard'>
             <Label htmlFor='nickname'>닉네임</Label>
@@ -71,13 +110,15 @@ export default function ProfileSetting() {
               id='nickname'
               className='h-12'
               placeholder='배유철'
+              {...register('nickname')}
             />
           </div>
         </div>
       </div>
       <Button
         className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
-        type='button'
+        type='submit'
+        onClick={() => handleOpenModal(<SettingChangedModal />)}
       >
         저장
       </Button>
