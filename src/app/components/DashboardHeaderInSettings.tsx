@@ -1,7 +1,17 @@
+'use client';
+
 import Image from 'next/image';
 import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
+import { useModal } from '@/context/ModalContext';
+import InvitationModal from './modals/InvitationModal';
 
 const DashboardHeaderInSettings = () => {
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
   return (
     <nav className='flex items-center justify-between p-4'>
       <div className='invisible xl:visible flex items-center'>
@@ -27,7 +37,10 @@ const DashboardHeaderInSettings = () => {
             />
             <p>관리</p>
           </button>
-          <button className='flex items-center px-2 py-1 bg-white border rounded-md'>
+          <button
+            className='flex items-center px-2 py-1 bg-white border rounded-md'
+            onClick={() => handleOpenModal(<InvitationModal />)}
+          >
             <Image
               className='hidden sm:block mr-2'
               src='/images/addTaskButton.svg'
