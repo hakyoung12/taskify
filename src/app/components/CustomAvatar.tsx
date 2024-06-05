@@ -1,4 +1,4 @@
-import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
+import Image from 'next/image';
 
 interface CustomAvatarProps {
   profileUrl?: string; //유저 프로필 이미지
@@ -13,32 +13,30 @@ export default function CustomAvatar({
   size = 'small',
 }: CustomAvatarProps) {
   return (
-    <div>
-      <Avatar
-        className={`border-2 border-white ${
-          size === 'small' ? 'w-[24px] h-[24px]' : 'w-[34px] h-[34px]'
-        }`}
-      >
-        {profileUrl ? (
-          <AvatarImage
-            src={profileUrl}
-            alt='Profile Image'
-            className='object-cover'
-          />
-        ) : (
-          <>
-            <AvatarImage />
-            {/* 랜덤으로 색깔 지정하는 로직 추가 예정 */}
-            <AvatarFallback className='bg-custom_green-_a3c4a2 text-white justify-center items-center'>
-              <span
-                className={size === 'small' ? 'text-[12px]' : 'text-[16px]'}
-              >
-                {nickName[0].toUpperCase()}
-              </span>
-            </AvatarFallback>
-          </>
-        )}
-      </Avatar>
+    <div
+      className={`border-2 border-white rounded-full overflow-hidden relative ${
+        size === 'small' ? 'w-[24px] h-[24px]' : 'w-[34px] h-[34px]'
+      }`}
+    >
+      {profileUrl ? (
+        <Image
+          fill
+          src={profileUrl}
+          alt='Profile Image'
+          className='object-cover rounded-full'
+        />
+      ) : (
+        <>
+          {/* 랜덤으로 색깔 지정하는 로직 추가 예정 */}
+          <div className='bg-custom_green-_a3c4a2 text-white justify-center items-center flex rounded-full h-full'>
+            <span
+              className={`${size === 'small' ? 'text-[12px]' : 'text-[16px]'}`}
+            >
+              {nickName[0].toUpperCase()}
+            </span>
+          </div>
+        </>
+      )}
     </div>
   );
 }
