@@ -62,7 +62,10 @@ const DashboardHeader = () => {
               >
                 로그아웃
               </li>
-              <li className='cursor-pointer px-4 py-2 hover:bg-gray-100'>
+              <li
+                className='cursor-pointer px-4 py-2 hover:bg-gray-100'
+                onClick={() => router.push('/mypage')}
+              >
                 마이페이지
               </li>
             </ul>
