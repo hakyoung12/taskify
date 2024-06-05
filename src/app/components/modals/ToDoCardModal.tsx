@@ -45,10 +45,6 @@ export default function ToDoCardModal({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <span className='border'>카드 상세 조회 모달입니다</span>
-      </DialogTrigger>
-
       <DialogContent className='min-w-[730px] p-[28px]'>
         {/* 헤더부분(title과 dropdown, 닫기 버튼) */}
         <div className='flex justify-between'>

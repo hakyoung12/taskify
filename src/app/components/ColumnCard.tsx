@@ -1,8 +1,10 @@
+'use client';
+
 import Image from 'next/image';
 import CustomAvatar from './CustomAvatar';
 import ToDoCardModal from './modals/ToDoCardModal';
 import { CreateCardRes } from '../api/apiTypes/cardType';
-import { mock } from 'node:test';
+import { useModal } from '@/context/ModalContext';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -40,6 +42,12 @@ export default function ColumnCard({
   assignerNickname,
   assignerProfileUrl,
 }: ColumnCardProps) {
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
   return (
     <>
       <div className='bg-white rounded-md border border-custom_gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'>
@@ -80,14 +88,23 @@ export default function ColumnCard({
             profileUrl={assignerProfileUrl}
           />
         </div>
-        <ToDoCardModal
-          title={mockCardData.title}
-          description={mockCardData.description}
-          tags={mockCardData.tags}
-          dueDate={mockCardData.dueDate}
-          assignee={mockCardData.assignee}
-          imageUrl={mockCardData.imageUrl}
-        />
+        <p
+          className='border'
+          onClick={() =>
+            handleOpenModal(
+              <ToDoCardModal
+                title={mockCardData.title}
+                description={mockCardData.description}
+                tags={mockCardData.tags}
+                dueDate={mockCardData.dueDate}
+                assignee={mockCardData.assignee}
+                imageUrl={mockCardData.imageUrl}
+              />
+            )
+          }
+        >
+          카드 상세 조회 모달입니다
+        </p>
       </div>
     </>
   );
