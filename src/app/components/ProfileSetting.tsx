@@ -54,9 +54,9 @@ export default function ProfileSetting() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='flex flex-col gap-8 w-[620px] my-[25px] mx-5 py-7 px-7 flex-shrink-0 rounded-lg bg-custom_white max-sm:flex max-sm:flex-col max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'
+      className='mx-5 my-[25px] flex w-[620px] flex-shrink-0 flex-col gap-8 rounded-lg bg-custom_white px-7 py-7 max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3 max-sm:flex max-sm:flex-col'
     >
-      <div className='text-4xl font-bold font-Pretendard text-custom_black-_333236'>
+      <div className='font-Pretendard text-4xl font-bold text-custom_black-_333236'>
         프로필
       </div>
       <div className='flex gap-4 max-sm:flex-col'>
@@ -74,7 +74,7 @@ export default function ProfileSetting() {
               className='hidden'
               onChange={onchangeImageUpload}
             />
-            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa cursor-pointer max-sm:w-[100px] max-sm:h-[100px] '>
+            <div className='relative flex h-[182px] w-[182px] cursor-pointer rounded-md bg-custom_gray-_fafafa max-sm:h-[100px] max-sm:w-[100px]'>
               <Image
                 fill
                 src={uploadedImage || '/images/no_Profile.svg'}
@@ -83,7 +83,7 @@ export default function ProfileSetting() {
             </div>
           </label>
         </label>
-        <div className='flex flex-col w-full gap-5'>
+        <div className='flex w-full flex-col gap-5'>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg'>
             <Label htmlFor='email'>이메일</Label>
             <Input
@@ -100,12 +100,12 @@ export default function ProfileSetting() {
               })}
             />
             {
-              <p className='text-custom_red font-pretendard text-sm font-normal'>
+              <p className='font-pretendard text-sm font-normal text-custom_red'>
                 {errors.email?.message}
               </p>
             }
           </div>
-          <div className='grid w-full max-w-sm items-center gap-[10px] text-lg font-medium font-Pretendard'>
+          <div className='font-Pretendard grid w-full max-w-sm items-center gap-[10px] text-lg font-medium'>
             <Label htmlFor='nickname'>닉네임</Label>
             <Input
               type='text'
@@ -118,7 +118,7 @@ export default function ProfileSetting() {
         </div>
       </div>
       <Button
-        className='px-[30px] py-2 bg-custom_violet-_5534da text-white rounded ml-auto'
+        className='ml-auto rounded bg-custom_violet-_5534da px-[30px] py-2 text-white'
         type='submit'
       >
         저장

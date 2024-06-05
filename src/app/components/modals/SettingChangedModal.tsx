@@ -1,10 +1,10 @@
 const SettingChangedModal = ({ text }: { text: string }) => {
   return (
-    <div className='flex flex-col w-[540px] h-[250px] items-center gap-[45px] max-sm:w-[327px]'>
-      <p className='mt-[108px] mb-4 text-lg max-sm:mx-6 max-sm:w-full max-sm:mx-auto max-sm:text-center'>
+    <div className='flex h-[250px] w-[540px] flex-col items-center gap-[45px] max-sm:w-[327px]'>
+      <p className='mb-4 mt-[108px] text-lg max-sm:mx-6 max-sm:mx-auto max-sm:w-full max-sm:text-center'>
         {text}
       </p>
-      <button className='px-[46px] py-3.5 bg-custom_violet-_5534da text-base text-white rounded ml-auto max-sm:mx-auto'>
+      <button className='ml-auto rounded bg-custom_violet-_5534da px-[46px] py-3.5 text-base text-white max-sm:mx-auto'>
         확인
       </button>
     </div>

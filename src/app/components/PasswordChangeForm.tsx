@@ -38,9 +38,9 @@ export default function PasswordChangeForm() {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className='relative w-[620px] h-[454px] mt-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'
+      className='relative mx-5 mt-[25px] h-[454px] w-[620px] flex-shrink-0 rounded-lg bg-custom_white px-[28px] py-4 max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'
     >
-      <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
+      <div className='font-Pretendard pb-8 text-4xl font-bold text-custom_black-_333236'>
         비밀번호 변경
       </div>
       <div className='flex flex-col gap-5'>
@@ -56,7 +56,7 @@ export default function PasswordChangeForm() {
             })}
           />
         </div>
-        <div className='grid w-full items-center gap-[10px] text-lg font-medium font-Pretendard'>
+        <div className='font-Pretendard grid w-full items-center gap-[10px] text-lg font-medium'>
           <Label htmlFor='newPassword'>새 비밀번호</Label>
           <Input
             type='password'
@@ -68,12 +68,12 @@ export default function PasswordChangeForm() {
             })}
           />
           {
-            <p className='text-custom_red font-pretendard text-sm font-normal'>
+            <p className='font-pretendard text-sm font-normal text-custom_red'>
               {errors.newPassword?.message}
             </p>
           }
         </div>
-        <div className='grid w-full items-center gap-[10px] text-lg font-medium font-Pretendard'>
+        <div className='font-Pretendard grid w-full items-center gap-[10px] text-lg font-medium'>
           <Label htmlFor='newPassworConfirm'>새 비밀번호 확인</Label>
           <Input
             type='password'
@@ -90,13 +90,13 @@ export default function PasswordChangeForm() {
             })}
           />
           {
-            <p className='text-custom_red font-pretendard text-sm font-normal'>
+            <p className='font-pretendard text-sm font-normal text-custom_red'>
               {errors.newPassworConfirm?.message}
             </p>
           }
         </div>
         <Button
-          className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
+          className='absolute bottom-7 right-7 rounded bg-custom_violet-_5534da px-[30px] py-2 text-white'
           type='submit'
         >
           변경

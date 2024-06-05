@@ -25,7 +25,7 @@ export default function InvitationList() {
   const totalPage = Math.ceil(mockData.length / 5);
 
   return (
-    <div className='w-auto rounded-lg bg-white-_ffffff m-5'>
+    <div className='bg-white-_ffffff m-5 w-auto rounded-lg'>
       <div className='relative flex'>
         <EditMenuTitle
           title='초대 내역'
@@ -35,8 +35,8 @@ export default function InvitationList() {
           onPrev={handlePrevPage}
           onNext={handleNextPage}
         />
-        <button className='flex items-center gap-2 mt-8 py-2 px-3 w-[105px] h-8 text-white rounded-md bg-custom_violet-_5534da font-Pretendard font-medium text-base max-sm:absolute max-sm:bottom-4 max-sm:right-7 max-sm:text-sx py-2 px-3'>
-          <div className='relative w-4 h-4 max-sm:w-3.5 max-sm:h-3.5'>
+        <button className='font-Pretendard max-sm:text-sx mt-8 flex h-8 w-[105px] items-center gap-2 rounded-md bg-custom_violet-_5534da px-3 py-2 text-base font-medium text-white max-sm:absolute max-sm:bottom-4 max-sm:right-7'>
+          <div className='relative h-4 w-4 max-sm:h-3.5 max-sm:w-3.5'>
             <Image
               fill
               src='/images/inviteMemberButton.svg'
@@ -52,7 +52,7 @@ export default function InvitationList() {
             return (
               <div
                 key={email.id}
-                className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'
+                className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'
               >
                 <div className='flex items-center gap-3 max-sm:text-sm'>
                   {email.email}
