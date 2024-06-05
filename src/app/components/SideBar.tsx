@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import DashboardList from './DashboardList';
 import Link from 'next/link';
+import DashboardListMobile from './DashboardListMobile';
 
 export default function SideBar() {
   return (
@@ -14,6 +15,7 @@ export default function SideBar() {
         </div>
       </Link>
       <DashboardList />
+      <DashboardListMobile />
     </aside>
   );
 }
