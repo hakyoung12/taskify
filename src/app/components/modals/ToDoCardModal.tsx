@@ -14,6 +14,7 @@ import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
 import CommentsList from '../CommentsList';
 import CustomAvatar from '../CustomAvatar';
+import { useModal } from '@/context/ModalContext';
 
 interface assignee {
   profileImageUrl?: string;
@@ -37,109 +38,119 @@ export default function ToDoCardModal({
   imageUrl?: string;
 }) {
   const [value, setValue] = useState<string>();
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const { closeModal } = useModal();
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newvalue = e.target.value;
     setValue(newvalue);
   };
 
+  const handleToggle = (e: React.MouseEvent<HTMLImageElement>) => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <Dialog>
-      <DialogContent className='min-w-[730px] p-[28px]'>
-        {/* 헤더부분(title과 dropdown, 닫기 버튼) */}
-        <div className='flex justify-between'>
-          <DialogHeader>
-            <DialogTitle className='text-[24px] font-bold'>{title}</DialogTitle>
-          </DialogHeader>
-          <div className='flex gap=[24px] relative '>
-            <ToDoCardDropDown />
-            <DialogClose asChild>
-              <img src='/images/close-button.svg' alt='닫기 버튼'></img>
-            </DialogClose>
+    <div className='w-[682px] flex flex-col gap-[24px] p-[4px]'>
+      {/* 헤더 부분 */}
+      <div className='flex justify-between relative right-1'>
+        <h2 className='text-[24px] font-bold'>{title}</h2>
+        <div className='flex gap=[24px] relative '>
+          <img
+            src='/images/card-setting.svg'
+            alt='카드 설정 아이콘'
+            onClick={handleToggle}
+          />
+          <ToDoCardDropDown isOpen={isOpen} />
+          <img
+            src='/images/close-button.svg'
+            alt='닫기 버튼'
+            onClick={closeModal}
+          ></img>
+        </div>
+      </div>
+      {/* 컨텐츠 */}
+      <div className='flex w-[450px] gap-[24px]'>
+        <div className='flex flex-col gap-[16px]'>
+          {/* 태그 */}
+          <div className='flex gap-[20px] items-center'>
+            <div className='flex w-[65px] bg-[#F1EFFD] gap-[6px] rounded-xl px-[8px] py-[4px]'>
+              <img
+                className='w-[6px]'
+                src='/images/Ellipse-puple.svg'
+                alt='꾸미는 점'
+              />
+              <span className='text-[12px] text-[#5534DA]'>To Do</span>
+            </div>
+            <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />
+            <div className='flex'>
+              {tags.map((tag: any, index: number) => {
+                return (
+                  <div
+                    className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
+                    key={index}
+                  >
+                    {tag}
+                  </div>
+                );
+              })}
+            </div>
           </div>
+
+          {/* 카드 컨텐츠 */}
+          <div className='mb-[8px]'>
+            <div className='text-[14px] mb-[16px]'>{description}</div>
+            {imageUrl && (
+              <div className='w-[450px] h-[260px] relative'>
+                <Image
+                  fill
+                  src={imageUrl}
+                  alt='카드 이미지'
+                  className='object-cover rounded-md'
+                />
+              </div>
+            )}
+          </div>
+
+          {/* 댓글 */}
+          <form className='relative'>
+            <label className='text-[16px] font-medium'>댓글</label>
+            <textarea
+              onChange={handleChange}
+              placeholder='댓글 작성하기'
+              className='w-full resize-none h-[110px] border border-[#d9d9d9] rounded-md p-[16px] text-[14px] mt-[10px]'
+            ></textarea>
+            <button
+              type='submit'
+              className={`${modalButtonStyle} disabled:text-[#787486]`}
+              disabled={!value}
+            >
+              입력
+            </button>
+          </form>
+          <CommentsList comments={commentsList.comments} />
         </div>
 
-        <div className='flex w-[450px] gap-[20px]'>
-          <div className='flex flex-col gap-[16px]'>
-            {/* 태그 */}
-            <div className='flex gap-[20px] items-center'>
-              <div className='flex w-[65px] bg-[#F1EFFD] gap-[6px] rounded-xl px-[8px] py-[4px]'>
-                <img
-                  className='w-[6px]'
-                  src='/images/Ellipse-puple.svg'
-                  alt='꾸미는 점'
-                />
-                <span className='text-[12px] text-[#5534DA]'>To Do</span>
-              </div>
-              <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />
-              <div className='flex'>
-                {tags.map((tag: any, index: number) => {
-                  return (
-                    <div
-                      className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
-                      key={index}
-                    >
-                      {tag}
-                    </div>
-                  );
-                })}
-              </div>
+        {/* 카드 부연설명 (담장자, 마감일) */}
+        <div className='w-[200px] h-[155px] p-[16px] text-[14px] flex flex-col gap-[20px] rounded-lg border'>
+          <div className='w-[168px]'>
+            <p className='mb-[6px] font-semibold text-[12px]'>담당자</p>
+            <div className='flex gap-[8px] items-center'>
+              <CustomAvatar
+                profileUrl={assignee.profileImageUrl}
+                nickName={assignee.nickname}
+                size='large'
+              />
+              <span>{assignee.nickname}</span>
             </div>
-
-            {/* 카드 컨텐츠 */}
-            <div>
-              <div className='text-[14px] mb-[16px]'>{description}</div>
-              {imageUrl && (
-                <div className='w-[450px] h-[260px] relative'>
-                  <Image
-                    fill
-                    src={imageUrl}
-                    alt='카드 이미지'
-                    className='object-cover rounded-md'
-                  />
-                </div>
-              )}
-            </div>
-
-            {/* 댓글 */}
-            <div className='relative'>
-              <p className='text-[16px] font-medium mb-[10px]'>댓글</p>
-              <textarea
-                onChange={handleChange}
-                className='w-full resize-none h-[110px] border border-[#d9d9d9] rounded-md'
-              ></textarea>
-              <Button
-                type='submit'
-                className={modalButtonStyle}
-                disabled={!value}
-              >
-                입력
-              </Button>
-            </div>
-            <CommentsList comments={commentsList.comments} />
           </div>
-
-          {/* 카드 부연설명 (담장자, 마감일) */}
-          <div className='w-[200px] h-[155px] p-[16px] text-[14px] flex flex-col gap-[20px] rounded-lg border'>
-            <div className='w-[168px]'>
-              <p className='mb-[6px] font-semibold text-[12px]'>담당자</p>
-              <div className='flex gap-[8px] items-center'>
-                <CustomAvatar
-                  profileUrl={assignee.profileImageUrl}
-                  nickName={assignee.nickname}
-                  size='large'
-                />
-                <span>{assignee.nickname}</span>
-              </div>
-            </div>
-            <div className='flex flex-col gap-[6px]'>
-              <p className='font-semibold text-[12px]'>마감일</p>
-              <p>{dueDate}</p>
-            </div>
+          <div className='flex flex-col gap-[6px]'>
+            <p className='font-semibold text-[12px]'>마감일</p>
+            <p>{dueDate}</p>
           </div>
         </div>
-      </DialogContent>
-    </Dialog>
+      </div>
+    </div>
   );
 }
 

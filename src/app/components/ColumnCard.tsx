@@ -50,7 +50,21 @@ export default function ColumnCard({
 
   return (
     <>
-      <div className='bg-white rounded-md border border-custom_gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'>
+      <div
+        className='bg-white rounded-md border border-custom_gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'
+        onClick={() =>
+          handleOpenModal(
+            <ToDoCardModal
+              title={mockCardData.title}
+              description={mockCardData.description}
+              tags={mockCardData.tags}
+              dueDate={mockCardData.dueDate}
+              assignee={mockCardData.assignee}
+              imageUrl={mockCardData.imageUrl}
+            />
+          )
+        }
+      >
         {/* 카드 이미지 설정 */}
         {imageUrl && (
           <Image
@@ -88,23 +102,6 @@ export default function ColumnCard({
             profileUrl={assignerProfileUrl}
           />
         </div>
-        <p
-          className='border'
-          onClick={() =>
-            handleOpenModal(
-              <ToDoCardModal
-                title={mockCardData.title}
-                description={mockCardData.description}
-                tags={mockCardData.tags}
-                dueDate={mockCardData.dueDate}
-                assignee={mockCardData.assignee}
-                imageUrl={mockCardData.imageUrl}
-              />
-            )
-          }
-        >
-          카드 상세 조회 모달입니다
-        </p>
       </div>
     </>
   );
