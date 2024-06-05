@@ -1,13 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import { useModal } from '@/context/ModalContext';
 
-const NewDashboardModal = () => {
+const NewDashboardModal: React.FC = () => {
   const { closeModal } = useModal();
+  const [selectedColor, setSelectedColor] = useState<string>('green');
 
   const handleCloseModal = () => {
     closeModal();
   };
+
+  const handleColorClick = (color: string) => {
+    setSelectedColor(color);
+  };
+
+  const colors = [
+    { name: 'green', bgColor: 'bg-custom_green-_7ac555' },
+    { name: 'purple', bgColor: 'bg-custom_purple' },
+    { name: 'orange', bgColor: 'bg-custom_orange' },
+    { name: 'blue', bgColor: 'bg-custom_blue' },
+    { name: 'pink', bgColor: 'bg-custom_pink' },
+  ];
 
   return (
     <div className='flex w-[320px] flex-col sm:w-[540px]'>
@@ -24,17 +38,21 @@ const NewDashboardModal = () => {
         />
       </div>
       <div className='mt-[28px] flex gap-x-3'>
-        <div className='relative h-[30px] w-[30px] rounded-full bg-custom_green-_7ac555'>
-          <img
-            className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'
-            src='/images/check.svg'
-            alt='check'
-          />
-        </div>
-        <div className='h-[30px] w-[30px] rounded-full bg-custom_purple'></div>
-        <div className='h-[30px] w-[30px] rounded-full bg-custom_orange'></div>
-        <div className='h-[30px] w-[30px] rounded-full bg-custom_blue'></div>
-        <div className='h-[30px] w-[30px] rounded-full bg-custom_pink'></div>
+        {colors.map((color) => (
+          <div
+            key={color.name}
+            className={`relative h-[30px] w-[30px] rounded-full ${color.bgColor} cursor-pointer`}
+            onClick={() => handleColorClick(color.name)}
+          >
+            {selectedColor === color.name && (
+              <img
+                className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'
+                src='/images/check.svg'
+                alt='check'
+              />
+            )}
+          </div>
+        ))}
       </div>
       <div className='mt-5 flex w-full justify-center gap-x-3 sm:justify-end'>
         <button
