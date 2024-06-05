@@ -6,13 +6,13 @@ const InvitedDashboardList = () => {
   ];
 
   return (
-    <div className='hidden sm:block px-7 py-8 border-t border-r border-b botder-custom_gray-_d9d9d9'>
-      <div className='text-custom_black-_333236 text-2xl font-bold'>
+    <div className='ml-6 mt-6 hidden rounded-lg bg-custom_white px-7 py-8 sm:block'>
+      <div className='text-2xl font-bold text-custom_black-_333236'>
         초대받은 대시보드
       </div>
       <div className='relative mt-5'>
         <input
-          className='w-full p-3 border border-custom_gray-_d9d9d9 rounded-md indent-8 text-[16px]'
+          className='w-full rounded-md border border-custom_gray-_d9d9d9 p-3 indent-8 text-[16px]'
           placeholder='검색'
         />
         <img
@@ -25,23 +25,23 @@ const InvitedDashboardList = () => {
       </div>
       <div>
         <div className='flex justify-between p-4 text-custom_gray-_9fa6b2'>
-          <div className='flex-1 min-w-0'>이름</div>
-          <div className='flex-1 min-w-0'>초대자</div>
-          <div className='flex-1 min-w-0'>수락 여부</div>
+          <div className='min-w-0 flex-1'>이름</div>
+          <div className='min-w-0 flex-1'>초대자</div>
+          <div className='min-w-0 flex-1'>수락 여부</div>
         </div>
         {data.map((item) => (
           <div
             key={item.id}
-            className='flex justify-between items-center p-4 border-b'
+            className='flex items-center justify-between border-b p-4'
           >
-            <div className='flex-1 min-w-0'>{item.name}</div>
-            <div className='flex-1 min-w-0'>{item.inviter}</div>
-            <div className='flex-1 min-w-0'>
+            <div className='min-w-0 flex-1'>{item.name}</div>
+            <div className='min-w-0 flex-1'>{item.inviter}</div>
+            <div className='min-w-0 flex-1'>
               <div className='flex space-x-2'>
-                <button className='px-7 py-2 bg-custom_violet-_5534da text-white rounded'>
+                <button className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'>
                   수락
                 </button>
-                <button className='px-7 py-2 bg-custom_white text-custom_violet-_5534da rounded border border-custom_gray-_d9d9d9'>
+                <button className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'>
                   거절
                 </button>
               </div>

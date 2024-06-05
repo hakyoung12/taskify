@@ -46,7 +46,7 @@ export default function DashboardCard() {
   const totalPage = Math.ceil(mockData.length / 5);
 
   return (
-    <section className='w-sreen ml-6 mt-6'>
+    <section className='w-sreen pl-6 pt-6'>
       <div className='grid gap-3 max-sm:h-96 max-sm:grid-cols-1 max-sm:grid-rows-6 sm:grid-cols-2 sm:grid-rows-3 xl:grid-cols-3 xl:grid-rows-2'>
         <button
           className='font-Pretendard flex h-16 w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-5 py-7 text-base font-semibold text-gray-800 max-sm:h-14'

@@ -2,8 +2,8 @@ import { Avatar, AvatarImage, AvatarFallback } from './ui/avatar';
 
 const DashboardHeader = () => {
   return (
-    <div className='flex justify-between items-center py-6 border-t border-r border-b botder-custom_gray-_d9d9d9'>
-      <div className='ml-10 text-custom_black-_333236 text-lg font-bold'>
+    <div className='botder-custom_gray-_d9d9d9 flex items-center justify-between border-b border-t py-6'>
+      <div className='ml-10 text-lg font-bold text-custom_black-_333236'>
         내 대시보드
       </div>
       <div className='flex items-center'>
@@ -13,7 +13,7 @@ const DashboardHeader = () => {
             B
           </AvatarFallback>
         </Avatar>
-        <div className='hidden sm:block mr-[80px]'>배유철</div>
+        <div className='mr-[80px] hidden sm:block'>배유철</div>
       </div>
     </div>
   );
