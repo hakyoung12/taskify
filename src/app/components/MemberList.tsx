@@ -24,7 +24,7 @@ export default function MemberList() {
   const totalPage = Math.ceil(mockData.length / 4);
 
   return (
-    <div className='w-auto rounded-lg bg-white-_ffffff m-5'>
+    <div className='bg-white-_ffffff m-5 w-auto rounded-lg'>
       <EditMenuTitle
         title='구성원'
         subtitle='이름'
@@ -37,7 +37,7 @@ export default function MemberList() {
         <div>
           {selectedTodos.map((member) => {
             return (
-              <div className='flex justify-between items-center flex-shrink-0 py-4 text-black-_333236 border-b stroke-gray-_eeeeee stroke-1'>
+              <div className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'>
                 <div className='flex items-center gap-3 max-sm:text-sm'>
                   <img src='/images/mockprofile4.svg' alt='프로필 사진' />
                   {member.name}

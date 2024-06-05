@@ -5,6 +5,8 @@ import LandingMain from './components/LadingMain';
 import LandingFooter from './components/LandingFooter';
 import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '../app/api/apiStrings';
+import CreateToDoForm from './components/modals/test';
+import { useEffect } from 'react';
 
 function checkToken() {
   if (typeof window === undefined) return;
@@ -12,13 +14,16 @@ function checkToken() {
 }
 
 export default function Home() {
-  const userToken = checkToken();
-  if (userToken) redirect('/mydashboard');
+  useEffect(() => {
+    const userToken = checkToken();
+    if (userToken) redirect('/mydashboard');
+  }, []);
   return (
     <div className='bg-custom_black-_000000 text-custom_white'>
       <LandingHeader />
       <LandingMain />
       <LandingFooter />
+      <CreateToDoForm />
     </div>
   );
 }
