@@ -18,12 +18,12 @@ export default function EditMenuTitle({
   onNext,
 }: EditMenuTitleProps) {
   return (
-    <div className='grid grid-cols-2 grid-rows-2 place-items-start gap-3 py-8 pb-0 px-[28px]'>
-      <div className='text-black_333236 font-Pretendard font-bold text-2xl  max-sm:text-xl'>
+    <div className='grid grid-cols-2 grid-rows-2 place-items-start gap-3 px-[28px] py-8 pb-0'>
+      <div className='text-black_333236 font-Pretendard text-2xl font-bold max-sm:text-xl'>
         {title}
       </div>
-      <div className='flex justify-self-end items-center gap-4'>
-        <div className='text-gray-800 font-Pretendard text-xm font-normal max-sm:text-xs'>
+      <div className='flex items-center gap-4 justify-self-end'>
+        <div className='font-Pretendard text-xm font-normal text-gray-800 max-sm:text-xs'>
           {currentPage} 페이지 중 {totalPage}
         </div>
         <Pagination

@@ -14,11 +14,11 @@ const CommonModal: React.FC = () => {
       onClick={closeModal}
     >
       <div
-        className='bg-white rounded-lg shadow-lg p-6 relative'
+        className='relative rounded-lg bg-white p-6 shadow-lg'
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className='absolute top-1 right-2 text-2xl'
+          className='absolute right-2 top-1 text-2xl'
           onClick={closeModal}
         >
           ×

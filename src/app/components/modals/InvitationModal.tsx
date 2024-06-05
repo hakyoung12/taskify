@@ -1,23 +1,23 @@
 const InvitationModal = () => {
   return (
-    <div className='w-[320px] sm:w-[540px] flex flex-col'>
-      <div className='text-custom_black-_333236 text-[24px] font-bold'>
+    <div className='flex w-[320px] flex-col sm:w-[540px]'>
+      <div className='text-[24px] font-bold text-custom_black-_333236'>
         초대하기
       </div>
       <div className='mt-[32px]'>
-        <div className='text-custom_black-_333236 text-[18px]'>
+        <div className='text-[18px] text-custom_black-_333236'>
           대시보드 이름
         </div>
         <input
-          className='mt-[10px] px-4 py-4 w-full border border-custom_gray-_d9d9d9 rounded-md'
+          className='mt-[10px] w-full rounded-md border border-custom_gray-_d9d9d9 px-4 py-4'
           placeholder='codeit@codeit.com'
         />
       </div>
-      <div className='flex justify-center w-full sm:justify-end gap-x-3 mt-5'>
-        <button className='px-[46px] py-[14px] w-1/2 sm:w-auto bg-custom_white border border-custom_gray-_d9d9d9 rounded-md'>
+      <div className='mt-5 flex w-full justify-center gap-x-3 sm:justify-end'>
+        <button className='w-1/2 rounded-md border border-custom_gray-_d9d9d9 bg-custom_white px-[46px] py-[14px] sm:w-auto'>
           취소
         </button>
-        <button className='px-[46px] py-[14px] w-1/2 sm:w-auto text-white bg-custom_violet-_5534da border-custom_gray-_d9d9d9 rounded-md'>
+        <button className='w-1/2 rounded-md border-custom_gray-_d9d9d9 bg-custom_violet-_5534da px-[46px] py-[14px] text-white sm:w-auto'>
           초대
         </button>
       </div>

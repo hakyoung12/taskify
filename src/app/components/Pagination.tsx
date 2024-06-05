@@ -15,7 +15,7 @@ export default function Pagination({
     <div>
       <button onClick={onPrev}>
         <img
-          className='w-10 h-10 max-sm:w-9  max-sm:h-9'
+          className='h-10 w-10 max-sm:h-9 max-sm:w-9'
           src={
             currentPage === 1
               ? '/images/paginationLeft__invaild.svg'
@@ -26,7 +26,7 @@ export default function Pagination({
       </button>
       <button onClick={onNext}>
         <img
-          className='w-10 h-10 max-sm:w-9  max-sm:h-9'
+          className='h-10 w-10 max-sm:h-9 max-sm:w-9'
           src={
             currentPage === totalPage
               ? '/images/paginationRight__invaild.svg'

@@ -11,7 +11,7 @@ export default function MyPage() {
         <SideBar />
         <div className='w-3/4'>
           <DashboardHeaderInSettings />
-          <div className='bg-custom_gray-_fafafa w-full h-full'>
+          <div className='h-full w-full bg-custom_gray-_fafafa'>
             <BackButton link='/mydashboard' />
             <ProfileSetting />
             <PasswordChangeForm />
