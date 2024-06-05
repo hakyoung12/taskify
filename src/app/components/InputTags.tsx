@@ -1,4 +1,3 @@
-import { MouseEvent } from 'react';
 import InputTag from './InputTag';
 
 export default function InputTags({
@@ -9,7 +8,7 @@ export default function InputTags({
   onClick: (tag: string) => void;
 }) {
   return (
-    <div className='flex max-w-[100%] flex-wrap items-center gap-y-[5px] self-start'>
+    <div className='flex max-w-[100%] flex-wrap gap-x-[8px] gap-y-[5px] self-start'>
       {tags.map((tag) => {
         return <InputTag tag={tag} key={tag} onClick={onClick} />;
       })}

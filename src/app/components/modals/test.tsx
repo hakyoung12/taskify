@@ -11,7 +11,7 @@ type Inputs = {
   description: string;
   dueDate: string;
   tags: string;
-  image: string;
+  image: FileList;
 };
 
 type ModalProps = {
@@ -23,10 +23,12 @@ export default function CreateToDoForm({ dashboardId }: ModalProps) {
     register,
     handleSubmit,
     setFocus,
+    getValues,
     formState: { errors, isDirty, isValid },
   } = useForm<Inputs>({ mode: 'onSubmit' });
   const [focused, setFocused] = useState<boolean>(false);
   const [tags, setTags] = useState<string[]>([]);
+  const [imageUrl, setImageUrl] = useState<string>();
 
   const INPUT_STYLE =
     'no-autofill text-[16px] max-sm:text-[14px] px-4 py-[15px] outline-none rounded-md border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
@@ -73,6 +75,20 @@ export default function CreateToDoForm({ dashboardId }: ModalProps) {
     ) {
       e.preventDefault();
     }
+  };
+
+  const setImage = () => {
+    const imgFile = getValues('image')[0];
+    if (imageUrl !== undefined) {
+      URL.revokeObjectURL(imageUrl);
+    }
+    if (imgFile) {
+      const newImg = URL.createObjectURL(imgFile);
+      setImageUrl(newImg);
+    } else {
+      setImageUrl(undefined);
+    }
+    console.log(imageUrl);
   };
 
   function getToday() {
@@ -172,7 +188,7 @@ export default function CreateToDoForm({ dashboardId }: ModalProps) {
           onBlur={() => setFocused(false)}
           className={`${INPUT_STYLE} ${
             focused ? 'border-custom_violet-_5534da' : ''
-          } flex flex-col items-center gap-y-[5px] bg-custom_white`}
+          } flex flex-col items-center bg-custom_white`}
         >
           <InputTags tags={tags} onClick={onDelTag} />
           <input
@@ -185,19 +201,26 @@ export default function CreateToDoForm({ dashboardId }: ModalProps) {
         </div>
       </div>
       {/* ---------------이미지------------------ */}
-      <div className={LABLE_INPUT_STYLE}>
+      <div className={`${LABLE_INPUT_STYLE} relative`}>
         <label htmlFor='image' className='mb-2 self-start'>
           이미지
         </label>
         <input
           id='image'
           type='file'
-          className='w-[76px] text-transparent file:h-[76px] file:w-[76px] file:cursor-pointer file:bg-[#f5f5f5] file:bg-[url("/images/add-card-icon.svg")] file:bg-[length:28px_28px] file:bg-center file:bg-no-repeat file:text-transparent'
+          accept='image/*'
+          className={`z-10 w-[76px] text-transparent file:h-[76px] file:w-[76px] file:cursor-pointer file:rounded-md file:border-none ${imageUrl ? 'file:bg-transparent file:bg-none' : 'file:bg-[#f5f5f5] file:bg-[url("/images/add-card-icon.svg")]'} file:bg-[length:28px_28px] file:bg-center file:bg-no-repeat file:text-transparent`}
           aria-invalid={errors.image ? 'true' : 'false'}
           {...register('image', {
             required: true,
+            onChange: setImage,
           })}
         />
+        {imageUrl && (
+          <div className='absolute top-[35px] h-[76px] w-[76px] cursor-pointer overflow-hidden rounded-md'>
+            <Image src={imageUrl} fill alt='' />
+          </div>
+        )}
       </div>
       <input
         value={'생성'}
