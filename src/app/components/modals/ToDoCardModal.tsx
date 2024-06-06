@@ -1,14 +1,5 @@
 'use client';
 
-import { Button } from '@/app/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-} from '@/app/components/ui/dialog';
 import ToDoCardDropDown from '../ToDoCardDropDown';
 import Image from 'next/image';
 import { ChangeEvent, useState } from 'react';
@@ -37,9 +28,9 @@ export default function ToDoCardModal({
   assignee: assignee;
   imageUrl?: string;
 }) {
-  const [value, setValue] = useState<string>();
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { closeModal } = useModal();
+  const [value, setValue] = useState<string>();
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newvalue = e.target.value;
@@ -112,7 +103,6 @@ export default function ToDoCardModal({
             )}
           </div>
 
-          {/* 댓글 */}
           <form className='relative'>
             <label className='text-[16px] font-medium'>댓글</label>
             <textarea
@@ -128,6 +118,8 @@ export default function ToDoCardModal({
               입력
             </button>
           </form>
+
+          {/* 댓글리스트 */}
           <CommentsList comments={commentsList.comments} />
         </div>
 
@@ -153,9 +145,6 @@ export default function ToDoCardModal({
     </div>
   );
 }
-
-const modalButtonStyle =
-  'text-center w-[83px] h-[32px] text-[12px] rounded-md bg-white text-[#5534DA] border border-[#D9D9D9] absolute right-[10px] bottom-[15px]';
 
 const commentsList = {
   cursorId: 0,
@@ -198,3 +187,6 @@ const commentsList = {
     },
   ],
 };
+
+const modalButtonStyle =
+  'text-center w-[83px] h-[32px] text-[12px] rounded-md bg-white text-[#5534DA] border border-[#D9D9D9] absolute right-[10px] bottom-[15px]';
