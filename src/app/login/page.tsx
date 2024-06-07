@@ -1,5 +1,5 @@
-import AuthLogo from '@/app/components/AuthLogo';
-import LoginForm from '@/app/components/LoginForm';
+import AuthLogo from '../components/AuthLogo';
+import LoginForm from '../components/LoginForm';
 import Link from 'next/link';
 
 export default function Login() {

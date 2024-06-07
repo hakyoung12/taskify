@@ -5,8 +5,8 @@ import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
-import { loginRes } from '../api/apiTypes/authType';
-import { LOGIN_TOKEN } from '../api/apiStrings';
+import { loginRes } from '@/app/api/apiTypes/authType';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 
 type Inputs = {
   Id: string;
@@ -24,7 +24,7 @@ export default function LoginForm() {
   const [passShow, setPassShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
-    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
+    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const tryLogin: SubmitHandler<Inputs> = async () => {
@@ -89,7 +89,7 @@ export default function LoginForm() {
           })}
         />
         <button
-          className='absolute right-4 top-3'
+          className='absolute right-4 top-4'
           type='button'
           onClick={() => setPassShow(!passShow)}
         >

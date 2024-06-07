@@ -1,9 +1,9 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { LOGIN_TOKEN } from '../api/apiStrings';
-import { CheckUserRes } from '../api/apiTypes/userType';
-import instance from '../api/axios';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
+import { CheckUserRes } from '@/app/api/apiTypes/userType';
+import instance from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 
 const DashboardHeader = () => {
