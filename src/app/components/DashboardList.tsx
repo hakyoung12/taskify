@@ -3,6 +3,9 @@ import Link from 'next/link';
 import { useState } from 'react';
 import Pagination from './Pagination';
 import { mockData } from './mockdata/DashboardMock';
+import Image from 'next/image';
+import { useModal } from '@/context/ModalContext';
+import NewDashboardModal from './modals/NewDashboardModal';
 
 type ColorPalette = {
   [key: string]: string;
@@ -18,6 +21,12 @@ const ColorPalette: ColorPalette = {
 
 export default function DashboardList() {
   const [currentPage, setCurrentPage] = useState(1);
+
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
 
   const handleNextPage = () => {
     if (currentPage * 10 < mockData.length) {
@@ -46,6 +55,7 @@ export default function DashboardList() {
             className='w-5 h-5'
             src='/images/addTaskButton.svg'
             alt='할 일 추가하기'
+            onClick={() => handleOpenModal(<NewDashboardModal />)}
           />
         </button>
       </div>
@@ -61,9 +71,9 @@ export default function DashboardList() {
             />
             <div className='max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
-              <div className='max-sm:hidden'>
-                <img
-                  className='w-5 h-3.5'
+              <div className='relative w-5 h-3.5 max-sm:hidden'>
+                <Image
+                  fill
                   src='/images/createByMe.svg'
                   alt='내가 만든 대시보드'
                 />
