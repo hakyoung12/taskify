@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 
 const NewDashboardModal: React.FC = () => {
   const { closeModal } = useModal();

@@ -1,12 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { KeyboardEvent, useEffect, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputTags from '../InputTags';
-import axios from '@/src/app/api/axios';
-import BaseInput from '../Inputs/BaseInput';
-import { useModal } from '@/src/context/ModalContext';
+import axios from '@/app/api/axios';
+import { useModal } from '@/context/ModalContext';
 import { ModalProps } from './CreateToDoModal';
 import { LOGIN_TOKEN } from '../../api/apiStrings';
 
@@ -34,6 +33,7 @@ export default function CreateToDoForm({
   const [tags, setTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState<string>();
   const { closeModal } = useModal();
+  const token = useRef<string>(null);
 
   const INPUT_STYLE =
     'no-autofill text-[16px] max-sm:text-[14px] px-4 py-[15px] outline-none rounded-md border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
@@ -119,6 +119,10 @@ export default function CreateToDoForm({
     return year + '-' + month + '-' + day;
   }
 
+  useEffect(() => {
+    const loginToken = window.localStorage.getItem(LOGIN_TOKEN);
+    token.current = loginToken;
+  }, []);
   return (
     <article>
       <h2 className='max-sm:max-[20px] mb-[24px] text-[24px] font-bold text-custom_black-_333236 max-sm:mb-[20px]'>

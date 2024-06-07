@@ -1,12 +1,12 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import axios from '../api/axios';
+import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
-import { loginRes } from '../api/apiTypes/authType';
-import { LOGIN_TOKEN } from '../api/apiStrings';
+import { loginRes } from '@/app/api/apiTypes/authType';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 
 type Inputs = {
   Id: string;

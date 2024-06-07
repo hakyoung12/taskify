@@ -1,6 +1,6 @@
 'use client';
 
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 
 const UpdateColumnModal = () => {
   const { closeModal } = useModal();

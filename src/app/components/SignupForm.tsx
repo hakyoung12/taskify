@@ -1,7 +1,7 @@
 'use client';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import axios from '../api/axios';
+import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';

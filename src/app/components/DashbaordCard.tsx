@@ -5,7 +5,7 @@ import Pagination from './Pagination';
 import { useState } from 'react';
 import { mockData } from './mockdata/DashboardMock';
 import Image from 'next/image';
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
 
 type ColorPalette = {

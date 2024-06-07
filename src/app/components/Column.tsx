@@ -1,9 +1,9 @@
 'use client';
 
-import ColumnCard from '@/src/app/components/ColumnCard';
+import ColumnCard from '@/app/components/ColumnCard';
 import Image from 'next/image';
 import ChipAddIcon from './ui/chipAddIcon';
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
 
 const cardsMockDataByColumnId = {

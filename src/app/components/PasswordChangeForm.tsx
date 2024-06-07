@@ -1,7 +1,7 @@
 'use client';
 import { useForm } from 'react-hook-form';
-import { Input } from '@/src/app/components/ui/input';
-import { Label } from '@/src/app/components/ui/label';
+import { Input } from '@/app/components/ui/input';
+import { Label } from '@/app/components/ui/label';
 import { Button } from '@radix-ui/themes';
 
 export default function PasswordChangeForm() {

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 
 const CommonModal: React.FC = () => {
   const { modalContent, isModalOpen, closeModal } = useModal();

@@ -1,7 +1,7 @@
 'use client';
 
-import { Button } from '@/src/app/components/ui/button';
-import ChipAddIcon from '@/src/app/components/ui/chipAddIcon';
+import { Button } from '@/app/components/ui/button';
+import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import {
   Dialog,
   DialogContent,
@@ -10,9 +10,9 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogClose,
-} from '@/src/app/components/ui/dialog';
-import { Input } from '@/src/app/components/ui/input';
-import { Label } from '@/src/app/components/ui/label';
+} from '@/app/components/ui/dialog';
+import { Input } from '@/app/components/ui/input';
+import { Label } from '@/app/components/ui/label';
 import { ChangeEvent, useState } from 'react';
 
 const modalButtonStyle =

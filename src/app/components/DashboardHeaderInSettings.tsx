@@ -1,11 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import { useModal } from '@/src/context/ModalContext';
+import { useModal } from '@/context/ModalContext';
 import InvitationModal from './modals/InvitationModal';
 import { useEffect, useState } from 'react';
-import { CheckUserRes } from '../api/apiTypes/userType';
-import { LOGIN_TOKEN } from '../api/apiStrings';
+import { CheckUserRes } from '@/app/api/apiTypes/userType';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import instance from '../api/axios';
 import { useRouter } from 'next/navigation';
 
