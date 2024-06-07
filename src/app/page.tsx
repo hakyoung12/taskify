@@ -1,8 +1,8 @@
 'use client';
 
-import LandingHeader from './components/LandingHeader';
-import LandingMain from './components/LadingMain';
-import LandingFooter from './components/LandingFooter';
+import LandingHeader from './components/Landing/LandingHeader';
+import LandingMain from './components/Landing/LadingMain';
+import LandingFooter from './components/Landing/LandingFooter';
 import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '../app/api/apiStrings';
 import CreateToDoForm from './components/modals/CreateToDoForm';

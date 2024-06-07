@@ -20,13 +20,13 @@ export default function SignupForm() {
     handleSubmit,
     getValues,
     formState: { errors, isDirty, isValid },
-  } = useForm<Inputs>({ mode: 'onTouched' });
+  } = useForm<Inputs>({ mode: 'onBlur' });
   const router = useRouter();
-  const [passShow, setPassShow] = useState<boolean>(false);
-  const [passCheckShow, setPassCheckShow] = useState<boolean>(false);
+  const [ispassShow, setIsPassShow] = useState<boolean>(false);
+  const [ispassCheckShow, setIsPassCheckShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
-    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
+    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const trySignup: SubmitHandler<Inputs> = async () => {
@@ -105,7 +105,7 @@ export default function SignupForm() {
         <input
           id='password'
           placeholder='8자 이상 입력해주세요'
-          type={passShow ? 'string' : 'password'}
+          type={ispassShow ? 'string' : 'password'}
           className={`${INPUT_STYLE} ${
             errors.password ? 'border-custom_red' : ''
           }`}
@@ -121,9 +121,9 @@ export default function SignupForm() {
         <button
           className='absolute right-4 top-4'
           type='button'
-          onClick={() => setPassShow(!passShow)}
+          onClick={() => setIsPassShow(!ispassShow)}
         >
-          {passShow ? (
+          {ispassShow ? (
             <Image
               src='/AuthPage/eyeOn.svg'
               width={24}
@@ -151,7 +151,7 @@ export default function SignupForm() {
         <input
           id='passwordCheck'
           placeholder='비밀번호를 한 번 더 입력해주세요'
-          type={passCheckShow ? 'string' : 'password'}
+          type={ispassCheckShow ? 'string' : 'password'}
           className={`${INPUT_STYLE} ${
             errors.passwordCheck ? 'border-custom_red' : ''
           }`}
@@ -166,9 +166,9 @@ export default function SignupForm() {
         <button
           className='absolute right-4 top-4'
           type='button'
-          onClick={() => setPassCheckShow(!passCheckShow)}
+          onClick={() => setIsPassCheckShow(!ispassCheckShow)}
         >
-          {passShow ? (
+          {ispassShow ? (
             <Image
               src='/AuthPage/eyeOn.svg'
               width={24}

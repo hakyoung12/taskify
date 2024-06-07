@@ -24,7 +24,7 @@ export default function LoginForm() {
   const [passShow, setPassShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
-    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
+    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const tryLogin: SubmitHandler<Inputs> = async () => {

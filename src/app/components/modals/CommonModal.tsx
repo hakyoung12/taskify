@@ -19,6 +19,7 @@ const CommonModal: React.FC = () => {
       >
         <button
           className='absolute right-2 top-1 text-2xl'
+          type='button'
           onClick={closeModal}
         >
           ×

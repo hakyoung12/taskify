@@ -1,12 +1,19 @@
 'use client';
 
 import Image from 'next/image';
-import { KeyboardEvent, useState } from 'react';
+import {
+  HTMLAttributes,
+  KeyboardEvent,
+  PropsWithChildren,
+  useEffect,
+  useState,
+} from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputTags from '../InputTags';
 import axios from '@/src/app/api/axios';
 import { useModal } from '@/src/context/ModalContext';
 import { ModalProps } from './CreateToDoModal';
+import { LOGIN_TOKEN } from '../../api/apiStrings';
 
 type Inputs = {
   assignee: string;
@@ -46,7 +53,6 @@ export default function CreateToDoForm({
     { nickname: 'd', id: 4, userId: 44 },
   ];
 
-  //AccessToken받고 보내야함 AccessToken처리 방식 결정 후 수정
   const createToDo: SubmitHandler<Inputs> = async (cardData) => {
     const { assignee, title, description, dueDate } = cardData;
     try {
@@ -97,6 +103,7 @@ export default function CreateToDoForm({
 
   const setImage = () => {
     const imgFile = getValues('image')[0];
+    const reader = new FileReader();
     if (imageUrl !== undefined) {
       URL.revokeObjectURL(imageUrl);
     }
@@ -106,7 +113,6 @@ export default function CreateToDoForm({
     } else {
       setImageUrl(undefined);
     }
-    console.log(imageUrl);
   };
 
   function getToday() {
@@ -120,13 +126,13 @@ export default function CreateToDoForm({
 
   return (
     <article>
-      <h2 className='max-sm:max-[20px] mb-[32px] text-[24px] font-bold text-custom_black-_333236 max-sm:mb-[24px]'>
+      <h2 className='max-sm:max-[20px] mb-[24px] text-[24px] font-bold text-custom_black-_333236 max-sm:mb-[20px]'>
         할 일 생성
       </h2>
       <form
         onSubmit={handleSubmit(createToDo)}
         onKeyDown={preventEnterSubmit}
-        className='flex w-[100%] max-w-[450px] flex-col gap-y-8 px-7 text-[18px] font-medium text-custom_black-_333236'
+        className='flex w-[100vw] max-w-[450px] flex-col gap-y-[24px] px-[28px] text-[18px] font-medium text-custom_black-_333236 max-sm:gap-y-[20px]'
       >
         {/* ---------------담당자------------------ */}
         <div className={LABLE_INPUT_STYLE}>
@@ -135,14 +141,14 @@ export default function CreateToDoForm({
           </label>
           <select
             id='assignee'
-            className={`${INPUT_STYLE} no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
+            className={`${INPUT_STYLE} no-datalist-arrow no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
             aria-invalid={errors.assignee ? 'true' : 'false'}
             {...register('assignee', {
               required: '담당자를 설정해주세요',
             })}
           >
             {members.map((value) => (
-              <option key={value.id} value={value.userId}>
+              <option key={value.userId} value={value.userId}>
                 {value.nickname}
               </option>
             ))}
