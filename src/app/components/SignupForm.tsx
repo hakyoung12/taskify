@@ -20,13 +20,13 @@ export default function SignupForm() {
     handleSubmit,
     getValues,
     formState: { errors, isDirty, isValid },
-  } = useForm<Inputs>({ mode: 'onTouched' });
+  } = useForm<Inputs>({ mode: 'onBlur' });
   const router = useRouter();
-  const [passShow, setPassShow] = useState<boolean>(false);
-  const [passCheckShow, setPassCheckShow] = useState<boolean>(false);
+  const [ispassShow, setIsPassShow] = useState<boolean>(false);
+  const [ispassCheckShow, setIsPassCheckShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
-    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
+    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const trySignup: SubmitHandler<Inputs> = async () => {
@@ -47,13 +47,13 @@ export default function SignupForm() {
   return (
     <form
       onSubmit={handleSubmit(trySignup)}
-      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
+      className='mt-[38px] flex w-[100%] max-w-[544px] flex-col px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
     >
       {/*아이디 부분 */}
       <label htmlFor='Id' className='mb-2'>
         아이디
       </label>
-      <div className='mb-4 flex flex-col gap-y-2 '>
+      <div className='mb-4 flex flex-col gap-y-2'>
         <input
           id='Id'
           placeholder='이메일을 입력해주세요'
@@ -76,7 +76,7 @@ export default function SignupForm() {
       <label htmlFor='nickname' className='mb-2'>
         닉네임
       </label>
-      <div className='mb-4 flex flex-col gap-y-2 '>
+      <div className='mb-4 flex flex-col gap-y-2'>
         <input
           id='nickname'
           placeholder='이메일을 입력해주세요'
@@ -105,7 +105,7 @@ export default function SignupForm() {
         <input
           id='password'
           placeholder='8자 이상 입력해주세요'
-          type={passShow ? 'string' : 'password'}
+          type={ispassShow ? 'string' : 'password'}
           className={`${INPUT_STYLE} ${
             errors.password ? 'border-custom_red' : ''
           }`}
@@ -119,11 +119,11 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute top-3 right-4'
+          className='absolute right-4 top-3'
           type='button'
-          onClick={() => setPassShow(!passShow)}
+          onClick={() => setIsPassShow(!ispassShow)}
         >
-          {passShow ? (
+          {ispassShow ? (
             <Image
               src='/AuthPage/eyeOn.svg'
               width={24}
@@ -151,7 +151,7 @@ export default function SignupForm() {
         <input
           id='passwordCheck'
           placeholder='비밀번호를 한 번 더 입력해주세요'
-          type={passCheckShow ? 'string' : 'password'}
+          type={ispassCheckShow ? 'string' : 'password'}
           className={`${INPUT_STYLE} ${
             errors.passwordCheck ? 'border-custom_red' : ''
           }`}
@@ -164,11 +164,11 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute top-3 right-4'
+          className='absolute right-4 top-3'
           type='button'
-          onClick={() => setPassCheckShow(!passCheckShow)}
+          onClick={() => setIsPassCheckShow(!ispassCheckShow)}
         >
-          {passShow ? (
+          {ispassShow ? (
             <Image
               src='/AuthPage/eyeOn.svg'
               width={24}
@@ -190,11 +190,11 @@ export default function SignupForm() {
           </strong>
         )}
       </div>
-      <div className='mt-1 mb-[21px] flex items-center gap-x-2'>
+      <div className='mb-[21px] mt-1 flex items-center gap-x-2'>
         <input
           id='acceptTerms'
           type='checkbox'
-          className='w-5 h-5'
+          className='h-5 w-5'
           {...register('acceptTerms', { required: true })}
         />
         <label htmlFor='acceptTerms'> 이용약관에 동의합니다.</label>
@@ -202,7 +202,7 @@ export default function SignupForm() {
       <input
         value={'가입하기'}
         type='submit'
-        className='w-[100%] text-[18px] text-custom_white bg-custom_violet-_5534da rounded-lg font-medium h-[50px] flex justify-center items-center cursor-pointer disabled:bg-custom_gray-_9fa6b2 disabled:cursor-default'
+        className='flex h-[50px] w-[100%] cursor-pointer items-center justify-center rounded-lg bg-custom_violet-_5534da text-[18px] font-medium text-custom_white disabled:cursor-default disabled:bg-custom_gray-_9fa6b2'
         disabled={!isDirty || !isValid}
       />
     </form>

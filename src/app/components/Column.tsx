@@ -1,6 +1,10 @@
+'use client';
+
 import ColumnCard from '@/app/components/ColumnCard';
 import Image from 'next/image';
 import ChipAddIcon from './ui/chipAddIcon';
+import { useModal } from '@/context/ModalContext';
+import UpdateColumnModal from './modals/UpdateColumnModal';
 
 const cardsMockDataByColumnId = {
   cursorId: 0,
@@ -43,6 +47,12 @@ const cardsMockDataByColumnId = {
 };
 
 export default function Column({ title }: { title: string }) {
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
   return (
     <div className='border-gray-_eeeeee flex h-[1000px] w-[354px] flex-col gap-[25px] border-r p-[20px]'>
       {/* 카드 info */}
@@ -59,10 +69,12 @@ export default function Column({ title }: { title: string }) {
           </div>
         </div>
         <Image
+          className='cursor-pointer'
           width={24}
           height={24}
           src='/images/settings-icon.svg'
           alt='설정 아이콘'
+          onClick={() => handleOpenModal(<UpdateColumnModal />)}
         />
       </div>
       <div className='flex flex-col gap-[16px]'>

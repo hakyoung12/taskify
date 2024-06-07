@@ -8,13 +8,13 @@ const InvitedDashboardListMobile = () => {
   ];
 
   return (
-    <div className='sm:hidden px-7 py-8 border-t border-r border-b botder-custom_gray-_d9d9d9'>
-      <div className='text-custom_black-_333236 text-2xl font-bold'>
+    <div className='ml-6 mt-6 rounded-lg bg-custom_white px-7 py-8 sm:hidden'>
+      <div className='text-2xl font-bold text-custom_black-_333236'>
         초대받은 대시보드
       </div>
       <div className='relative mt-5'>
         <input
-          className='w-full p-3 border border-custom_gray-_d9d9d9 rounded-md indent-8 text-[16px]'
+          className='w-full rounded-md border border-custom_gray-_d9d9d9 p-3 indent-8 text-[16px]'
           placeholder='검색'
         />
         <Image
@@ -36,11 +36,11 @@ const InvitedDashboardListMobile = () => {
               <div className='text-custom_gray-_9fa6b2'>초대자</div>
               <div className=''>{item.inviter}</div>
             </div>
-            <div className='flex gap-x-[10px] mt-5'>
-              <button className='flex-1 px-7 py-2 bg-custom_violet-_5534da text-white rounded'>
+            <div className='mt-5 flex gap-x-[10px]'>
+              <button className='flex-1 rounded bg-custom_violet-_5534da px-7 py-2 text-white'>
                 수락
               </button>
-              <button className='flex-1 px-7 py-2 bg-white text-custom_violet-_5534da rounded border border-custom_gray-_d9d9d9'>
+              <button className='flex-1 rounded border border-custom_gray-_d9d9d9 bg-white px-7 py-2 text-custom_violet-_5534da'>
                 거절
               </button>
             </div>

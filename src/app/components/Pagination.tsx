@@ -13,9 +13,9 @@ export default function Pagination({
 }: PaginationProps) {
   return (
     <div>
-      <button onClick={onPrev}>
+      <button onClick={onPrev} disabled={currentPage === 1}>
         <img
-          className='w-10 h-10 max-sm:w-9  max-sm:h-9'
+          className='h-10 w-10 max-sm:h-9 max-sm:w-9'
           src={
             currentPage === 1
               ? '/images/paginationLeft__invaild.svg'
@@ -24,9 +24,9 @@ export default function Pagination({
           alt='이전 페이지'
         />
       </button>
-      <button onClick={onNext}>
+      <button onClick={onNext} disabled={currentPage === totalPage}>
         <img
-          className='w-10 h-10 max-sm:w-9  max-sm:h-9'
+          className='h-10 w-10 max-sm:h-9 max-sm:w-9'
           src={
             currentPage === totalPage
               ? '/images/paginationRight__invaild.svg'

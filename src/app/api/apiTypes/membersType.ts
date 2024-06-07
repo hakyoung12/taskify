@@ -1,4 +1,4 @@
-/**대시보드 멥버 목록 조회 */
+/**대시보드 멤버 목록 조회 */
 export interface CheckMembersRes {
   members: {
     id: number;

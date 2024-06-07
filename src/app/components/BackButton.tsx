@@ -9,9 +9,10 @@ export default function BackButton({ link }: BackButtonProps) {
   return (
     <Link
       href={link}
-      className='flex items-center gap-2 text-base font-medium text-custom_black-_333236 font-Pretendard'
+      className='font-Pretendard flex items-center gap-2 pl-5 pt-5 text-base font-medium text-custom_black-_333236'
+
     >
-      <div className='relative w-5 h-5'>
+      <div className='relative h-5 w-5'>
         <Image fill src='/images/leftArrowButton.svg' alt='대시보드 바로가기' />
       </div>
       돌아가기

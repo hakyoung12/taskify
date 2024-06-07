@@ -5,8 +5,8 @@ import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
-import { loginRes } from '../api/apiTypes/authType';
-import { LOGIN_TOKEN } from '../api/apiStrings';
+import { loginRes } from '@/app/api/apiTypes/authType';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 
 type Inputs = {
   Id: string;
@@ -24,7 +24,7 @@ export default function LoginForm() {
   const [passShow, setPassShow] = useState<boolean>(false);
 
   const INPUT_STYLE =
-    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
+    'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
   const ERROR_STYLE = 'text-[14px] leading-[17px] text-custom_red';
 
   const tryLogin: SubmitHandler<Inputs> = async () => {
@@ -44,12 +44,12 @@ export default function LoginForm() {
   return (
     <form
       onSubmit={handleSubmit(tryLogin)}
-      className='flex flex-col max-w-[544px] w-[100%] mt-[38px] px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
+      className='mt-[38px] flex w-[100%] max-w-[544px] flex-col px-3 text-[16px] text-custom_black-_333236 max-xl:mt-[60px] max-sm:mt-10'
     >
       <label htmlFor='Id' className='mb-2'>
         아이디
       </label>
-      <div className='mb-4 flex flex-col gap-y-2 '>
+      <div className='mb-4 flex flex-col gap-y-2'>
         <input
           id='Id'
           placeholder='이메일을 입력해주세요'
@@ -89,7 +89,7 @@ export default function LoginForm() {
           })}
         />
         <button
-          className='absolute top-3 right-4'
+          className='absolute right-4 top-4'
           type='button'
           onClick={() => setPassShow(!passShow)}
         >
@@ -116,7 +116,7 @@ export default function LoginForm() {
       <input
         value={'로그인'}
         type='submit'
-        className='w-[100%] text-[18px] text-custom_white bg-custom_violet-_5534da rounded-lg font-medium h-[50px] flex justify-center items-center cursor-pointer disabled:bg-custom_gray-_9fa6b2 disabled:cursor-default'
+        className='flex h-[50px] w-[100%] cursor-pointer items-center justify-center rounded-lg bg-custom_violet-_5534da text-[18px] font-medium text-custom_white disabled:cursor-default disabled:bg-custom_gray-_9fa6b2'
         disabled={!isDirty || !isValid}
       />
     </form>

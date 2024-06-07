@@ -8,11 +8,13 @@ const MyDashboard = () => {
   return (
     <div className='flex'>
       <SideBar />
-      <div className='w-3/4'>
+      <div className='w-screen bg-custom_gray-_fafafa pb-5'>
         <DashboardHeader />
-        <DashboardCard />
-        <InvitedDashboardList />
-        <InvitedDashboardListMobile />
+        <div className='w-3/4'>
+          <DashboardCard />
+          <InvitedDashboardList />
+          <InvitedDashboardListMobile />
+        </div>
       </div>
     </div>
   );

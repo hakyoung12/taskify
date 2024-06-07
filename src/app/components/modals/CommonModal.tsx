@@ -10,15 +10,16 @@ const CommonModal: React.FC = () => {
 
   return (
     <div
-      className='fixed inset-0 flex items-center justify-center bg-black bg-opacity-50'
+      className='fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50'
       onClick={closeModal}
     >
       <div
-        className='bg-white rounded-lg shadow-lg p-6 relative'
+        className='relative rounded-lg bg-white p-6 shadow-lg'
         onClick={(e) => e.stopPropagation()}
       >
         <button
-          className='absolute top-1 right-2 text-2xl'
+          className='absolute right-2 top-1 text-2xl'
+          type='button'
           onClick={closeModal}
         >
           ×
