@@ -16,6 +16,7 @@ const DashboardHeader = () => {
     setShowDropdown(!showDropdown);
   };
 
+  // 로그아웃 부분 custom hook 구분 or 컴포넌트 작성해서 구분
   const handleLogout = () => {
     localStorage.removeItem(LOGIN_TOKEN);
     setUser(null);
@@ -34,6 +35,7 @@ const DashboardHeader = () => {
       }
     };
 
+    // if 문으로 변경
     accessToken ? fetchUserData() : router.push('/');
   }, []);
 
