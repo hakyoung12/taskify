@@ -8,7 +8,7 @@ export const mockData: Todo[] = [
   {
     id: 1,
     title: '비브리지1',
-    color: 'green',
+    color: 'purple',
     createdByMe: true,
   },
   {
@@ -68,7 +68,7 @@ export const mockData: Todo[] = [
   {
     id: 1,
     title: '비브리지2',
-    color: 'green',
+    color: 'blue',
     createdByMe: true,
   },
   {
@@ -86,7 +86,7 @@ export const mockData: Todo[] = [
   {
     id: 4,
     title: '회의록',
-    color: 'blue',
+    color: 'green',
     createdByMe: false,
   },
   {
@@ -110,7 +110,7 @@ export const mockData: Todo[] = [
   {
     id: 3,
     title: '3분기 계획',
-    color: 'orange',
+    color: 'green',
     createdByMe: false,
   },
   {
@@ -128,7 +128,7 @@ export const mockData: Todo[] = [
   {
     id: 1,
     title: '비브리지3',
-    color: 'green',
+    color: 'orange',
     createdByMe: true,
   },
   {
@@ -170,7 +170,7 @@ export const mockData: Todo[] = [
   {
     id: 3,
     title: '3분기 계획',
-    color: 'orange',
+    color: 'green',
     createdByMe: false,
   },
   {
@@ -188,7 +188,7 @@ export const mockData: Todo[] = [
   {
     id: 1,
     title: '비브리지4',
-    color: 'green',
+    color: 'pink',
     createdByMe: true,
   },
   {
@@ -212,7 +212,7 @@ export const mockData: Todo[] = [
   {
     id: 5,
     title: '중요문서함',
-    color: 'pink',
+    color: 'purple',
     createdByMe: false,
   },
   {
@@ -224,7 +224,7 @@ export const mockData: Todo[] = [
   {
     id: 2,
     title: '코드잇',
-    color: 'purple',
+    color: 'blue',
     createdByMe: true,
   },
   {
