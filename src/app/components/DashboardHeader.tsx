@@ -35,8 +35,11 @@ const DashboardHeader = () => {
       }
     };
 
-    // if 문으로 변경
-    accessToken ? fetchUserData() : router.push('/');
+    if (!accessToken) {
+      router.push('/');
+    }
+
+    fetchUserData();
   }, []);
 
   return (

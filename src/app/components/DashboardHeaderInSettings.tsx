@@ -43,7 +43,11 @@ const DashboardHeaderInSettings = () => {
       }
     };
 
-    accessToken ? fetchUserData() : router.push('/');
+    if (!accessToken) {
+      router.push('/');
+    }
+
+    fetchUserData();
   }, []);
 
   return (
