@@ -6,7 +6,7 @@ const InvitedDashboardList = () => {
   ];
 
   return (
-    <div className='botder-custom_gray-_d9d9d9 hidden border-b border-r border-t px-7 py-8 sm:block'>
+    <div className='ml-6 mt-6 hidden rounded-lg bg-custom_white px-7 py-8 sm:block'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
         초대받은 대시보드
       </div>

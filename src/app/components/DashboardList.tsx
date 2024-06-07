@@ -46,8 +46,8 @@ export default function DashboardList() {
   const totalPage = Math.ceil(mockData.length / 10);
 
   return (
-    <div className='p-0 px-3'>
-      <div className='font-Pretendard mx-3 mb-8 mt-16 flex items-center justify-between font-bold text-gray-500 max-sm:mx-2'>
+    <div className='p-0 px-3 max-sm:hidden'>
+      <div className='font-Pretendard mx-3 mb-8 mt-16 flex items-center justify-between font-bold text-gray-500'>
         <div className='font-pretendard text-xs font-bold text-custom_black-_333236 max-sm:hidden'>
           Dash Boards
         </div>

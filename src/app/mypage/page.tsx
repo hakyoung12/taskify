@@ -9,9 +9,9 @@ export default function MyPage() {
     <>
       <div className='flex'>
         <SideBar />
-        <div className='w-3/4'>
+        <div className='w-screen'>
           <DashboardHeaderInSettings />
-          <div className='h-full w-full bg-custom_gray-_fafafa'>
+          <div className='bg-custom_gray-_fafafa pb-5'>
             <BackButton link='/mydashboard' />
             <ProfileSetting />
             <PasswordChangeForm />
