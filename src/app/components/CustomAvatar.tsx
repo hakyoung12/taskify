@@ -12,7 +12,7 @@ export default function CustomAvatar({
 }: CustomAvatarProps) {
   return (
     <div>
-      <Avatar className='w-[24px] h-[24px]'>
+      <Avatar className='h-[24px] w-[24px]'>
         {profileUrl ? (
           <AvatarImage
             src={profileUrl}
@@ -23,7 +23,7 @@ export default function CustomAvatar({
           <>
             <AvatarImage />
             {/* 랜덤으로 색깔 지정하는 로직 추가 예정 */}
-            <AvatarFallback className='bg-custom_green-_a3c4a2 text-white justify-center items-center'>
+            <AvatarFallback className='items-center justify-center bg-custom_green-_a3c4a2 text-white'>
               {nickName[0].toUpperCase()}
             </AvatarFallback>
           </>
