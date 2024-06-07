@@ -24,9 +24,7 @@ export default function CommentsList({
                 size={'large'}
               />
               {/* 댓글이 1개면 구분선을 붙이지 않습니다 */}
-              {nowComments.length === 1 ? (
-                ''
-              ) : (
+              {nowComments.length > 1 && (
                 <img
                   src='/images/Vector.svg'
                   className='h-[50px] w-[4px]'

@@ -44,17 +44,17 @@ const cardsMockDataByColumnId = {
 
 export default function Column({ title }: { title: string }) {
   return (
-    <div className='w-[354px] h-[1000px] flex flex-col p-[20px] gap-[25px] border-r border-gray-_eeeeee'>
+    <div className='border-gray-_eeeeee flex h-[1000px] w-[354px] flex-col gap-[25px] border-r p-[20px]'>
       {/* 카드 info */}
-      <div className='flex justify-between items-center'>
-        <div className='text-[16px] font-bold flex justify-center items-center'>
+      <div className='flex items-center justify-between'>
+        <div className='flex items-center justify-center text-[16px] font-bold'>
           <img
             className='mr-[8px]'
             src='/images/Ellipse-puple.svg'
             alt='꾸미는 점'
           />
           <span className='mr-[12px]'>{title}</span>
-          <div className='h-[20px] text-[12px] font-normal text-gray-_787486 bg-gray-_eeeeee rounded px-[6px]'>
+          <div className='text-gray-_787486 bg-gray-_eeeeee h-[20px] rounded px-[6px] text-[12px] font-normal'>
             {cardsMockDataByColumnId.totalCount}
           </div>
         </div>
@@ -67,7 +67,7 @@ export default function Column({ title }: { title: string }) {
       </div>
       <div className='flex flex-col gap-[16px]'>
         {/* 카드 추가 버튼 */}
-        <div className='bg-white rounded-md border border-gray-_d9d9d9 h-[40px] flex justify-center items-center'>
+        <div className='border-gray-_d9d9d9 flex h-[40px] items-center justify-center rounded-md border bg-white'>
           <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}

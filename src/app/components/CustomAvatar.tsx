@@ -32,6 +32,7 @@ export default function CustomAvatar({
             <span
               className={`${size === 'small' ? 'text-[12px]' : 'text-[16px]'}`}
             >
+              {/* nickName.at(0) */}
               {nickName[0].toUpperCase()}
             </span>
           </div>

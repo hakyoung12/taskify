@@ -41,7 +41,7 @@ export default function dashboardPage() {
         })}
         {/* 카드 추가하기 모달 */}
         <button
-          className='w-[354px] h-[70px] bg-white rounded-lg border border-gray-_d9d9d9 flex justify-center items-center relative top-[68px] left-[20px]'
+          className='border-gray-_d9d9d9 relative left-[20px] top-[68px] flex h-[70px] w-[354px] items-center justify-center rounded-lg border bg-white'
           onClick={() => handleOpenModal(<NewColumnModal />)}
         >
           <p className='mr-[12px] text-[16px] font-bold'>

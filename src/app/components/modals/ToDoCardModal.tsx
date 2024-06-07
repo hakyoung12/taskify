@@ -42,11 +42,11 @@ export default function ToDoCardModal({
   };
 
   return (
-    <div className='w-[682px] flex flex-col gap-[24px] p-[4px]'>
+    <div className='flex w-[682px] flex-col gap-[24px] p-[4px]'>
       {/* 헤더 부분 */}
-      <div className='flex justify-between relative right-1'>
+      <div className='relative right-1 flex justify-between'>
         <h2 className='text-[24px] font-bold'>{title}</h2>
-        <div className='flex gap=[24px] relative '>
+        <div className='gap=[24px] relative flex'>
           <img
             src='/images/card-setting.svg'
             alt='카드 설정 아이콘'
@@ -64,8 +64,8 @@ export default function ToDoCardModal({
       <div className='flex w-[450px] gap-[24px]'>
         <div className='flex flex-col gap-[16px]'>
           {/* 태그 */}
-          <div className='flex gap-[20px] items-center'>
-            <div className='flex w-[65px] bg-[#F1EFFD] gap-[6px] rounded-xl px-[8px] py-[4px]'>
+          <div className='flex items-center gap-[20px]'>
+            <div className='flex w-[65px] gap-[6px] rounded-xl bg-[#F1EFFD] px-[8px] py-[4px]'>
               <img
                 className='w-[6px]'
                 src='/images/Ellipse-puple.svg'
@@ -78,7 +78,7 @@ export default function ToDoCardModal({
               {tags.map((tag: any, index: number) => {
                 return (
                   <div
-                    className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
+                    className='mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] text-[#D58D49]'
                     key={index}
                   >
                     {tag}
@@ -90,14 +90,14 @@ export default function ToDoCardModal({
 
           {/* 카드 컨텐츠 */}
           <div className='mb-[8px]'>
-            <div className='text-[14px] mb-[16px]'>{description}</div>
+            <div className='mb-[16px] text-[14px]'>{description}</div>
             {imageUrl && (
-              <div className='w-[450px] h-[260px] relative'>
+              <div className='relative h-[260px] w-[450px]'>
                 <Image
                   fill
                   src={imageUrl}
                   alt='카드 이미지'
-                  className='object-cover rounded-md'
+                  className='rounded-md object-cover'
                 />
               </div>
             )}
@@ -108,7 +108,7 @@ export default function ToDoCardModal({
             <textarea
               onChange={handleChange}
               placeholder='댓글 작성하기'
-              className='w-full resize-none h-[110px] border border-[#d9d9d9] rounded-md p-[16px] text-[14px] mt-[10px]'
+              className='mt-[10px] h-[110px] w-full resize-none rounded-md border border-[#d9d9d9] p-[16px] text-[14px]'
             ></textarea>
             <button
               type='submit'
@@ -124,10 +124,10 @@ export default function ToDoCardModal({
         </div>
 
         {/* 카드 부연설명 (담장자, 마감일) */}
-        <div className='w-[200px] h-[155px] p-[16px] text-[14px] flex flex-col gap-[20px] rounded-lg border'>
+        <div className='flex h-[155px] w-[200px] flex-col gap-[20px] rounded-lg border p-[16px] text-[14px]'>
           <div className='w-[168px]'>
-            <p className='mb-[6px] font-semibold text-[12px]'>담당자</p>
-            <div className='flex gap-[8px] items-center'>
+            <p className='mb-[6px] text-[12px] font-semibold'>담당자</p>
+            <div className='flex items-center gap-[8px]'>
               <CustomAvatar
                 profileUrl={assignee.profileImageUrl}
                 nickName={assignee.nickname}
@@ -137,7 +137,7 @@ export default function ToDoCardModal({
             </div>
           </div>
           <div className='flex flex-col gap-[6px]'>
-            <p className='font-semibold text-[12px]'>마감일</p>
+            <p className='text-[12px] font-semibold'>마감일</p>
             <p>{dueDate}</p>
           </div>
         </div>

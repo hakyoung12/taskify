@@ -1,7 +1,7 @@
 export default function ToDoCardDropDown({ isOpen }: { isOpen: boolean }) {
   return (
     isOpen && (
-      <div className='flex flex-col gap-[6px] justify-center items-center absolute top-[40px] right-[40px] border border-[#D9D9D9] rounded-md shadow-lg w-[93px] text-[14px] p-[6px] bg-white'>
+      <div className='absolute right-[40px] top-[40px] flex w-[93px] flex-col items-center justify-center gap-[6px] rounded-md border border-[#D9D9D9] bg-white p-[6px] text-[14px] shadow-lg'>
         <button className=''>
           <p className={buttonStyle}>수정하기</p>
         </button>

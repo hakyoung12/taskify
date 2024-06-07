@@ -11,7 +11,7 @@ interface Comment {
 
 const Comment = ({
   id,
-  setSelectedId,
+  setSelectedId, // onEdit
   createdAt,
   content,
   isEditing,
@@ -34,7 +34,7 @@ const Comment = ({
 
   return (
     <div className='text-[14px]'>
-      <div className='flex gap-[8px] mt-[6px] items-center'>
+      <div className='mt-[6px] flex items-center gap-[8px]'>
         <span className='font-semibold'>장만철</span>
         <span className='text-[12px] text-[#9FA6B2]'>{createdAt}</span>
       </div>
@@ -42,14 +42,14 @@ const Comment = ({
         <form onSubmit={handleSubmit}>
           <input
             value={value}
-            className='border p-[5px] rounded-md'
+            className='rounded-md border p-[5px]'
             onChange={handleChange}
           />
         </form>
       ) : (
         <p>{value}</p>
       )}
-      <div className='flex mt-[3px] text-[#9FA6B2] gap-[10px] text-[10px] underline'>
+      <div className='mt-[3px] flex gap-[10px] text-[10px] text-[#9FA6B2] underline'>
         <button onClick={handleOnClick}>수정</button>
         <button>삭제</button>
       </div>

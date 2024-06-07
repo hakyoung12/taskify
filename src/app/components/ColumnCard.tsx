@@ -51,7 +51,7 @@ export default function ColumnCard({
   return (
     <>
       <div
-        className='bg-white rounded-md border border-custom_gray-_d9d9d9 flex flex-col justify-center p-[20px] gap-[10px]'
+        className='flex flex-col justify-center gap-[10px] rounded-md border border-custom_gray-_d9d9d9 bg-white p-[20px]'
         onClick={() =>
           handleOpenModal(
             <ToDoCardModal
@@ -61,7 +61,7 @@ export default function ColumnCard({
               dueDate={mockCardData.dueDate}
               assignee={mockCardData.assignee}
               imageUrl={mockCardData.imageUrl}
-            />
+            />,
           )
         }
       >
@@ -70,7 +70,7 @@ export default function ColumnCard({
           <Image
             width={274}
             height={160}
-            className='h-[160px] object-cover rounded-md'
+            className='h-[160px] rounded-md object-cover'
             src={imageUrl}
             alt=''
           />
@@ -82,7 +82,7 @@ export default function ColumnCard({
           {tags.map((tag: any, index: number) => {
             return (
               <div
-                className='bg-[#F9EEE3] rounded text-[#D58D49] text-[12px] px-[6px] py-[4px] mr-[6px]'
+                className='mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] text-[#D58D49]'
                 key={index}
               >
                 {tag}
@@ -92,7 +92,7 @@ export default function ColumnCard({
           })}
         </div>
         {/* 카드 마감날짜와 관리자 아이콘 */}
-        <div className='text-custom_gray-_787486 text-[12px] relative flex justify-between items-center'>
+        <div className='relative flex items-center justify-between text-[12px] text-custom_gray-_787486'>
           <div className='flex gap-[6px]'>
             <img src='/images/calender-icon.svg' alt='캘린더 아이콘' />
             {dueDate}
