@@ -1,5 +1,4 @@
-import AuthLogo from '@/app/components/AuthLogo';
-import LoginForm from '@/app/components/LoginForm';
+import AuthLogo from '../components/AuthLogo';
 import Link from 'next/link';
 import SignupForm from '../components/SignupForm';
 
