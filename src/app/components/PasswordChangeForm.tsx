@@ -6,8 +6,8 @@ import { Button } from '@radix-ui/themes';
 
 export default function PasswordChangeForm() {
   return (
-    <form className='relative w-[620px] h-[454px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'>
-      <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
+    <form className='relative mx-5 my-[25px] h-[454px] w-[620px] flex-shrink-0 rounded-lg bg-custom_white px-[28px] py-4'>
+      <div className='font-Pretendard pb-8 text-4xl font-bold text-custom_black-_333236'>
         비밀번호 변경
       </div>
       <div className='flex flex-col gap-5'>
@@ -20,7 +20,7 @@ export default function PasswordChangeForm() {
             placeholder='현재 비밀번호 입력'
           />
         </div>
-        <div className='grid w-full items-center gap-[10px] text-lg font-medium font-Pretendard'>
+        <div className='font-Pretendard grid w-full items-center gap-[10px] text-lg font-medium'>
           <Label htmlFor='newPasswor'>새 비밀번호</Label>
           <Input
             type='password'
@@ -29,7 +29,7 @@ export default function PasswordChangeForm() {
             placeholder='새 비밀번호 입력'
           />
         </div>
-        <div className='grid w-full items-center gap-[10px] text-lg font-medium font-Pretendard'>
+        <div className='font-Pretendard grid w-full items-center gap-[10px] text-lg font-medium'>
           <Label htmlFor='newPassworConfirm'>새 비밀번호 확인</Label>
           <Input
             type='password'
@@ -39,7 +39,7 @@ export default function PasswordChangeForm() {
           />
         </div>
         <Button
-          className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
+          className='absolute bottom-7 right-7 rounded bg-custom_violet-_5534da px-[30px] py-2 text-white'
           type='button'
         >
           변경

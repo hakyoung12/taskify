@@ -11,7 +11,7 @@ const iconSize: IconSize = {
 export default function ChipAddIcon({ size }: { size: 'small' | 'large' }) {
   return (
     <div
-      className={`w-${iconSize[size]} h-${iconSize[size]} rounded p-[3px] bg-[#F1EFFD]`}
+      className={`w-${iconSize[size]} h-${iconSize[size]} rounded bg-[#F1EFFD] p-[3px]`}
     >
       <img src='/images/add-card-icon.svg' />
     </div>

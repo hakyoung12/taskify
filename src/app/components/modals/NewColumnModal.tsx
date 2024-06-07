@@ -32,7 +32,7 @@ export default function NewColumnModal() {
       <DialogTrigger asChild>
         <Button
           variant='outline'
-          className='w-[354px] h-[70px] bg-white rounded-lg border border-gray-_d9d9d9 flex justify-center items-center relative top-[68px] left-[20px]'
+          className='border-gray-_d9d9d9 relative left-[20px] top-[68px] flex h-[70px] w-[354px] items-center justify-center rounded-lg border bg-white'
         >
           <span className='mr-[12px] text-[16px] font-bold'>
             새로운 컬럼 추가하기
@@ -60,7 +60,7 @@ export default function NewColumnModal() {
             <Button
               type='button'
               variant='secondary'
-              className={`${modalButtonStyle} text-[#787486] bg-white border border-[#d9d9d9]`}
+              className={`${modalButtonStyle} border border-[#d9d9d9] bg-white text-[#787486]`}
             >
               취소
             </Button>

@@ -10,18 +10,18 @@ export default function ProfileSetting() {
   const [uploadedImage, setUploadedImage] = useState(null);
 
   return (
-    <form className='relative w-[620px] h-[355px] my-[25px] mx-5 py-4 px-[28px] flex-shrink-0 rounded-lg bg-custom_white'>
-      <div className='text-4xl pb-8 font-bold font-Pretendard text-custom_black-_333236'>
+    <form className='relative mx-5 my-[25px] h-[355px] w-[620px] flex-shrink-0 rounded-lg bg-custom_white px-[28px] py-4'>
+      <div className='font-Pretendard pb-8 text-4xl font-bold text-custom_black-_333236'>
         프로필
       </div>
       <div className='flex gap-4'>
         <label htmlFor='imageUpload'>
           {uploadedImage ? (
-            <div className='relative w-[182px] h-[182px]'>
+            <div className='relative h-[182px] w-[182px]'>
               <Image fill src={uploadedImage} alt='프로필 없을때' />
             </div>
           ) : (
-            <div className='relative flex w-[182px] h-[182px] rounded-md bg-custom_gray-_fafafa'>
+            <div className='relative flex h-[182px] w-[182px] rounded-md bg-custom_gray-_fafafa'>
               <Image
                 fill
                 src='/images/no_Profile.svg'
@@ -30,7 +30,7 @@ export default function ProfileSetting() {
             </div>
           )}
         </label>
-        <div className='flex flex-col w-full gap-5'>
+        <div className='flex w-full flex-col gap-5'>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg'>
             <Label htmlFor='email'>이메일</Label>
             <Input
@@ -40,7 +40,7 @@ export default function ProfileSetting() {
               placeholder='이메일을 입력해주세요'
             />
           </div>
-          <div className='grid w-full max-w-sm items-center gap-[10px] text-lg font-medium font-Pretendard'>
+          <div className='font-Pretendard grid w-full max-w-sm items-center gap-[10px] text-lg font-medium'>
             <Label htmlFor='email'>닉네임</Label>
             <Input
               type='text'
@@ -52,7 +52,7 @@ export default function ProfileSetting() {
         </div>
       </div>
       <Button
-        className='absolute right-7 bottom-7 px-[30px] py-2 bg-custom_violet-_5534da text-white rounded'
+        className='absolute bottom-7 right-7 rounded bg-custom_violet-_5534da px-[30px] py-2 text-white'
         type='button'
       >
         저장
