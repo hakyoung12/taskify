@@ -5,9 +5,9 @@ import LandingMain from './components/Landing/LadingMain';
 import LandingFooter from './components/Landing/LandingFooter';
 import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
-import CreateToDoForm from './components/modals/CreateToDoForm';
 import { useEffect } from 'react';
 import CreateToDoModal from './components/modals/CreateToDoModal';
+import ModToDoForm from './components/modals/ModToDoForm';
 
 function checkToken() {
   if (typeof window === undefined) return;
@@ -25,7 +25,7 @@ export default function Home() {
       <LandingMain />
       <LandingFooter />
       <CreateToDoModal />
-      {/* <CreateToDoForm /> */}
+      <ModToDoForm />
     </div>
   );
 }
