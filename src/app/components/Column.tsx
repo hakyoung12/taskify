@@ -1,6 +1,10 @@
-import ColumnCard from '@/app/components/ColumnCard';
+'use client';
+
+import ColumnCard from '@/src/app/components/ColumnCard';
 import Image from 'next/image';
 import ChipAddIcon from './ui/chipAddIcon';
+import { useModal } from '@/src/context/ModalContext';
+import UpdateColumnModal from './modals/UpdateColumnModal';
 
 const cardsMockDataByColumnId = {
   cursorId: 0,
@@ -43,31 +47,39 @@ const cardsMockDataByColumnId = {
 };
 
 export default function Column({ title }: { title: string }) {
+  const { openModal } = useModal();
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
   return (
-    <div className='w-[354px] h-[1000px] flex flex-col p-[20px] gap-[25px] border-r border-gray-_eeeeee'>
+    <div className='border-gray-_eeeeee flex h-[1000px] w-[354px] flex-col gap-[25px] border-r p-[20px]'>
       {/* 카드 info */}
-      <div className='flex justify-between justify-center items-center'>
-        <div className='text-[16px] font-bold flex justify-center items-center'>
+      <div className='flex items-center justify-center justify-between'>
+        <div className='flex items-center justify-center text-[16px] font-bold'>
           <img
             className='mr-[8px]'
             src='/images/Ellipse-puple.svg'
             alt='꾸미는 점'
           />
           <span className='mr-[12px]'>{title}</span>
-          <div className='h-[20px] text-[12px] font-normal text-gray-_787486 bg-gray-_eeeeee rounded px-[6px]'>
+          <div className='text-gray-_787486 bg-gray-_eeeeee h-[20px] rounded px-[6px] text-[12px] font-normal'>
             {cardsMockDataByColumnId.totalCount}
           </div>
         </div>
         <Image
+          className='cursor-pointer'
           width={24}
           height={24}
           src='/images/settings-icon.svg'
           alt='설정 아이콘'
+          onClick={() => handleOpenModal(<UpdateColumnModal />)}
         />
       </div>
       <div className='flex flex-col gap-[16px]'>
         {/* 카드 추가 버튼 */}
-        <div className='bg-white rounded-md border border-gray-_d9d9d9 h-[40px] flex justify-center items-center'>
+        <div className='border-gray-_d9d9d9 flex h-[40px] items-center justify-center rounded-md border bg-white'>
           <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}

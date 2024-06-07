@@ -1,6 +1,6 @@
 import { HTMLAttributes, PropsWithChildren } from 'react';
 
-const Input = ({
+const BaseInput = ({
   children,
   ...props
 }: PropsWithChildren<HTMLAttributes<HTMLInputElement>>) => {
@@ -16,3 +16,5 @@ const Input = ({
     </input>
   );
 };
+
+export default BaseInput;

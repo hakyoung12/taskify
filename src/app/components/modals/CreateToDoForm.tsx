@@ -1,16 +1,11 @@
 'use client';
 
 import Image from 'next/image';
-import {
-  HTMLAttributes,
-  KeyboardEvent,
-  PropsWithChildren,
-  useEffect,
-  useState,
-} from 'react';
+import { KeyboardEvent, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputTags from '../InputTags';
 import axios from '@/src/app/api/axios';
+import BaseInput from '../Inputs/BaseInput';
 import { useModal } from '@/src/context/ModalContext';
 import { ModalProps } from './CreateToDoModal';
 import { LOGIN_TOKEN } from '../../api/apiStrings';

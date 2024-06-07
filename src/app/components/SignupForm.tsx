@@ -119,7 +119,7 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute right-4 top-4'
+          className='absolute right-4 top-3'
           type='button'
           onClick={() => setIsPassShow(!ispassShow)}
         >
@@ -164,7 +164,7 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute right-4 top-4'
+          className='absolute right-4 top-3'
           type='button'
           onClick={() => setIsPassCheckShow(!ispassCheckShow)}
         >
