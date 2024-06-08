@@ -6,7 +6,7 @@ export default function MyPage() {
   return (
     <>
       <div className='flex'>
-        <div className='w-screen'>
+        <div className='w-full'>
           <div className='bg-custom_gray-_fafafa pb-5'>
             <BackButton link='/mydashboard' />
             <ProfileSetting />
