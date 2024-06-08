@@ -43,6 +43,8 @@ const NewDashboardModal: React.FC = () => {
       console.log('POST 요청 성공:', response.data);
     } catch (e) {
       alert('대시보드 생성에 실패했습니다.');
+    } finally {
+      closeModal();
     }
   };
 
