@@ -49,6 +49,7 @@ export default function InvitationList({
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <div className='relative flex'>
+        {}
         <EditMenuTitle
           title='초대 내역'
           subtitle='이메일'
@@ -69,21 +70,34 @@ export default function InvitationList({
         </button>
       </div>
       <div className='flex flex-col px-[28px] pb-[28px]'>
-        <div>
-          {invitationList.map((email) => {
-            return (
-              <div
-                key={email.invitations[0].inviter.id}
-                className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'
-              >
-                <div className='flex items-center gap-3 max-sm:text-sm'>
-                  {email.invitations[0].inviter.email}
+        {invitationList.length > 0 ? (
+          <div>
+            {invitationList.map((email) => {
+              return (
+                <div
+                  key={email.invitations[0].inviter.id}
+                  className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'
+                >
+                  <div className='flex items-center gap-3 max-sm:text-sm'>
+                    {email.invitations[0].inviter.email}
+                  </div>
+                  <DeleteButton title='삭제' />
                 </div>
-                <DeleteButton title='삭제' />
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className='flex flex-col items-center justify-center text-xs text-custom_gray-_9fa6b2'>
+            <div className='relative h-[100px] w-[100px]'>
+              <Image
+                fill
+                src='/images/no_invitation.svg'
+                alt='초대내역이 없습니다'
+              />
+            </div>
+            <div>아직 초대내역이 없습니다</div>
+          </div>
+        )}
       </div>
     </div>
   );
