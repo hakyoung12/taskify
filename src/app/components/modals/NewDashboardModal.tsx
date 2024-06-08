@@ -2,10 +2,12 @@
 
 import { useState } from 'react';
 import { useModal } from '@/context/ModalContext';
+import instance from '@/app/api/axios';
 
 const NewDashboardModal: React.FC = () => {
   const { closeModal } = useModal();
-  const [selectedColor, setSelectedColor] = useState<string>('green');
+  const [selectedColor, setSelectedColor] = useState<string>('#7ac555');
+  const [dashboardName, setDashboardName] = useState<string>('');
 
   const handleCloseModal = () => {
     closeModal();
@@ -14,14 +16,34 @@ const NewDashboardModal: React.FC = () => {
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
   };
+  /** 입력값 저장 */
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDashboardName(e.target.value);
+  };
 
   const colors = [
-    { name: 'green', bgColor: 'bg-custom_green-_7ac555' },
-    { name: 'purple', bgColor: 'bg-custom_purple' },
-    { name: 'orange', bgColor: 'bg-custom_orange' },
-    { name: 'blue', bgColor: 'bg-custom_blue' },
-    { name: 'pink', bgColor: 'bg-custom_pink' },
+    { name: '#7ac555', bgColor: 'bg-custom_green-_7ac555' },
+    { name: '#760dde', bgColor: 'bg-custom_purple' },
+    { name: '#ffa500', bgColor: 'bg-custom_orange' },
+    { name: '#76a6ea', bgColor: 'bg-custom_blue' },
+    { name: '#e876ea', bgColor: 'bg-custom_pink' },
   ];
+
+  /** 대시보드 생성 테스트용 파라미터 */
+  const requestData = {
+    title: dashboardName,
+    color: selectedColor,
+  };
+
+  /** 테스트용 대시보드 만들기 함수 */
+  const onClick = async () => {
+    try {
+      const response = await instance.post('dashboards', requestData);
+      console.log('POST 요청 성공:', response.data);
+    } catch (e) {
+      alert('대시보드 생성에 실패했습니다.');
+    }
+  };
 
   return (
     <div className='flex w-[320px] flex-col sm:w-[540px]'>
@@ -35,6 +57,8 @@ const NewDashboardModal: React.FC = () => {
         <input
           className='mt-[10px] w-full rounded-md border border-custom_gray-_d9d9d9 px-4 py-4'
           placeholder='뉴프로젝트'
+          value={dashboardName}
+          onChange={handleInputChange}
         />
       </div>
       <div className='mt-[28px] flex gap-x-3'>
@@ -61,7 +85,10 @@ const NewDashboardModal: React.FC = () => {
         >
           취소
         </button>
-        <button className='w-1/2 rounded-md border-custom_gray-_d9d9d9 bg-custom_violet-_5534da px-[46px] py-[14px] text-white sm:w-auto'>
+        <button
+          onClick={onClick}
+          className='w-1/2 rounded-md border-custom_gray-_d9d9d9 bg-custom_violet-_5534da px-[46px] py-[14px] text-white sm:w-auto'
+        >
           생성
         </button>
       </div>

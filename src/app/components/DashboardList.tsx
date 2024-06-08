@@ -72,18 +72,6 @@ export default function DashboardList() {
     fetchdashboardData();
   }, [currentPage]);
 
-  /** 대시보드 생성 테스트용 파라미터 */
-  const requestData = {
-    title: '넥스트',
-    color: '#e876ea',
-  };
-
-  /** 테스트용 대시보드 만들기 함수 */
-  const onClick = async () => {
-    const response = await instance.post('dashboards', requestData);
-    console.log('POST 요청 성공:', response.data);
-  };
-
   return (
     <div className='p-0 px-3 max-sm:hidden'>
       <div className='font-Pretendard mx-3 mb-8 mt-16 flex items-center justify-between font-bold text-gray-500'>
@@ -130,7 +118,7 @@ export default function DashboardList() {
           onNext={handleNextPage}
         />
       </div>
-      <button onClick={onClick}>생성</button>
+      <button>생성</button>
     </div>
   );
 }
