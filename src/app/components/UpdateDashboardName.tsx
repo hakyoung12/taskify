@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const UpdateDashboardName = () => {
   return (
-    <div className='w-[620px] border border-black p-7'>
+    <div className='m-5 w-[620px] rounded-lg bg-custom_white px-[28px] py-8 max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <div className='flex justify-between'>
         <div className='text-xl font-bold'>비브리지</div>
         <div className='flex gap-x-3'>
@@ -29,7 +29,7 @@ const UpdateDashboardName = () => {
         />
       </div>
       <div className='mt-6 flex justify-end'>
-        <button className='rounded bg-custom_violet-_5534da px-[46px] py-[14px] text-white'>
+        <button className='rounded bg-custom_violet-_5534da px-[46px] py-[14px] text-white max-sm:px-[23px] max-sm:py-[6px]'>
           변경
         </button>
       </div>

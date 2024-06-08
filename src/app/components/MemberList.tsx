@@ -25,7 +25,7 @@ export default function MemberList() {
   const totalPage = Math.ceil(mockData.length / 4);
 
   return (
-    <div className='bg-white-_ffffff m-5 w-auto rounded-lg'>
+    <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <EditMenuTitle
         title='구성원'
         subtitle='이름'
