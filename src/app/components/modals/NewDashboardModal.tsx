@@ -16,6 +16,7 @@ const NewDashboardModal: React.FC = () => {
   const handleColorClick = (color: string) => {
     setSelectedColor(color);
   };
+
   /** 입력값 저장 */
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDashboardName(e.target.value);
@@ -29,13 +30,13 @@ const NewDashboardModal: React.FC = () => {
     { name: '#e876ea', bgColor: 'bg-custom_pink' },
   ];
 
-  /** 대시보드 생성 테스트용 파라미터 */
+  /** 대시보드 생성 파라미터 */
   const requestData = {
     title: dashboardName,
     color: selectedColor,
   };
 
-  /** 테스트용 대시보드 만들기 함수 */
+  /** 대시보드 만들기 함수 */
   const onClick = async () => {
     try {
       const response = await instance.post('dashboards', requestData);

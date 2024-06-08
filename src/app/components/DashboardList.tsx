@@ -118,7 +118,6 @@ export default function DashboardList() {
           onNext={handleNextPage}
         />
       </div>
-      <button>생성</button>
     </div>
   );
 }

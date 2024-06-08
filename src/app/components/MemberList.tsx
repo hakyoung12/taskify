@@ -12,7 +12,7 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const [totalCount, setTotalCount] = useState<number>(10);
   const totalPage = Math.ceil(totalCount / 4);
   /** 멤버리스트 조회 파라미터 */
-  const queryParams = { dashboardId: dashboardid };
+  const queryParams = { dashboardId: dashboardid, page: currentPage, size: 4 };
 
   const handleNextPage = () => {
     if (currentPage * 4 < totalPage) {

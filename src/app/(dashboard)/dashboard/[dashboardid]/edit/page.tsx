@@ -23,7 +23,7 @@ export default function dashboardPage({ params }: PageProps) {
         <DashboardHeaderInSettings />
         <div className='bg-custom_gray-_fafafa pb-5'>
           <BackButton link={backLink} />
-          <UpdateDashboardName />
+          <UpdateDashboardName dashboardid={dashboardid} />
           <MemberList dashboardid={dashboardid} />
           <InvitationList dashboardid={dashboardid} />
         </div>
