@@ -1,4 +1,4 @@
-import DashboardCard from '@/app/components/DashbaordCard';
+import DashboardCard from '@/app/components/DashboardCard';
 import InvitedDashboardList from '@/app/components/InvitedDashboarList';
 import InvitedDashboardListMobile from '@/app/components/InvitedDashboardListMobile';
 
