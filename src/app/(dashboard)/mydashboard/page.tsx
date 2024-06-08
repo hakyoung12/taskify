@@ -5,12 +5,10 @@ import InvitedDashboardListMobile from '@/app/components/InvitedDashboardListMob
 const MyDashboard = () => {
   return (
     <div className='flex'>
-      <div className='w-screen bg-custom_gray-_fafafa pb-5'>
-        <div className='w-3/4'>
-          <DashboardCard />
-          <InvitedDashboardList />
-          <InvitedDashboardListMobile />
-        </div>
+      <div className='w-full bg-custom_gray-_fafafa pb-5 pr-6'>
+        <DashboardCard />
+        <InvitedDashboardList />
+        <InvitedDashboardListMobile />
       </div>
     </div>
   );

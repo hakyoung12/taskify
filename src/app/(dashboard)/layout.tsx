@@ -9,8 +9,8 @@ const DashboardLayout: React.FC<{ children: React.ReactNode }> = ({
   return (
     <div className='flex'>
       <SideBar />
-      <div className='w-4/5'>
-        {/* <DashboardHeader /> */}
+      <div className='w-full'>
+        <DashboardHeader />
         <DashboardHeaderInSettings />
         <main>{children}</main>
       </div>
