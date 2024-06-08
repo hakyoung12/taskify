@@ -4,8 +4,6 @@ import Column from '@/app/components/Column';
 import NewColumnModal from '@/app/components/modals/NewColumnModal';
 import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
-import SideBar from '@/app/components/SideBar';
-import DashboardHeaderInSettings from '@/app/components/DashboardHeaderInSettings';
 
 const columnMockData = {
   result: 'SUCCESS',
@@ -36,9 +34,7 @@ export default function dashboardPage() {
 
   return (
     <div className='flex'>
-      <SideBar />
       <div className='w-screen'>
-        <DashboardHeaderInSettings />
         <div className='flex flex-wrap bg-custom_gray-_fafafa'>
           {/* 컬럼 컴포넌트 뿌리기 */}
           {columnMockData.data.map((column: any, index: number) => {

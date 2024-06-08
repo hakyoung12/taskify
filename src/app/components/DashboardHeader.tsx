@@ -43,7 +43,7 @@ const DashboardHeader = () => {
   }, []);
 
   return (
-    <div className='flex h-[60px] items-center justify-between border-b border-r border-t border-custom_gray-_d9d9d9 py-4'>
+    <div className='flex h-[60px] items-center justify-between border-b border-r border-t border-custom_gray-_d9d9d9 py-1'>
       <div className='ml-10 text-lg font-bold text-custom_black-_333236'>
         내 대시보드
       </div>
