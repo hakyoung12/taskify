@@ -34,7 +34,7 @@ export default function dashboardPage() {
 
   return (
     <div className='flex'>
-      <div className='w-screen'>
+      <div className='w-full'>
         <div className='flex flex-wrap bg-custom_gray-_fafafa'>
           {/* 컬럼 컴포넌트 뿌리기 */}
           {columnMockData.data.map((column: any, index: number) => {
