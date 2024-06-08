@@ -2,14 +2,22 @@
 import EditMenuTitle from './EditMenuTitle';
 import { DeleteButton } from './DeleteButton';
 import { mockData } from './mockdata/MemberMock';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import instance from '../api/axios';
+import { CheckMembersRes } from '../api/apiTypes/membersType';
 
-export default function MemberList() {
+export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const [currentPage, setCurrentPage] = useState(1);
+  const [memberList, setMemberList] = useState<CheckMembersRes[]>([]);
+  const [totalCount, setTotalCount] = useState<number>(10);
+  const startIndex = (currentPage - 1) * 4;
+  const totalPage = Math.ceil(totalCount / 4);
+  /** 대시보드 조회 파라미터 */
+  const queryParams = { dashboardId: dashboardid };
 
   const handleNextPage = () => {
-    if (currentPage * 4 < mockData.length) {
+    if (currentPage * 4 < totalPage) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -20,9 +28,18 @@ export default function MemberList() {
     }
   };
 
-  const startIndex = (currentPage - 1) * 4;
-  const selectedTodos = mockData.slice(startIndex, startIndex + 4);
-  const totalPage = Math.ceil(mockData.length / 4);
+  /** 대시보드 조회 */
+  useEffect(() => {
+    const fetchdashboardData = async () => {
+      const res = await instance.get('members', {
+        params: queryParams,
+      });
+      console.log(res);
+      setMemberList(res.data.members);
+      setTotalCount(res.data.totalCount);
+    };
+    fetchdashboardData();
+  }, []);
 
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
@@ -36,7 +53,7 @@ export default function MemberList() {
       />
       <div className='flex flex-col px-[28px] pb-[28px]'>
         <div>
-          {selectedTodos.map((member) => {
+          {memberList.map((member) => {
             return (
               <div
                 key={member.id}
@@ -50,7 +67,7 @@ export default function MemberList() {
                       alt='프로필 사진'
                     />
                   </div>
-                  {member.name}
+                  {member.nickname}
                 </div>
                 <DeleteButton title='삭제' />
               </div>

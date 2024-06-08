@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Pagination from './Pagination';
-import { mockData } from './mockdata/DashboardMock';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
@@ -49,7 +48,7 @@ export default function DashboardList() {
   };
   /** 다음페이지 넘기기 함수 */
   const handleNextPage = () => {
-    if (currentPage * 10 < mockData.length) {
+    if (currentPage * 10 < totalCount) {
       setCurrentPage(currentPage + 1);
     }
   };

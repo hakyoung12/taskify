@@ -1,22 +1,22 @@
 'use client';
+import instance from '@/app/api/axios';
 import BackButton from '@/app/components/BackButton';
 import DashboardHeaderInSettings from '@/app/components/DashboardHeaderInSettings';
 import InvitationList from '@/app/components/InvitationList';
 import MemberList from '@/app/components/MemberList';
 import SideBar from '@/app/components/SideBar';
 import UpdateDashboardName from '@/app/components/UpdateDashboardName';
+import { useEffect, useState } from 'react';
 
 interface PageProps {
   params: {
-    dashboardid: string;
+    dashboardid: number;
   };
 }
 
 export default function dashboardPage({ params }: PageProps) {
   const { dashboardid } = params;
-
-  // 동적 파라미터를 포함한 링크 생성
-  const backLink = `/dashboard/${dashboardid}`;
+  const backLink = `/dashboard/${dashboardid}`; // 동적 파라미터를 포함한 링크 생성
 
   return (
     <div className='flex'>
@@ -26,7 +26,7 @@ export default function dashboardPage({ params }: PageProps) {
         <div className='bg-custom_gray-_fafafa pb-5'>
           <BackButton link={backLink} />
           <UpdateDashboardName />
-          <MemberList />
+          <MemberList dashboardid={dashboardid} />
           <InvitationList />
         </div>
       </div>
