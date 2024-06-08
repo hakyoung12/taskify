@@ -1,12 +1,10 @@
 'use client';
-import instance from '@/app/api/axios';
 import BackButton from '@/app/components/BackButton';
 import DashboardHeaderInSettings from '@/app/components/DashboardHeaderInSettings';
 import InvitationList from '@/app/components/InvitationList';
 import MemberList from '@/app/components/MemberList';
 import SideBar from '@/app/components/SideBar';
 import UpdateDashboardName from '@/app/components/UpdateDashboardName';
-import { useEffect, useState } from 'react';
 
 interface PageProps {
   params: {
@@ -27,7 +25,7 @@ export default function dashboardPage({ params }: PageProps) {
           <BackButton link={backLink} />
           <UpdateDashboardName />
           <MemberList dashboardid={dashboardid} />
-          <InvitationList />
+          <InvitationList dashboardid={dashboardid} />
         </div>
       </div>
     </div>

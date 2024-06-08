@@ -1,7 +1,6 @@
 'use client';
 import EditMenuTitle from './EditMenuTitle';
 import { DeleteButton } from './DeleteButton';
-import { mockData } from './mockdata/MemberMock';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import instance from '../api/axios';
@@ -11,9 +10,8 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [memberList, setMemberList] = useState<CheckMembersRes[]>([]);
   const [totalCount, setTotalCount] = useState<number>(10);
-  const startIndex = (currentPage - 1) * 4;
   const totalPage = Math.ceil(totalCount / 4);
-  /** 대시보드 조회 파라미터 */
+  /** 멤버리스트 조회 파라미터 */
   const queryParams = { dashboardId: dashboardid };
 
   const handleNextPage = () => {
@@ -28,17 +26,16 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
     }
   };
 
-  /** 대시보드 조회 */
+  /** 멤버리스트 조회 */
   useEffect(() => {
-    const fetchdashboardData = async () => {
+    const fetchMembersData = async () => {
       const res = await instance.get('members', {
         params: queryParams,
       });
-      console.log(res);
       setMemberList(res.data.members);
       setTotalCount(res.data.totalCount);
     };
-    fetchdashboardData();
+    fetchMembersData();
   }, []);
 
   return (

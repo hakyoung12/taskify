@@ -80,7 +80,6 @@ export interface InviteDashRes {
 
 /**대시보드 초대 불러오기 Response*/
 export interface LoadInvitationsRes {
-  totalCount: number;
   invitations: {
     id: number;
     inviter: {
