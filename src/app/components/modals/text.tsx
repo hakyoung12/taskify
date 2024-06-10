@@ -2,6 +2,7 @@
 import { MouseEvent, useCallback, useState } from 'react';
 import AssigneeInput from '../Inputs/AssigneeInput';
 import TitleInput from '../Inputs/TitleInput';
+import DescriptionInput from '../Inputs/DescriptionInput';
 
 type Assignee = {
   id?: number;
@@ -62,6 +63,7 @@ const Test = () => {
         setData={setData}
       />
       <TitleInput setData={setData} />
+      <DescriptionInput setData={setData} />
     </>
   );
 };
