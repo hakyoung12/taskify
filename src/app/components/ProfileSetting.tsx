@@ -7,6 +7,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
+import instance from '../api/axios';
 
 interface ProfileSettingValues {
   email: string;
@@ -24,14 +25,31 @@ export default function ProfileSetting() {
 
   /** submit 이벤트 추가 예정 */
   const onSubmit: SubmitHandler<ProfileSettingValues> = (data) => {
-    console.log(data.email, data.nickname);
     handleOpenModal(
       <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
     );
   };
 
   /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
-  const onchangeImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const uploadImage = async (file: File) => {
+    const formData = new FormData();
+    formData.append('image', file);
+
+    try {
+      const response = await instance.post('users/me/image', formData);
+      setUploadedImage(response.data.profileImageUrl);
+    } catch (error) {
+      handleOpenModal(
+        <SettingChangedModal>
+          프로필 이미지 변경에 실패했습니다. 다시 시도해주세요.
+        </SettingChangedModal>,
+      );
+    }
+  };
+
+  const onchangeImageUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>,
+  ) => {
     const { files } = e.target;
 
     if (!files || files.length === 0) {
@@ -40,14 +58,12 @@ export default function ProfileSetting() {
     }
 
     const uploadFile = files[0];
-    const reader = new FileReader();
-    reader.readAsDataURL(uploadFile);
-    reader.onloadend = () => {
-      const result = reader.result;
-      if (typeof result === 'string') {
-        setUploadedImage(result);
-      }
-    };
+
+    try {
+      await uploadImage(uploadFile);
+    } catch (error) {
+      console.error('Failed to upload image:', error);
+    }
   };
 
   const { openModal } = useModal();
@@ -70,23 +86,16 @@ export default function ProfileSetting() {
             type='file'
             accept='image/png, image/jpeg'
             className='hidden'
+            id='imageUpload'
             onChange={onchangeImageUpload}
           />
-          <label className='preview'>
-            <input
-              type='file'
-              accept='image/png, image/jpeg'
-              className='hidden'
-              onChange={onchangeImageUpload}
+          <div className='relative flex h-[182px] w-[182px] cursor-pointer rounded-md bg-custom_gray-_fafafa max-sm:h-[100px] max-sm:w-[100px]'>
+            <Image
+              fill
+              src={uploadedImage || '/images/no_Profile.svg'}
+              alt='프로필 이미지 수정하기'
             />
-            <div className='relative flex h-[182px] w-[182px] cursor-pointer rounded-md bg-custom_gray-_fafafa max-sm:h-[100px] max-sm:w-[100px]'>
-              <Image
-                fill
-                src={uploadedImage || '/images/no_Profile.svg'}
-                alt='프로필 이미지 수정하기'
-              />
-            </div>
-          </label>
+          </div>
         </label>
         <div className='flex w-full flex-col gap-5'>
           <div className='grid w-full max-w-sm items-center gap-[10px] text-lg'>
