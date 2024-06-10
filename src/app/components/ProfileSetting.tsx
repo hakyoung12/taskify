@@ -25,7 +25,9 @@ export default function ProfileSetting() {
   /** submit 이벤트 추가 예정 */
   const onSubmit: SubmitHandler<ProfileSettingValues> = (data) => {
     console.log(data.email, data.nickname);
-    handleOpenModal(<SettingChangedModal text='프로필이 변경되었습니다.' />);
+    handleOpenModal(
+      <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
+    );
   };
 
   /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
