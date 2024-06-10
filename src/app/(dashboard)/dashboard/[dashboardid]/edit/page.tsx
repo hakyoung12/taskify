@@ -17,7 +17,7 @@ interface PageProps {
 export default function dashboardEditPage({ params }: PageProps) {
   const router = useRouter();
   const { dashboardid } = params;
-  const backLink = `/dashboards/${dashboardid}`; // 동적 파라미터를 포함한 링크 생성
+  const backLink = `/dashboard/${dashboardid}`; // 동적 파라미터를 포함한 링크 생성
 
   const { openModal } = useModal();
 

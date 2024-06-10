@@ -34,6 +34,7 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
     openModal(content);
   };
 
+  /** 멤버삭제 */
   const onClick = async (id: number) => {
     try {
       const response = await instance.delete(`members/${id}`);
