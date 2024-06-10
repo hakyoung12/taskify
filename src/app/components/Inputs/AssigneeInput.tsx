@@ -1,6 +1,7 @@
 'use client';
 
 import React, {
+  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   useEffect,
@@ -63,7 +64,7 @@ export default function AssigneeInput({
   members,
   setAssignee,
 }: AssigneeProps) {
-  const [inputValue, setInputValue] = useState<string>();
+  const [inputValue, setInputValue] = useState<string>('');
   const input = useRef<HTMLInputElement>(null);
   const [searchedMembers, setSearchedMembers] = useState<Members>(members);
   const [isDropShow, setIsDropShow] = useState<boolean>(false);
@@ -89,7 +90,8 @@ export default function AssigneeInput({
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       chooseAssignee();
-    } else {
+      e.currentTarget.blur();
+    } else if (isCircleShow && !isDropShow) {
       setIsCircleShow(false);
       setIsDropShow(true);
     }
@@ -128,8 +130,9 @@ export default function AssigneeInput({
           id='assignee'
           placeholder='이름을 입력해주세요'
           className='no-autofill flex-grow outline-none'
+          autoComplete='off'
           onChange={() => {
-            setInputValue(input.current?.value);
+            setInputValue(input.current?.value || '');
           }}
           onFocus={() => {
             setIsDropShow(true);
