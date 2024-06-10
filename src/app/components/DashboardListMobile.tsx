@@ -1,10 +1,7 @@
 'use client';
-
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
-import Pagination from './Pagination';
+import { useEffect, useRef, useState } from 'react';
 import { mockData } from './mockdata/DashboardMock';
-import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
 import instance from '@/app/api/axios';
@@ -28,11 +25,12 @@ type DashboardData = {
   createdByMe: boolean;
 };
 
-export default function DashboardList() {
+export default function DashboardListMobile() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(10);
-  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]);
+  const startPointRef = useRef(0);
   const { openModal } = useModal();
+  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]);
   const startIndex = (currentPage - 1) * 10; //시작페이지
   const totalPage = Math.ceil(totalCount / 10); //마지막페이지
 
@@ -47,17 +45,19 @@ export default function DashboardList() {
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
   };
-  /** 다음페이지 넘기기 함수 */
-  const handleNextPage = () => {
-    if (currentPage * 10 < mockData.length) {
-      setCurrentPage(currentPage + 1);
-    }
+
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    startPointRef.current = e.touches[0].pageX;
   };
 
-  /** 이전페이지 넘기기 함수 */
-  const handlePrevPage = () => {
-    if (currentPage > 1) {
+  const handleTouchEnd = (e: React.TouchEvent<HTMLDivElement>) => {
+    const endPoint = e.changedTouches[0].pageX;
+    if (startPointRef.current < endPoint) {
+      if (currentPage === 1) return;
       setCurrentPage(currentPage - 1);
+    } else if (startPointRef.current > endPoint) {
+      if (currentPage === totalPage) return;
+      setCurrentPage(currentPage + 1);
     }
   };
 
@@ -73,24 +73,9 @@ export default function DashboardList() {
     fetchdashboardData();
   }, [currentPage]);
 
-  /** 대시보드 생성 테스트용 파라미터 */
-  const requestData = {
-    title: '넥스트',
-    color: '#e876ea',
-  };
-
-  /** 테스트용 대시보드 만들기 함수 */
-  const onClick = async () => {
-    const response = await instance.post('dashboards', requestData);
-    console.log('POST 요청 성공:', response.data);
-  };
-
   return (
-    <div className='p-0 px-3 max-sm:hidden'>
-      <div className='font-Pretendard mx-3 mb-8 mt-16 flex items-center justify-between font-bold text-gray-500'>
-        <div className='font-pretendard text-xs font-bold text-custom_black-_333236 max-sm:hidden'>
-          Dash Boards
-        </div>
+    <div className='p-0 px-3 sm:hidden'>
+      <div className='mx-2 mb-8 mt-16 flex items-center justify-between'>
         <button>
           <img
             className='h-5 w-5'
@@ -100,38 +85,19 @@ export default function DashboardList() {
           />
         </button>
       </div>
-      <div>
+      <div onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd}>
         {dashboardsData.map((todo) => (
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
-            className='font-Pretendard my-7 flex items-center gap-4 font-medium text-custom_black-_333236 max-sm:justify-center'
+            className='my-7 flex items-center justify-center'
           >
             <div
               className={`h-2 w-2 rounded-full ${ColorPalette[todo.color]}`}
             />
-            <div className='max-sm:hidden'>{todo.title}</div>
-            {todo.createdByMe && (
-              <div className='relative h-3.5 w-5 max-sm:hidden'>
-                <Image
-                  fill
-                  src='/images/createByMe.svg'
-                  alt='내가 만든 대시보드'
-                />
-              </div>
-            )}
           </Link>
         ))}
       </div>
-      <div className='max-sm:hidden'>
-        <Pagination
-          currentPage={currentPage}
-          totalPage={totalPage}
-          onPrev={handlePrevPage}
-          onNext={handleNextPage}
-        />
-      </div>
-      <button onClick={onClick}>생성</button>
     </div>
   );
 }
