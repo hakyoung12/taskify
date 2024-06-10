@@ -4,7 +4,7 @@ import React from 'react';
 import SideBar from '../components/SideBar';
 import DashboardHeader from '../components/DashboardHeader';
 import DashboardHeaderInSettings from '../components/DashboardHeaderInSettings';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface LayoutProps {
   children: React.ReactNode;
