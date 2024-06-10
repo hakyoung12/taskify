@@ -24,7 +24,18 @@ const InvitedDashboardList = () => {
     fetchInvitation();
   }, []);
 
-  console.log(invitations);
+  const handleInvitationResponse = async (
+    invitationId: number,
+    inviteAccepted: boolean,
+  ) => {
+    try {
+      await instance.put(`invitations/${invitationId}`, {
+        inviteAccepted: inviteAccepted,
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className='ml-6 mt-6 hidden rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
@@ -77,10 +88,20 @@ const InvitedDashboardList = () => {
                     </div>
                     <div className='min-w-0 flex-1'>
                       <div className='flex space-x-2'>
-                        <button className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'>
+                        <button
+                          className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
+                          onClick={() =>
+                            handleInvitationResponse(invitation.id, true)
+                          }
+                        >
                           수락
                         </button>
-                        <button className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'>
+                        <button
+                          className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'
+                          onClick={() =>
+                            handleInvitationResponse(invitation.id, false)
+                          }
+                        >
                           거절
                         </button>
                       </div>
