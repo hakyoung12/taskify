@@ -27,6 +27,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     setIsModalOpen(false);
   };
 
+  // state, 함수 따로 구분
   return (
     <ModalContext.Provider
       value={{ modalContent, isModalOpen, openModal, closeModal }}
