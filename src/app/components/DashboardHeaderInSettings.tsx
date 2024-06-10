@@ -7,13 +7,18 @@ import { useEffect, useState } from 'react';
 import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import instance from '../api/axios';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 
 const DashboardHeaderInSettings = () => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [title, setTitle] = useState<string | null>(null);
 
   const router = useRouter();
+  const params = useParams();
+
+  // console.log('params');
+  // console.log(params.dashboardid);
 
   const { openModal } = useModal();
 
@@ -43,17 +48,27 @@ const DashboardHeaderInSettings = () => {
       }
     };
 
+    const fetchDashboardData = async () => {
+      try {
+        const res = await instance.get(`dashboards/${params.dashboardid}`);
+        setTitle(res.data.title);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
     if (!accessToken) {
       router.push('/');
     }
 
     fetchUserData();
+    fetchDashboardData();
   }, []);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
-        <span className='ml-10 text-lg font-bold'>비브리지</span>
+        <span className='ml-10 text-lg font-bold'>{title}</span>
         <span className='ml-2 text-yellow-500'>
           <Image
             src='/images/createByMe.svg'
