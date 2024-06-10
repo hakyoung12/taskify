@@ -4,54 +4,79 @@ import Column from '@/app/components/Column';
 import NewColumnModal from '@/app/components/modals/NewColumnModal';
 import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
+import { useEffect, useMemo, useState } from 'react';
+import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/api';
 
-const columnMockData = {
-  result: 'SUCCESS',
-  data: [
-    {
-      id: 0,
-      title: 'TO DO',
-      teamId: 'string',
-      createdAt: '2024-05-31T16:47:59.846Z',
-      updatedAt: '2024-05-31T16:47:59.846Z',
-    },
-    {
-      id: 1,
-      title: 'On Progress',
-      teamId: 'string',
-      createdAt: '2024-05-31T16:47:59.846Z',
-      updatedAt: '2024-05-31T16:47:59.846Z',
-    },
-  ],
-};
-
-export default function dashboardPage() {
+export default function dashboardPage(dashboardid: any) {
+  const [columnData, setColumnData] = useState([]);
+  const id = Number(dashboardid.params.dashboardid);
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
   };
 
-  return (
-    <div className='flex'>
-      <div className='w-full'>
-        <div className='flex flex-wrap bg-custom_gray-_fafafa'>
-          {/* 컬럼 컴포넌트 뿌리기 */}
-          {columnMockData.data.map((column: any, index: number) => {
-            return <Column key={column.id} title={column.title} />;
-          })}
-          {/* 카드 추가하기 모달 */}
-          <button
-            className='border-gray-_d9d9d9 relative left-[20px] top-[68px] flex h-[70px] w-[354px] items-center justify-center rounded-lg border bg-white'
-            onClick={() => handleOpenModal(<NewColumnModal />)}
-          >
-            <p className='mr-[12px] text-[16px] font-bold'>
-              새로운 컬럼 추가하기
-            </p>
-            <ChipAddIcon size={'large'} />
-          </button>
+  async function fetchColumns() {
+    try {
+      const columnData = await getColumnsByDashBoardId(id);
+      setColumnData(columnData.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchColumns();
+  }, []);
+
+  /* 새로운 컬럼 생성 버튼 - PC */
+  const NewColumnButton = useMemo(() => {
+    return (
+      <div className='min-w-[354px] max-xl:hidden'>
+        <div
+          className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
+          onClick={() => handleOpenModal(<NewColumnModal />)}
+        >
+          <p className='mr-[12px] text-[16px] font-bold'>
+            새로운 컬럼 추가하기
+          </p>
+          <ChipAddIcon size={'large'} />
         </div>
       </div>
+    );
+  }, [handleOpenModal]);
+
+  /* 새로운 컬럼 생성 버튼 - Tablet, Mobile */
+  const NewColumnButtonMedia = useMemo(() => {
+    return (
+      <div className='hidden max-xl:fixed max-xl:bottom-0 max-xl:block max-xl:w-full max-xl:bg-custom_gray-_fafafa max-xl:px-[20px]'>
+        <div
+          className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
+          onClick={() => handleOpenModal(<NewColumnModal />)}
+        >
+          <p className='mr-[12px] text-[16px] font-bold'>
+            새로운 컬럼 추가하기
+          </p>
+          <ChipAddIcon size={'large'} />
+        </div>
+      </div>
+    );
+  }, [handleOpenModal]);
+
+  return (
+    <div className='relative flex'>
+      <div className='w-screen'>
+        <div className='flex overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'>
+          {/* 컬럼 컴포넌트 뿌리기 */}
+          {columnData &&
+            columnData.length > 0 &&
+            columnData.map((column: any, index: number) => {
+              return <Column key={column.id} title={column.title} />;
+            })}
+          {NewColumnButton}
+        </div>
+      </div>
+      {NewColumnButtonMedia}
     </div>
   );
 }
