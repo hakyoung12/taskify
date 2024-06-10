@@ -14,16 +14,9 @@ const CommonModal: React.FC = () => {
       onClick={closeModal}
     >
       <div
-        className='relative rounded-lg bg-white p-6 shadow-lg'
+        className='relative mx-[24px] rounded-lg bg-white p-6 shadow-lg'
         onClick={(e) => e.stopPropagation()}
       >
-        <button
-          className='absolute right-2 top-1 text-2xl'
-          type='button'
-          onClick={closeModal}
-        >
-          ×
-        </button>
         {modalContent}
       </div>
     </div>
