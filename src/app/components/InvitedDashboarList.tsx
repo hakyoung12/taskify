@@ -24,6 +24,8 @@ const InvitedDashboardList = () => {
     fetchInvitation();
   }, []);
 
+  console.log(invitations);
+
   return (
     <div className='ml-6 mt-6 hidden rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
