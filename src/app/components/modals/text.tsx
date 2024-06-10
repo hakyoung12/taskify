@@ -1,6 +1,7 @@
 'use client';
-import { MouseEvent, useState } from 'react';
+import { MouseEvent, useCallback, useState } from 'react';
 import AssigneeInput from '../Inputs/AssigneeInput';
+import TitleInput from '../Inputs/TitleInput';
 
 type Assignee = {
   id?: number;
@@ -13,7 +14,29 @@ type Assignee = {
   isOwner?: boolean;
 };
 
+interface Datas {
+  assignee: Assignee;
+  title: string;
+  description: string;
+  dueDate: string;
+  tags: string[];
+  imageUrl: string;
+}
+
 const Test = () => {
+  const [datas, setDatas] = useState<Datas>({
+    assignee: {
+      userId: 0,
+      email: '',
+      nickname: '',
+    },
+    title: '',
+    description: '',
+    dueDate: '',
+    tags: [],
+    imageUrl: '',
+  });
+
   const members = [
     { userId: 1, email: 'aa@aa.com', nickname: '가 고래' },
     { userId: 2, email: 'ba@aa.com', nickname: '나 고래' },
@@ -21,18 +44,25 @@ const Test = () => {
     { userId: 4, email: 'da@aa.com', nickname: '라 고래' },
     { userId: 5, email: 'ea@aa.com', nickname: '마 고래' },
   ];
-  const [assignee, setAssignee] = useState<Assignee>({
-    userId: 0,
-    email: '',
-    nickname: '',
-  });
+
+  const setData = useCallback(
+    (data: { [key: string]: string | Assignee | string[] }) => {
+      setDatas((prev) => {
+        return { ...prev, ...data };
+      });
+    },
+    [],
+  );
 
   return (
-    <AssigneeInput
-      assignee={assignee}
-      members={members}
-      setAssignee={setAssignee}
-    />
+    <>
+      <AssigneeInput
+        assignee={datas.assignee}
+        members={members}
+        setData={setData}
+      />
+      <TitleInput setData={setData} />
+    </>
   );
 };
 

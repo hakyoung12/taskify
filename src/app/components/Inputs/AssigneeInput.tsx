@@ -1,7 +1,6 @@
 'use client';
 
 import React, {
-  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   useEffect,
@@ -9,29 +8,10 @@ import React, {
   useState,
 } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
-
-type Assignee = {
-  id?: number;
-  userId: number;
-  email: string;
-  nickname: string;
-  profileImageUrl?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  isOwner?: boolean;
-};
+import { Assignee, SetData } from './InputTypes';
 
 interface AssigneeProps {
-  assignee: {
-    id?: number;
-    userId: number;
-    email: string;
-    nickname: string;
-    profileImageUrl?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    isOwner?: boolean;
-  };
+  assignee: Assignee;
   members: {
     id?: number;
     userId: number;
@@ -42,7 +22,7 @@ interface AssigneeProps {
     updatedAt?: string;
     isOwner?: boolean;
   }[];
-  setAssignee: React.Dispatch<React.SetStateAction<Assignee>>;
+  setData: SetData;
 }
 
 type Members = {
@@ -62,7 +42,7 @@ const CIRCLE =
 export default function AssigneeInput({
   assignee,
   members,
-  setAssignee,
+  setData,
 }: AssigneeProps) {
   const [inputValue, setInputValue] = useState<string>('');
   const input = useRef<HTMLInputElement>(null);
@@ -74,14 +54,14 @@ export default function AssigneeInput({
     const selected = members.filter(
       (member) => String(member.userId) === e.currentTarget.value,
     );
-    setAssignee(selected[0]);
+    setData({ assignee: selected[0] });
     setIsCircleShow(true);
     setIsDropShow(false);
   };
 
   const chooseAssignee = () => {
     if (searchedMembers.length === 1) {
-      setAssignee(searchedMembers[0]);
+      setData({ assignee: searchedMembers[0] });
       setIsCircleShow(true);
       setIsDropShow(false);
     }
@@ -118,7 +98,7 @@ export default function AssigneeInput({
         담당자
       </label>
       <div
-        className={`${INPUT_STYLE} flex items-center bg-white`}
+        className={`${INPUT_STYLE} ${isDropShow ? 'border-custom_violet-_5534da' : ''} flex items-center bg-white`}
         onClick={() => {
           input.current?.focus();
         }}
@@ -131,8 +111,8 @@ export default function AssigneeInput({
           placeholder='이름을 입력해주세요'
           className='no-autofill flex-grow outline-none'
           autoComplete='off'
-          onChange={() => {
-            setInputValue(input.current?.value || '');
+          onChange={(e) => {
+            setInputValue(e.target.value || '');
           }}
           onFocus={() => {
             setIsDropShow(true);
