@@ -1,17 +1,24 @@
 import instance from '@/app/api/axios';
 
 const getDashBoard = async () => {
-  const res = await instance.get('dashboards', {
-    params: { navigationMethod: 'pagination' },
-  });
-  console.log(res);
+  try {
+    const res = await instance.get('dashboards', {
+      params: { navigationMethod: 'pagination' },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const getColumnsByDashBoardId = async (dashboardid: number) => {
-  const res = await instance.get(`columns`, {
-    params: { dashboardId: `${dashboardid}` },
-  });
-  return await res.data;
+  try {
+    const res = await instance.get(`columns`, {
+      params: { dashboardId: `${dashboardid}` },
+    });
+    return await res.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const postNewColumnData = async (title: string, dashboardid: number) => {
@@ -20,8 +27,12 @@ const postNewColumnData = async (title: string, dashboardid: number) => {
     dashboardId: dashboardid,
   };
 
-  const res = await instance.post(`columns`, data);
-  return await res.data;
+  try {
+    const res = await instance.post(`columns`, data);
+    return await res.data;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 const getCardsList = async (
@@ -35,8 +46,28 @@ const getCardsList = async (
     cursorId: `${cursorId}`,
   };
 
-  const res = await instance.get('cards', { params });
-  console.log(res);
+  try {
+    const res = await instance.get('cards', { params });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteColumnByID = async (columnId: number) => {
+  try {
+    const res = await instance.delete(`columns/${columnId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const putColumnByID = async (columnId: number, title: string) => {
+  const data = { title: title };
+  try {
+    const res = await instance.put(`columns/${columnId}`, data);
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export {
@@ -44,4 +75,6 @@ export {
   getColumnsByDashBoardId,
   postNewColumnData,
   getCardsList,
+  deleteColumnByID,
+  putColumnByID,
 };
