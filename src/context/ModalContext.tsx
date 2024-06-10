@@ -2,13 +2,19 @@
 
 import React, { createContext, useState, useContext, ReactNode } from 'react';
 
-interface ModalContextProps {
+interface ModalStateContextProps {
   modalContent: ReactNode | null;
   isModalOpen: boolean;
+}
+
+interface ModalContextProps {
   openModal: (content: ReactNode) => void;
   closeModal: () => void;
 }
 
+const ModalStateContext = createContext<ModalStateContextProps | undefined>(
+  undefined,
+);
 const ModalContext = createContext<ModalContextProps | undefined>(undefined);
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({
@@ -27,14 +33,21 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({
     setIsModalOpen(false);
   };
 
-  // state, 함수 따로 구분
   return (
-    <ModalContext.Provider
-      value={{ modalContent, isModalOpen, openModal, closeModal }}
-    >
-      {children}
-    </ModalContext.Provider>
+    <ModalStateContext.Provider value={{ modalContent, isModalOpen }}>
+      <ModalContext.Provider value={{ openModal, closeModal }}>
+        {children}
+      </ModalContext.Provider>
+    </ModalStateContext.Provider>
   );
+};
+
+export const useModalState = (): ModalStateContextProps => {
+  const context = useContext(ModalStateContext);
+  if (!context) {
+    throw new Error('useModalState 사용 불가');
+  }
+  return context;
 };
 
 export const useModal = (): ModalContextProps => {
