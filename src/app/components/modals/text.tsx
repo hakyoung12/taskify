@@ -1,8 +1,10 @@
 'use client';
-import { MouseEvent, useCallback, useState } from 'react';
+import { useCallback, useState } from 'react';
 import AssigneeInput from '../Inputs/AssigneeInput';
 import TitleInput from '../Inputs/TitleInput';
 import DescriptionInput from '../Inputs/DescriptionInput';
+import { Input } from '../ui/input';
+import DueDateInput from '../Inputs/DueDateInput';
 
 type Assignee = {
   id?: number;
@@ -64,6 +66,7 @@ const Test = () => {
       />
       <TitleInput setData={setData} />
       <DescriptionInput setData={setData} />
+      <DueDateInput setData={setData} />
     </>
   );
 };

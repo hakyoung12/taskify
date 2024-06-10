@@ -1,14 +1,14 @@
 'use client';
 
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
 import { SetData } from './InputTypes';
 
-interface TitleProps {
+interface Props {
   setData: SetData;
 }
 
-export default function TitleInput({ setData }: TitleProps) {
+export default function TitleInput({ setData }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {

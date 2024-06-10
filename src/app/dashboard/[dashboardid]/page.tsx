@@ -27,7 +27,7 @@ const columnMockData = {
   ],
 };
 
-export default function DashboardPage() {
+export default function dashboardPage() {
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {

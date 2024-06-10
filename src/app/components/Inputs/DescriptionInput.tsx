@@ -4,11 +4,11 @@ import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
 import { SetData } from './InputTypes';
 
-interface descriptionProps {
+interface Props {
   setData: SetData;
 }
 
-export default function DescriptionInput({ setData }: descriptionProps) {
+export default function DescriptionInput({ setData }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
