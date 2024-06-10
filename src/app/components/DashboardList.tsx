@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import Pagination from './Pagination';
-import { mockData } from './mockdata/DashboardMock';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
@@ -49,7 +48,7 @@ export default function DashboardList() {
   };
   /** 다음페이지 넘기기 함수 */
   const handleNextPage = () => {
-    if (currentPage * 10 < mockData.length) {
+    if (currentPage * 10 < totalCount) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -72,18 +71,6 @@ export default function DashboardList() {
     };
     fetchdashboardData();
   }, [currentPage]);
-
-  /** 대시보드 생성 테스트용 파라미터 */
-  const requestData = {
-    title: '넥스트',
-    color: '#e876ea',
-  };
-
-  /** 테스트용 대시보드 만들기 함수 */
-  const onClick = async () => {
-    const response = await instance.post('dashboards', requestData);
-    console.log('POST 요청 성공:', response.data);
-  };
 
   return (
     <div className='p-0 px-3 max-sm:hidden'>
@@ -131,7 +118,6 @@ export default function DashboardList() {
           onNext={handleNextPage}
         />
       </div>
-      <button onClick={onClick}>생성</button>
     </div>
   );
 }

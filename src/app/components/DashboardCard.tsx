@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Pagination from './Pagination';
 import { useEffect, useState } from 'react';
-import { mockData } from './mockdata/DashboardMock';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
@@ -29,9 +28,9 @@ type DashboardData = {
 };
 
 export default function DashboardCard() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState<number>(10);
-  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]);
+  const [currentPage, setCurrentPage] = useState(1); //현재 페이지
+  const [totalCount, setTotalCount] = useState<number>(10); //총 페이지
+  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]); // 가져올 대시보드 데이터
   const { openModal } = useModal();
   const startIndex = (currentPage - 1) * 5; //시작페이지
   const totalPage = Math.ceil(totalCount / 5); //마지막페이지
@@ -49,7 +48,7 @@ export default function DashboardCard() {
   };
 
   const handleNextPage = () => {
-    if (currentPage * 5 < mockData.length) {
+    if (currentPage * 5 < totalCount) {
       setCurrentPage(currentPage + 1);
     }
   };

@@ -1,18 +1,26 @@
 'use client';
 
 import Image from 'next/image';
-import { KeyboardEvent, useState } from 'react';
+import { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import InputTags from '../InputTags';
+import { LOGIN_TOKEN } from '@/app/api/apiStrings';
+import { CheckCardRes } from '@/app/api/apiTypes/cardType';
+import axios from '@/app/api/axios';
 
-type Inputs = {
-  assignee: string;
+interface Inputs extends CardData {
+  image: FileList;
+}
+
+interface CardData {
+  assignee: number;
   title: string;
   description: string;
   dueDate: string;
-  tags: string;
-  image: FileList;
-};
+  tags: string[];
+  state: number;
+  imageUrl: string;
+}
 
 type ModalProps = {
   cardId?: number;
@@ -28,8 +36,18 @@ export default function ModToDoForm({ cardId }: ModalProps) {
     formState: { errors, isDirty, isValid },
   } = useForm<Inputs>({ mode: 'onSubmit' });
   const [focused, setFocused] = useState<boolean>(false);
-  const [tags, setTags] = useState<string[]>([]);
-  const [imageUrl, setImageUrl] = useState<string>();
+  const [initData, setInitData] = useState<CardData>({
+    assignee: 0,
+    title: '',
+    description: '',
+    dueDate: '',
+    tags: [],
+    state: 0,
+    imageUrl: '',
+  });
+  const [tags, setTags] = useState<string[]>(initData.tags);
+  const [imageUrl, setImageUrl] = useState<string | null>(initData.imageUrl);
+  const token = useRef<string | null>(null);
 
   const INPUT_STYLE =
     'no-autofill text-[16px] max-sm:text-[14px] px-4 py-[15px] outline-none rounded-md border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
@@ -44,7 +62,16 @@ export default function ModToDoForm({ cardId }: ModalProps) {
     { nickname: 'd', id: 4, userId: 4 },
   ];
 
-  const createToDo: SubmitHandler<Inputs> = async (data) => {
+  //컬럼 목록 조회로 얻은 정보
+  const columns = [
+    { id: 1, title: '1번' },
+    { id: 2, title: '2번' },
+    { id: 3, title: '3번' },
+    { id: 4, title: '4번' },
+    { id: 5, title: '5번' },
+  ];
+
+  const ModToDo: SubmitHandler<CardData> = async (data) => {
     console.log(data);
     console.log(tags);
     setTags([]);
@@ -81,14 +108,11 @@ export default function ModToDoForm({ cardId }: ModalProps) {
 
   const setImage = () => {
     const imgFile = getValues('image')[0];
-    if (imageUrl !== undefined) {
-      URL.revokeObjectURL(imageUrl);
-    }
     if (imgFile) {
       const newImg = URL.createObjectURL(imgFile);
       setImageUrl(newImg);
     } else {
-      setImageUrl(undefined);
+      setImageUrl(null);
     }
     console.log(imageUrl);
   };
@@ -102,35 +126,89 @@ export default function ModToDoForm({ cardId }: ModalProps) {
     return year + '-' + month + '-' + day;
   }
 
+  //카드 수정 모달 생성 시 기존 카드 정보 가져오기
+  const getCardData = async () => {
+    try {
+      const { data }: { data: CheckCardRes } = await axios.get(
+        `/cards/${cardId}`,
+        { headers: { Authorization: token.current } },
+      );
+      setInitData({
+        assignee: data.assignee.id,
+        title: data.title,
+        description: data.description,
+        dueDate: data.dueDate,
+        tags: data.tags,
+        state: data.columnId,
+        imageUrl: data.imageUrl,
+      });
+
+      console.log(initData);
+    } catch (err: any) {
+      console.log(err);
+    } finally {
+      console.log(initData);
+    }
+  };
+
+  useEffect(() => {
+    const loginToken = window.localStorage.getItem(LOGIN_TOKEN);
+    token.current = loginToken;
+    // getCardData();
+  }, []);
+
   return (
     <article>
       <h2 className='max-sm:max-[20px] mb-[32px] text-[24px] font-bold text-custom_black-_333236 max-sm:mb-[24px]'>
-        할 일 생성
+        할 일 수정
       </h2>
       <form
-        onSubmit={handleSubmit(createToDo)}
+        onSubmit={handleSubmit(ModToDo)}
         onKeyDown={preventEnterSubmit}
         className='flex w-[100%] max-w-[450px] flex-col gap-y-8 px-7 text-[18px] font-medium text-custom_black-_333236'
       >
-        {/* ---------------담당자------------------ */}
-        <div className={LABLE_INPUT_STYLE}>
-          <label htmlFor='assignee' className='mb-2 self-start'>
-            담당자
-          </label>
-          <select
-            id='assignee'
-            className={`${INPUT_STYLE} no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
-            aria-invalid={errors.assignee ? 'true' : 'false'}
-            {...register('assignee', {
-              required: '담당자를 설정해주세요',
-            })}
-          >
-            {members.map((value) => (
-              <option key={value.id} value={value.userId}>
-                {value.nickname}
-              </option>
-            ))}
-          </select>
+        {/* --------------- 상태 + 담당자 ------------------ */}
+        <div className='flex w-[100%] justify-between gap-x-[16px]'>
+          <div className={`${LABLE_INPUT_STYLE} w-[100%]`}>
+            <label htmlFor='state' className='mb-2 self-start'>
+              상태
+            </label>
+            <select
+              id='state'
+              defaultValue={initData.state}
+              className={`${INPUT_STYLE} no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
+              aria-invalid={errors.state ? 'true' : 'false'}
+              {...register('state', {
+                required: '담당자를 설정해주세요',
+              })}
+            >
+              {columns.map((value) => (
+                <option key={value.id * -17} value={value.id}>
+                  {value.title}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className={`${LABLE_INPUT_STYLE} w-[100%]`}>
+            <label htmlFor='assignee' className='mb-2 self-start'>
+              담당자
+            </label>
+            <select
+              id='assignee'
+              defaultValue={initData.assignee}
+              className={`${INPUT_STYLE} no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
+              aria-invalid={errors.assignee ? 'true' : 'false'}
+              {...register('assignee', {
+                required: '담당자를 설정해주세요',
+              })}
+            >
+              {members.map((value) => (
+                <option key={value.userId} value={value.userId}>
+                  {value.nickname}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         {/* -------------제목-------------------- */}
         <div className={LABLE_INPUT_STYLE}>
@@ -139,6 +217,7 @@ export default function ModToDoForm({ cardId }: ModalProps) {
           </label>
           <input
             id='title'
+            defaultValue={initData.title}
             placeholder='제목을 입력해주세요'
             type='text'
             className={`${INPUT_STYLE}`}
@@ -155,6 +234,7 @@ export default function ModToDoForm({ cardId }: ModalProps) {
           </label>
           <textarea
             id='description'
+            defaultValue={initData.description}
             placeholder='설명을 입력해주세요'
             className={`${INPUT_STYLE} no-scrollbar h-[96px] resize-none`}
             aria-invalid={errors.description ? 'true' : 'false'}
@@ -172,6 +252,7 @@ export default function ModToDoForm({ cardId }: ModalProps) {
             <input
               id='dueDate'
               data-placeholder='날짜를 입력해주세요'
+              defaultValue={initData.dueDate}
               type='date'
               min={getToday()}
               className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] w-[100%] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
@@ -229,7 +310,7 @@ export default function ModToDoForm({ cardId }: ModalProps) {
           )}
         </div>
         <input
-          value={'생성'}
+          value={'수정'}
           type='submit'
           className='flex h-[50px] w-[100%] cursor-pointer items-center justify-center rounded-lg bg-custom_violet-_5534da text-[18px] font-medium text-custom_white disabled:cursor-default disabled:bg-custom_gray-_9fa6b2'
           disabled={!isDirty || !isValid || !tags.length}

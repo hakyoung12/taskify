@@ -10,7 +10,7 @@ import { ModalProps } from './CreateToDoModal';
 import { LOGIN_TOKEN } from '../../api/apiStrings';
 
 type Inputs = {
-  assignee: string;
+  assignee: number;
   title: string;
   description: string;
   dueDate: string;
@@ -33,7 +33,7 @@ export default function CreateToDoForm({
   const [tags, setTags] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState<string>();
   const { closeModal } = useModal();
-  const token = useRef<string>(null);
+  const token = useRef<string | null>(null);
 
   const INPUT_STYLE =
     'no-autofill text-[16px] max-sm:text-[14px] px-4 py-[15px] outline-none rounded-md border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da';
@@ -51,16 +51,20 @@ export default function CreateToDoForm({
   const createToDo: SubmitHandler<Inputs> = async (cardData) => {
     const { assignee, title, description, dueDate } = cardData;
     try {
-      await axios.post('/cards', {
-        assigneeUserId: assignee,
-        dashboardId: dashboardId,
-        columnId: columnId,
-        title: title,
-        description: description,
-        dueDate: dueDate,
-        tags: tags,
-        imageUrl: imageUrl,
-      });
+      await axios.post(
+        '/cards',
+        {
+          assigneeUserId: assignee,
+          dashboardId: dashboardId,
+          columnId: columnId,
+          title: title,
+          description: description,
+          dueDate: dueDate,
+          tags: tags,
+          imageUrl: imageUrl,
+        },
+        { headers: { Authorization: token.current } },
+      );
       closeModal();
     } catch (err: any) {
       console.log(err);
@@ -98,7 +102,6 @@ export default function CreateToDoForm({
 
   const setImage = () => {
     const imgFile = getValues('image')[0];
-    const reader = new FileReader();
     if (imageUrl !== undefined) {
       URL.revokeObjectURL(imageUrl);
     }
@@ -143,9 +146,12 @@ export default function CreateToDoForm({
             className={`${INPUT_STYLE} no-datalist-arrow no-select-arrow bg-[url('/images/dropDownArrow.svg')] bg-[length:26px_26px] bg-[center_right_16px] bg-no-repeat`}
             aria-invalid={errors.assignee ? 'true' : 'false'}
             {...register('assignee', {
-              required: '담당자를 설정해주세요',
+              required: '담당자를 선택해주세요',
             })}
           >
+            <option value='' selected disabled hidden>
+              담당자를 선택해주세요
+            </option>
             {members.map((value) => (
               <option key={value.userId} value={value.userId}>
                 {value.nickname}
