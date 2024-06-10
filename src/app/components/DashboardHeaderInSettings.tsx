@@ -8,8 +8,15 @@ import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import instance from '../api/axios';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
-const DashboardHeaderInSettings = () => {
+interface DashboardHeaderInSettingsProps {
+  link?: string;
+}
+
+const DashboardHeaderInSettings = ({
+  link,
+}: DashboardHeaderInSettingsProps) => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -64,17 +71,23 @@ const DashboardHeaderInSettings = () => {
         </span>
       </div>
       <div className='flex items-center space-x-2'>
-        <div className='ml-7 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:mr-10 sm:text-[16px]'>
-          <button className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'>
-            <Image
-              className='mr-2 hidden sm:block'
-              src='/images/settings.svg'
-              alt='settings'
-              width={20}
-              height={20}
-            />
-            <p>관리</p>
-          </button>
+        <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
+          {/* 대시보드 설정페이지에서 비활성화 */}
+          {link && (
+            <Link
+              href={link}
+              className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
+            >
+              <Image
+                className='mr-2 hidden sm:block'
+                src='/images/settings.svg'
+                alt='settings'
+                width={20}
+                height={20}
+              />
+              <p>관리</p>
+            </Link>
+          )}
           <button
             className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
             onClick={() => handleOpenModal(<InvitationModal />)}
