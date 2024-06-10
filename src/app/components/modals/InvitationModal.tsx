@@ -24,10 +24,11 @@ const InvitationModal: React.FC = () => {
     }
 
     try {
-      const res = await instance.post(
-        `dashboards/${params.dashboardid}/invitations`,
-        { email },
-      );
+      await instance.post(`dashboards/${params.dashboardid}/invitations`, {
+        email,
+      });
+
+      closeModal();
     } catch (error) {
       console.error(error);
     }
