@@ -5,6 +5,7 @@ import TitleInput from '../Inputs/TitleInput';
 import DescriptionInput from '../Inputs/DescriptionInput';
 import { Input } from '../ui/input';
 import DueDateInput from '../Inputs/DueDateInput';
+import TagInput from '../Inputs/TagsInput';
 
 type Assignee = {
   id?: number;
@@ -67,6 +68,7 @@ const Test = () => {
       <TitleInput setData={setData} />
       <DescriptionInput setData={setData} />
       <DueDateInput setData={setData} />
+      <TagInput setData={setData} />
     </>
   );
 };

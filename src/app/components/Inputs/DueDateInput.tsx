@@ -36,6 +36,7 @@ export default function DueDateInput({ setData }: Props) {
         onChange={(e) => {
           setInputValue(e.target.value || '');
         }}
+        required
         value={inputValue}
         className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] w-[100%] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
       />
