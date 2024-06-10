@@ -4,7 +4,7 @@ import React from 'react';
 import SideBar from '../components/SideBar';
 import DashboardHeader from '../components/DashboardHeader';
 import DashboardHeaderInSettings from '../components/DashboardHeaderInSettings';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -12,15 +12,18 @@ interface LayoutProps {
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
+  const dashboardId = `${pathname}/edit`;
 
   const renderHeader = () => {
     if (pathname === '/mydashboard') {
       return <DashboardHeader />;
     } else if (
-      pathname === '/mydashboard/edit' ||
-      pathname.startsWith('/dashboard/')
+      pathname.startsWith('/dashboard/') &&
+      !pathname.endsWith('/edit')
     ) {
-      return <DashboardHeaderInSettings />;
+      return <DashboardHeaderInSettings link={dashboardId} />;
+    } else if (pathname.endsWith('/edit')) {
+      return <DashboardHeaderInSettings link={''} />;
     } else if (pathname === '/mypage') {
       return <DashboardHeader />;
     } else {

@@ -17,17 +17,11 @@ export default function dashboardPage({ params }: PageProps) {
   const backLink = `/dashboard/${dashboardid}`; // 동적 파라미터를 포함한 링크 생성
 
   return (
-    <div className='flex'>
-      <SideBar />
-      <div className='w-screen'>
-        <DashboardHeaderInSettings />
-        <div className='bg-custom_gray-_fafafa pb-5'>
-          <BackButton link={backLink} />
-          <UpdateDashboardName dashboardid={dashboardid} />
-          <MemberList dashboardid={dashboardid} />
-          <InvitationList dashboardid={dashboardid} />
-        </div>
-      </div>
+    <div className='w-full bg-custom_gray-_fafafa pb-5'>
+      <BackButton link={backLink} />
+      <UpdateDashboardName dashboardid={dashboardid} />
+      <MemberList dashboardid={dashboardid} />
+      <InvitationList dashboardid={dashboardid} />
     </div>
   );
 }
