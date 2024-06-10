@@ -15,14 +15,14 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
 
   const renderHeader = () => {
     if (pathname === '/mydashboard') {
-      return <DashboardHeader />;
+      return <DashboardHeader title={'내 대시보드'} />;
     } else if (
       pathname === '/mydashboard/edit' ||
       pathname.startsWith('/dashboard/')
     ) {
       return <DashboardHeaderInSettings />;
     } else if (pathname === '/mypage') {
-      return <DashboardHeader />;
+      return <DashboardHeader title={'계정관리'} />;
     } else {
       return null;
     }
