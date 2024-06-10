@@ -24,9 +24,6 @@ const DashboardHeaderInSettings = ({
   const router = useRouter();
   const params = useParams();
 
-  // console.log('params');
-  // console.log(params.dashboardid);
-
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
