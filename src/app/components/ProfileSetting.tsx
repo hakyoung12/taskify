@@ -3,11 +3,12 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { Input } from '@/app/components/ui/input';
 import { Label } from '@/app/components/ui/label';
 import { Button } from '@radix-ui/themes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
 import instance from '../api/axios';
+import axios from 'axios';
 
 interface ProfileSettingValues {
   email: string;
@@ -23,14 +24,7 @@ export default function ProfileSetting() {
     formState: { errors },
   } = useForm<ProfileSettingValues>();
 
-  /** submit 이벤트 추가 예정 */
-  const onSubmit: SubmitHandler<ProfileSettingValues> = (data) => {
-    handleOpenModal(
-      <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
-    );
-  };
-
-  /** input에서 이미지url을 받아서 미리보기 이미지 생성 */
+  /** 이미지 url 받아오는 함수 */
   const uploadImage = async (file: File) => {
     const formData = new FormData();
     formData.append('image', file);
@@ -47,6 +41,7 @@ export default function ProfileSetting() {
     }
   };
 
+  /** 비동기로 uploadImage를 호출하여 이미지를 수정할 때 이미지 url 받아오기 */
   const onchangeImageUpload = async (
     e: React.ChangeEvent<HTMLInputElement>,
   ) => {
@@ -65,6 +60,35 @@ export default function ProfileSetting() {
       console.error('Failed to upload image:', error);
     }
   };
+
+  /** 프로필 수정폼 제출 */
+  const onSubmit: SubmitHandler<ProfileSettingValues> = async (data) => {
+    // data에 이미지 url이 안들어가서 직접 추가함
+    const formData = {
+      ...data,
+      profileImageUrl: uploadedImage,
+    };
+    try {
+      const response = await instance.put('users/me', formData);
+      handleOpenModal(
+        <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
+      );
+    } catch (e: unknown) {
+      if (axios.isAxiosError(e)) {
+        const error = e.response?.data.message; // 에러발생시 메시지 저장
+        handleOpenModal(<SettingChangedModal>{error}</SettingChangedModal>);
+      }
+    }
+  };
+
+  //프로필 이미지 가져오기
+  useEffect(() => {
+    const fetchProfileImage = async () => {
+      const response = await instance.get('users/me');
+      setUploadedImage(response.data.profileImageUrl);
+    };
+    fetchProfileImage();
+  }, []);
 
   const { openModal } = useModal();
 
@@ -106,7 +130,7 @@ export default function ProfileSetting() {
               className='h-12'
               placeholder='이메일을 입력해주세요'
               {...register('email', {
-                required: { value: true, message: '이메일을 입력해주세요' },
+                required: { value: false, message: '이메일을 입력해주세요' },
                 pattern: {
                   value: /^\S+@\S+$/i,
                   message: '이메일 형식이 올바르지 않습니다',
