@@ -5,59 +5,42 @@ import Image from 'next/image';
 import ChipAddIcon from './ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
-
-const cardsMockDataByColumnId = {
-  cursorId: 0,
-  totalCount: 3,
-  cards: [
-    {
-      id: 0,
-      title: '새로운 일정 관리 Taskify',
-      description: '안녕하세요!',
-      tags: ['프로젝트', '백엔드'],
-      dueDate: '2024-05-31',
-      assignee: {
-        profileImageUrl: '',
-        nickname: 'string',
-        id: 0,
-      },
-      teamId: 'string',
-      columnId: 0,
-      createdAt: '2024-05-31T16:45:45.608Z',
-      updatedAt: '2024-05-31T16:45:45.608Z',
-    },
-    {
-      id: 1,
-      title: 'string',
-      description: 'string',
-      tags: ['백엔드', '상'],
-      dueDate: '2024-05-31',
-      assignee: {
-        profileImageUrl: '/images/test/profile-test.jpeg',
-        nickname: 'string',
-        id: 0,
-      },
-      imageUrl: '/images/test/card-image-test.jpg',
-      teamId: 'string',
-      columnId: 0,
-      createdAt: '2024-05-31T16:45:45.608Z',
-      updatedAt: '2024-05-31T16:45:45.608Z',
-    },
-  ],
-};
+import { useEffect, useState } from 'react';
+import { getCardsByColumnId } from './ToDoCardModal/api';
 
 export default function Column({
   title,
   columnId,
+  dashboardId,
 }: {
   title: string;
   columnId: number;
+  dashboardId: number;
 }) {
+  const [cards, setCards] = useState<string[]>([]);
+  const [totalCount, setTotalCount] = useState<number>();
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
   };
+
+  const fetchCards = async () => {
+    try {
+      const res = await getCardsByColumnId(columnId);
+      console.log(res);
+      setCards(res.cards);
+      setTotalCount(res.totalCount);
+    } catch (error: any) {
+      console.log(error);
+    }
+  };
+
+  console.log(cards);
+
+  useEffect(() => {
+    fetchCards();
+  }, []);
 
   return (
     <div className='border-gray-_eeeeee flex min-w-[354px] flex-col gap-[25px] border-r p-[20px] max-xl:w-full'>
@@ -71,7 +54,7 @@ export default function Column({
           />
           <span className='mr-[12px]'>{title}</span>
           <div className='flex h-[20px] w-[20px] items-center justify-center rounded bg-custom_gray-_eeeeee text-center text-[12px] font-normal text-custom_gray-_787486'>
-            <p>{cardsMockDataByColumnId.totalCount}</p>
+            <p>{totalCount}</p>
           </div>
         </div>
         <Image
@@ -93,19 +76,23 @@ export default function Column({
           <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}
-        {cardsMockDataByColumnId.cards.map((card: any, index: number) => {
-          return (
-            <ColumnCard
-              key={index}
-              imageUrl={card.imageUrl}
-              title={card.title}
-              tags={card.tags}
-              dueDate={card.dueDate}
-              assignerNickname={card.assignee.nickname}
-              assignerProfileUrl={card.assignee.profileImageUrl}
-            />
-          );
-        })}
+        {cards &&
+          cards.map((card: any, index: number) => {
+            return (
+              <ColumnCard
+                columnId={columnId}
+                dashboardId={dashboardId}
+                key={index}
+                imageUrl={card.imageUrl}
+                title={card.title}
+                tags={card.tags}
+                description={card.description}
+                dueDate={card.dueDate}
+                assigner={card.assignee}
+                cardId={card.id}
+              />
+            );
+          })}
       </div>
     </div>
   );

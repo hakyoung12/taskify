@@ -45,9 +45,10 @@ export default function dashboardPage(dashboardid: any) {
               columnData.map((column: any, index: number) => {
                 return (
                   <Column
-                    key={column.id}
+                    key={index}
                     columnId={column.id}
                     title={column.title}
+                    dashboardId={id}
                   />
                 );
               })}

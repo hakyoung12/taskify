@@ -3,44 +3,30 @@
 import Image from 'next/image';
 import CustomAvatar from './CustomAvatar';
 import ToDoCardModal from './modals/ToDoCardModal';
-import { CreateCardRes } from '../api/apiTypes/cardType';
 import { useModal } from '@/context/ModalContext';
 
 interface ColumnCardProps {
   imageUrl: string;
   title: string;
   tags: string[];
+  description: string;
   dueDate: string;
-  assignerNickname: string;
-  assignerProfileUrl: string;
+  assigner: any;
+  cardId: number;
+  columnId: number;
+  dashboardId: number;
 }
 
-const mockCardData: CreateCardRes = {
-  id: 0,
-  title: '새로운 일정 관리 Taskify',
-  description:
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum finibus nibh arcu, quis consequat ante cursus eget. Cras mattis, nulla non laoreet porttitor, diam justo laoreet eros, vel aliquet diam elit at leo!',
-  tags: ['프로젝트', '백엔드'],
-  dueDate: '2024-05-31',
-  assignee: {
-    profileImageUrl: '',
-    nickname: 'string',
-    id: 0,
-  },
-  imageUrl: '/images/test/card-image-test.jpg',
-  teamId: 'string',
-  columnId: 0,
-  createdAt: '2024-05-31T16:45:45.608Z',
-  updatedAt: '2024-05-31T16:45:45.608Z',
-};
-
 export default function ColumnCard({
+  dashboardId,
+  cardId,
+  description,
   imageUrl,
   title,
   tags,
   dueDate,
-  assignerNickname,
-  assignerProfileUrl,
+  assigner,
+  columnId,
 }: ColumnCardProps) {
   const { openModal } = useModal();
 
@@ -54,12 +40,15 @@ export default function ColumnCard({
       onClick={() =>
         handleOpenModal(
           <ToDoCardModal
-            title={mockCardData.title}
-            description={mockCardData.description}
-            tags={mockCardData.tags}
-            dueDate={mockCardData.dueDate}
-            assignee={mockCardData.assignee}
-            imageUrl={mockCardData.imageUrl}
+            columnId={columnId}
+            dashboardId={dashboardId}
+            cardId={cardId}
+            title={title}
+            description={description}
+            tags={tags}
+            dueDate={dueDate}
+            assigner={assigner}
+            imageUrl={imageUrl}
           />,
         )
       }
@@ -98,8 +87,8 @@ export default function ColumnCard({
               {dueDate}
             </div>
             <CustomAvatar
-              nickName={assignerNickname}
-              profileUrl={assignerProfileUrl}
+              nickName={assigner.nickname}
+              profileUrl={assigner.profileImageUrl}
             />
           </div>
         </div>
