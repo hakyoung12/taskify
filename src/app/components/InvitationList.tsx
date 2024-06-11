@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import EditMenuTitle from './EditMenuTitle';
 import { mockData } from './mockdata/InvitationMock';
@@ -65,7 +66,6 @@ export default function InvitationList({
       const res = await instance.get(`dashboards/${dashboardid}/invitations`, {
         params: queryParams,
       });
-      console.log(res);
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };

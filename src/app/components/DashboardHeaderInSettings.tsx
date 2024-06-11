@@ -31,6 +31,7 @@ const DashboardHeaderInSettings = ({
     params.dashboardid,
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
+  const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
 
   const { openModal } = useModal();
 
@@ -69,6 +70,8 @@ const DashboardHeaderInSettings = ({
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
         setTitle(res.data.title);
+        setCreatedByMe(res.data.createdByMe);
+        // console.log(res.data.createdByMe);
       } catch (error) {
         console.error(error);
       }
@@ -94,19 +97,23 @@ const DashboardHeaderInSettings = ({
     fetchDashboardMemberData();
   }, [params.dashboardid]);
 
+  console.log(createdByMe);
+
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
         <span className='ml-10 text-lg font-bold'>{title}</span>
         {/* TODO: 내가 만든 부분에서만 crown 설정 */}
-        <span className='ml-2 text-yellow-500'>
-          <Image
-            src='/images/createByMe.svg'
-            alt='crown'
-            width={20}
-            height={16}
-          />
-        </span>
+        {createdByMe === true ? (
+          <span className='ml-2 text-yellow-500'>
+            <Image
+              src='/images/createByMe.svg'
+              alt='crown'
+              width={20}
+              height={16}
+            />
+          </span>
+        ) : null}
       </div>
       <div className='flex items-center space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
