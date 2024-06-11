@@ -46,7 +46,13 @@ const cardsMockDataByColumnId = {
   ],
 };
 
-export default function Column({ title }: { title: string }) {
+export default function Column({
+  title,
+  columnId,
+}: {
+  title: string;
+  columnId: number;
+}) {
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -74,7 +80,11 @@ export default function Column({ title }: { title: string }) {
           height={24}
           src='/images/settings-icon.svg'
           alt='설정 아이콘'
-          onClick={() => handleOpenModal(<UpdateColumnModal />)}
+          onClick={() =>
+            handleOpenModal(
+              <UpdateColumnModal title={title} columnId={columnId} />,
+            )
+          }
         />
       </div>
       <div className='flex flex-col gap-[16px]'>
