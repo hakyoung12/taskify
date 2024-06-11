@@ -16,7 +16,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
     setShowDropdown(!showDropdown);
   };
 
-  // 로그아웃 부분 custom hook 구분 or 컴포넌트 작성해서 구분
+  // 로그아웃 부분 custom hook 구분 or 컴포넌트 작성해서 구분 => 로그아웃 버튼 컴포넌트로 분리
   const handleLogout = () => {
     localStorage.removeItem(LOGIN_TOKEN);
     setUser(null);
