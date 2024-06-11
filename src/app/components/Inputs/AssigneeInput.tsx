@@ -93,7 +93,7 @@ export default function AssigneeInput({
   }, [assignee]);
 
   return (
-    <div className={`${LABLE_INPUT_STYLE} text-black`}>
+    <div className={`${LABLE_INPUT_STYLE} relative text-black`}>
       <label htmlFor='assignee' className={LABLE_STYLE}>
         담당자
       </label>
@@ -125,7 +125,7 @@ export default function AssigneeInput({
         />
       </div>
       {isDropShow && (
-        <div className='max-h-[96px] overflow-y-scroll bg-white text-[16px] max-sm:max-h-[84px] max-sm:text-[14px]'>
+        <div className='absolute top-[83px] max-h-[96px] w-full overflow-y-scroll bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
           {searchedMembers.map((member) => {
             return (
               <button
