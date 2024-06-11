@@ -7,13 +7,30 @@ import { useEffect, useState } from 'react';
 import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import instance from '../api/axios';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
+import Link from 'next/link';
+import UserIcon from './UserIcon';
+import { CheckMembersRes } from '../api/apiTypes/membersType';
 
-const DashboardHeaderInSettings = () => {
+interface DashboardHeaderInSettingsProps {
+  link?: string;
+}
+
+const DashboardHeaderInSettings = ({
+  link,
+}: DashboardHeaderInSettingsProps) => {
+  const router = useRouter();
+  const params = useParams();
+
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
-  const router = useRouter();
+  const [title, setTitle] = useState<string | null>(null);
+  const [page, setPage] = useState<number | null>(1);
+  const [size, setSize] = useState<number | null>(10);
+  const [dashboardId, setDashboardId] = useState<string | string[]>(
+    params.dashboardid,
+  );
+  const [members, setMembers] = useState<CheckMembersRes[]>();
 
   const { openModal } = useModal();
 
@@ -34,6 +51,11 @@ const DashboardHeaderInSettings = () => {
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOGIN_TOKEN);
+
+    if (!accessToken) {
+      router.push('/');
+    }
+
     const fetchUserData = async () => {
       try {
         const res = await instance.get('users/me');
@@ -43,13 +65,40 @@ const DashboardHeaderInSettings = () => {
       }
     };
 
-    accessToken ? fetchUserData() : router.push('/');
-  }, []);
+    const fetchDashboardData = async () => {
+      try {
+        const res = await instance.get(`dashboards/${params.dashboardid}`);
+        setTitle(res.data.title);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchDashboardMemberData = async () => {
+      try {
+        const res = await instance.get('members', {
+          params: {
+            page,
+            size,
+            dashboardId: params.dashboardid,
+          },
+        });
+        setMembers(res.data.members);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+    fetchDashboardData();
+    fetchDashboardMemberData();
+  }, [params.dashboardid]);
 
   return (
-    <nav className='flex h-[60px] items-center justify-between border-b p-4'>
-      <div className='invisible flex items-center xl:visible'>
-        <span className='text-lg font-bold'>비브리지</span>
+    <nav className='flex h-[60px] items-center justify-between border-b'>
+      <div className='hidden items-center sm:flex'>
+        <span className='ml-10 text-lg font-bold'>{title}</span>
+        {/* TODO: 내가 만든 부분에서만 crown 설정 */}
         <span className='ml-2 text-yellow-500'>
           <Image
             src='/images/createByMe.svg'
@@ -61,16 +110,22 @@ const DashboardHeaderInSettings = () => {
       </div>
       <div className='flex items-center space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
-          <button className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'>
-            <Image
-              className='mr-2 hidden sm:block'
-              src='/images/settings.svg'
-              alt='settings'
-              width={20}
-              height={20}
-            />
-            <p>관리</p>
-          </button>
+          {/* 대시보드 설정페이지에서 비활성화 */}
+          {link && (
+            <Link
+              href={link}
+              className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
+            >
+              <Image
+                className='mr-2 hidden sm:block'
+                src='/images/settings.svg'
+                alt='settings'
+                width={20}
+                height={20}
+              />
+              <p>관리</p>
+            </Link>
+          )}
           <button
             className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
             onClick={() => handleOpenModal(<InvitationModal />)}
@@ -85,46 +140,26 @@ const DashboardHeaderInSettings = () => {
             <p>초대하기</p>
           </button>
         </div>
-        <div className='ml-6 flex items-center -space-x-2'>
-          <div className='relative z-10'>
-            <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-red-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                Y
-              </p>
-            </div>
-          </div>
-          <div className='relative z-10'>
-            <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-green-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                Y
-              </p>
-            </div>
-          </div>
-          <div className='relative z-10 hidden sm:block'>
-            <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-orange-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                Y
-              </p>
-            </div>
-          </div>
-          <div className='relative z-10 hidden sm:block'>
-            <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-yellow-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                Y
-              </p>
-            </div>
-          </div>
-          <div className='relative z-10'>
-            <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-blue-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                +2
-              </p>
-            </div>
+        <div className='ml-6 flex items-center sm:-space-x-2'>
+          <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
+            {members?.map((member: CheckMembersRes, index: number) =>
+              index < 4 ? <UserIcon key={member.id} member={member} /> : null,
+            )}
+            {members && members.length > 4 && (
+              <div className='relative z-10'>
+                <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-blue-500 text-white'>
+                  <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
+                    +{members.length - 4}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
+        <div className='h-10 border-r sm:pl-3'></div>
         <div className='relative'>
           <div className='flex items-center' onClick={handleNicknameClick}>
-            <div className='relative h-[34px] w-[34px] cursor-pointer rounded-full border-2 border-white bg-blue-500 text-white'>
+            <div className='relative mx-3 h-[34px] w-[34px] cursor-pointer rounded-full border-2 border-white bg-blue-500 text-white'>
               <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
                 {user && user.nickname[0]}
               </p>

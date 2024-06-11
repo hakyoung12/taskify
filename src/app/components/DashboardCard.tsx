@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import Pagination from './Pagination';
 import { useEffect, useState } from 'react';
-import { mockData } from './mockdata/DashboardMock';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
@@ -29,9 +28,9 @@ type DashboardData = {
 };
 
 export default function DashboardCard() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalCount, setTotalCount] = useState<number>(10);
-  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]);
+  const [currentPage, setCurrentPage] = useState(1); //현재 페이지
+  const [totalCount, setTotalCount] = useState<number>(10); //총 페이지
+  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]); // 가져올 대시보드 데이터
   const { openModal } = useModal();
   const startIndex = (currentPage - 1) * 5; //시작페이지
   const totalPage = Math.ceil(totalCount / 5); //마지막페이지
@@ -49,7 +48,7 @@ export default function DashboardCard() {
   };
 
   const handleNextPage = () => {
-    if (currentPage * 5 < mockData.length) {
+    if (currentPage * 5 < totalCount) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -73,10 +72,10 @@ export default function DashboardCard() {
   }, [currentPage]);
 
   return (
-    <section className='w-sreen ml-6 mt-6'>
-      <div className='grid gap-3 max-sm:h-96 max-sm:grid-cols-1 max-sm:grid-rows-6 sm:grid-cols-2 sm:grid-rows-3 xl:grid-cols-3 xl:grid-rows-2'>
+    <section className='mx-auto ml-6 mt-6 grid max-w-[1000px] gap-3'>
+      <div className='grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3'>
         <button
-          className='font-Pretendard flex h-16 w-full items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-5 py-7 text-base font-semibold text-gray-800 max-sm:h-14'
+          className='font-Pretendard flex h-16 items-center justify-center gap-3 rounded-lg border border-gray-300 bg-white px-5 py-7 text-base font-semibold text-gray-800'
           onClick={() => handleOpenModal(<NewDashboardModal />)}
         >
           새로운 대시보드
@@ -92,7 +91,7 @@ export default function DashboardCard() {
           <Link
             key={todo.id}
             href={`/dashboard/${todo.id}`}
-            className='font-Pretendard flex h-16 w-full items-center justify-between rounded-lg border border-gray-300 bg-white px-5 py-7 text-base font-semibold text-gray-800 max-sm:h-14'
+            className='font-Pretendard flex h-16 items-center justify-between rounded-lg border border-gray-300 bg-white px-5 py-7 text-base font-semibold text-gray-800'
           >
             <div className='flex items-center gap-2'>
               <div className='flex items-center gap-4'>
@@ -121,7 +120,7 @@ export default function DashboardCard() {
           </Link>
         ))}
       </div>
-      <div className='flex items-center justify-end gap-3 pr-0 pt-2 max-sm:pt-3'>
+      <div className='flex items-center justify-end gap-3 pr-0 pt-2'>
         <div className='font-Pretendard text-base font-normal text-gray-800'>
           {currentPage} 페이지 중 {totalPage}
         </div>

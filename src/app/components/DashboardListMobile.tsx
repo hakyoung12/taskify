@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
-import { mockData } from './mockdata/DashboardMock';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
 import instance from '@/app/api/axios';
