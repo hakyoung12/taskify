@@ -9,8 +9,9 @@ import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/api';
 
 export default function dashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);
-  const id = Number(dashboardid.params.dashboardid);
   const { openModal } = useModal();
+
+  const id = Number(dashboardid.params.dashboardid);
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -32,10 +33,10 @@ export default function dashboardPage(dashboardid: any) {
   /* 새로운 컬럼 생성 버튼 - PC */
   const NewColumnButton = useMemo(() => {
     return (
-      <div className='min-w-[354px] max-xl:hidden'>
+      <div className='ml-[20px] mt-[68px] min-w-[354px] max-xl:hidden'>
         <div
-          className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
-          onClick={() => handleOpenModal(<NewColumnModal />)}
+          className='border-gray-_d9d9d9 flex h-[70px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
+          onClick={() => handleOpenModal(<NewColumnModal dashboardId={id} />)}
         >
           <p className='mr-[12px] text-[16px] font-bold'>
             새로운 컬럼 추가하기
@@ -52,7 +53,9 @@ export default function dashboardPage(dashboardid: any) {
       <div className='hidden max-xl:fixed max-xl:bottom-0 max-xl:block max-xl:w-full max-xl:bg-custom_gray-_fafafa max-xl:px-[20px]'>
         <div
           className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
-          onClick={() => handleOpenModal(<NewColumnModal />)}
+          onClick={() =>
+            handleOpenModal(<NewColumnModal dashboardId={dashboardid} />)
+          }
         >
           <p className='mr-[12px] text-[16px] font-bold'>
             새로운 컬럼 추가하기
@@ -64,19 +67,27 @@ export default function dashboardPage(dashboardid: any) {
   }, [handleOpenModal]);
 
   return (
-    <div className='flex'>
-      <div className='w-full'>
-        <div className='flex flex-wrap bg-custom_gray-_fafafa'>
-          {/* 컬럼 컴포넌트 뿌리기 */}
-          {columnData &&
-            columnData.length > 0 &&
-            columnData.map((column: any, index: number) => {
-              return <Column key={column.id} title={column.title} />;
-            })}
-          {NewColumnButton}
+    <>
+      <div className='flex bg-custom_gray-_fafafa'>
+        <div className='flex min-w-0 max-w-full flex-1 overflow-x-auto'>
+          <div className='flex flex-nowrap'>
+            {/* 컬럼 컴포넌트 뿌리기 */}
+            {columnData &&
+              columnData.length > 0 &&
+              columnData.map((column: any, index: number) => {
+                return (
+                  <Column
+                    key={column.id}
+                    columnId={column.id}
+                    title={column.title}
+                  />
+                );
+              })}
+            {NewColumnButton}
+          </div>
         </div>
+        {NewColumnButtonMedia}
       </div>
-      {NewColumnButtonMedia}
-    </div>
+    </>
   );
 }
