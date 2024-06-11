@@ -70,6 +70,14 @@ const deleteComment = async (commentId: number) => {
   }
 };
 
+const deleteCard = async (cardId: number) => {
+  try {
+    const res = await instance.delete(`cards/${cardId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const putColumnByID = async (columnId: number, title: string) => {
   const data = { title: title };
   try {
@@ -129,4 +137,5 @@ export {
   postComment,
   putComment,
   deleteComment,
+  deleteCard,
 };
