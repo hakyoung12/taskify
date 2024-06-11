@@ -14,7 +14,7 @@ const UpdateColumnModal = ({
   columnId: number;
   title: string;
 }) => {
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -26,8 +26,10 @@ const UpdateColumnModal = ({
   };
 
   const handleUpdateColumn = (inputTitleData: string) => {
-    if (isValueChange(title, inputTitleData))
+    if (isValueChange(title, inputTitleData)) {
       putColumnByID(columnId, inputTitleData);
+      closeModal();
+    }
   };
 
   return (

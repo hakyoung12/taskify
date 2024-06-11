@@ -1,19 +1,38 @@
 'use client';
 
+import axios from 'axios';
+import instance from '@/app/api/axios';
 import { useState } from 'react';
-import { postNewColumnData } from '../ToDoCardModal/api';
 import ModalFooterButtons from '../ModalFooterButtons';
 import ModalInput from '../ModalInput';
 import { useModal } from '@/context/ModalContext';
 
-const NewColumnModal = ({ dashboardId }: { dashboardId: number }) => {
+const NewColumnModal = ({
+  dashboardId,
+  columnTitles,
+}: {
+  dashboardId: number;
+  columnTitles: string[];
+}) => {
   const [value, setValue] = useState<string>('');
+  const [errorMessage, setErrorMessage] = useState<string>('');
   const { closeModal } = useModal();
 
-  const handleOnCick = () => {
+  const handleOnCick = async (title: string, dashboardid: number) => {
     if (value) {
-      postNewColumnData(value, dashboardId);
-      closeModal();
+      const data = {
+        title: title,
+        dashboardId: dashboardid,
+      };
+      try {
+        if (columnTitles.includes(title)) {
+          throw new Error('중복된 칼럼 이름입니다.');
+        }
+        const res = await instance.post(`columns`, data);
+        closeModal();
+      } catch (error: any) {
+        setErrorMessage(error.message);
+      }
     }
   };
 
@@ -27,8 +46,16 @@ const NewColumnModal = ({ dashboardId }: { dashboardId: number }) => {
           placeFolder='새로운 프로젝트'
           value={value}
           setValue={setValue}
+          error={
+            <span className='mt-[8px] text-[14px] text-red-600'>
+              {errorMessage}
+            </span>
+          }
         />
-        <ModalFooterButtons value={value} onAction={handleOnCick} />
+        <ModalFooterButtons
+          value={value}
+          onAction={() => handleOnCick(value, dashboardId)}
+        />
       </div>
     </div>
   );

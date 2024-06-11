@@ -1,3 +1,4 @@
+import axios from 'axios';
 import instance from '@/app/api/axios';
 
 const getDashBoard = async () => {
@@ -27,13 +28,7 @@ const postNewColumnData = async (title: string, dashboardid: number) => {
     dashboardId: dashboardid,
   };
 
-  try {
-    const res = await instance.post(`columns`, data);
-    console.log(res.data);
-    return res.data;
-  } catch (error) {
-    console.error(error);
-  }
+  const res = await instance.post(`columns`, data);
 };
 
 const getCardsList = async (
@@ -67,7 +62,7 @@ const putColumnByID = async (columnId: number, title: string) => {
   try {
     const res = await instance.put(`columns/${columnId}`, data);
   } catch (error) {
-    console.log(error);
+    console.log(axios.isAxiosError(error));
   }
 };
 
