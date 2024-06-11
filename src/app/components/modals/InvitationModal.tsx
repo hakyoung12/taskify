@@ -44,6 +44,7 @@ const InvitationModal: React.FC = () => {
         <input
           className='mt-[10px] w-full rounded-md border border-custom_gray-_d9d9d9 px-4 py-4'
           placeholder='codeit@codeit.com'
+          type='email'
           value={email}
           onChange={handleInputChange}
         />

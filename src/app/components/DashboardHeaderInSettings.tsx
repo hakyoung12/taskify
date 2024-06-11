@@ -79,7 +79,7 @@ const DashboardHeaderInSettings = ({
           params: {
             page,
             size,
-            dashboardId,
+            dashboardId: params.dashboardid,
           },
         });
         setMembers(res.data.members);
@@ -91,12 +91,13 @@ const DashboardHeaderInSettings = ({
     fetchUserData();
     fetchDashboardData();
     fetchDashboardMemberData();
-  }, []);
+  }, [params.dashboardid]);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
         <span className='ml-10 text-lg font-bold'>{title}</span>
+        {/* 내가 만든 부분에서만 crown 설정 */}
         <span className='ml-2 text-yellow-500'>
           <Image
             src='/images/createByMe.svg'
