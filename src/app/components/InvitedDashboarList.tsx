@@ -7,41 +7,61 @@ import Image from 'next/image';
 
 const InvitedDashboardList = () => {
   const [invitations, setInvitations] = useState<
-    CheckInvitationsRes['invitations'] | null
+    CheckInvitationsRes['invitations']
   >([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [filteredInvitations, setFilteredInvitations] = useState<
-    CheckInvitationsRes['invitations'] | null
+    CheckInvitationsRes['invitations']
   >([]);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const size = 6;
 
-  const fetchInvitation = async (cursorId: number | null) => {
+  const fetchInvitations = async (cursorId: number | null) => {
+    setLoading(true);
     try {
-      const res = await instance.get('invitations');
-
+      const res = await instance.get('invitations', {
+        params: {
+          cursorId,
+          size,
+        },
+      });
       const newInvitations = res.data.invitations;
+      setInvitations((prev) => {
+        const mergedInvitations = [...prev, ...newInvitations];
+        const uniqueInvitations = mergedInvitations.filter(
+          (invitation, index, self) =>
+            index === self.findIndex((i) => i.id === invitation.id),
+        );
+        return uniqueInvitations;
+      });
+      setFilteredInvitations((prev) => {
+        const mergedFilteredInvitations = [...prev, ...newInvitations];
+        const uniqueFilteredInvitations = mergedFilteredInvitations.filter(
+          (invitation, index, self) =>
+            index === self.findIndex((i) => i.id === invitation.id),
+        );
+        return uniqueFilteredInvitations;
+      });
 
       if (newInvitations.length > 0) {
-        setCursorId(newInvitations[newInvitations.length - 1]?.id);
+        setCursorId(newInvitations[newInvitations.length - 1].id);
       }
-
-      setInvitations(res.data.invitations);
-      setFilteredInvitations(res.data.invitations);
-      // console.log(invitations);
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && cursorId) {
-        fetchInvitation(cursorId);
+      if (target.isIntersecting && !loading) {
+        fetchInvitations(cursorId);
       }
     },
-    [cursorId],
+    [cursorId, loading],
   );
 
   useEffect(() => {
@@ -62,8 +82,8 @@ const InvitedDashboardList = () => {
   }, [handleIntersection]);
 
   useEffect(() => {
-    fetchInvitation(null);
-  }, [cursorId]);
+    fetchInvitations(null);
+  }, []);
 
   const debounce = (func: Function, delay: number) => {
     let timer: ReturnType<typeof setTimeout>;
@@ -81,21 +101,13 @@ const InvitedDashboardList = () => {
   ) => {
     try {
       await instance.put(`invitations/${invitationId}`, {
-        inviteAccepted: inviteAccepted,
+        inviteAccepted,
       });
-
-      setInvitations(
-        (prevInvitations) =>
-          prevInvitations?.filter(
-            (invitation) => invitation.id !== invitationId,
-          ) || null,
+      setInvitations((prev) =>
+        prev.filter((invitation) => invitation.id !== invitationId),
       );
-
-      setFilteredInvitations(
-        (prevFilteredInvitations) =>
-          prevFilteredInvitations?.filter(
-            (invitation) => invitation.id !== invitationId,
-          ) || null,
+      setFilteredInvitations((prev) =>
+        prev.filter((invitation) => invitation.id !== invitationId),
       );
     } catch (error) {
       console.error(error);
@@ -113,11 +125,11 @@ const InvitedDashboardList = () => {
         setFilteredInvitations(invitations);
       } else {
         setFilteredInvitations(
-          invitations?.filter((invitation) =>
+          invitations.filter((invitation) =>
             invitation.dashboard.title
               .toLowerCase()
               .includes(term.toLowerCase()),
-          ) || null,
+          ),
         );
       }
     }, 300),
@@ -129,7 +141,7 @@ const InvitedDashboardList = () => {
       <div className='text-2xl font-bold text-custom_black-_333236'>
         초대받은 대시보드
       </div>
-      {invitations?.length === 0 ? (
+      {invitations.length === 0 ? (
         <div className='flex flex-col items-center justify-center'>
           <Image
             src='/images/no-invitation.svg'
@@ -162,44 +174,43 @@ const InvitedDashboardList = () => {
               <div className='min-w-0 flex-1'>초대자</div>
               <div className='min-w-0 flex-1'>수락 여부</div>
             </div>
-            {filteredInvitations?.map((invitation) => {
-              return (
-                <div
-                  key={invitation.id}
-                  className='flex items-center justify-between border-b p-4'
-                >
-                  <div className='min-w-0 flex-1'>
-                    {invitation.dashboard.title}
-                  </div>
-                  <div className='min-w-0 flex-1'>
-                    {invitation.inviter.nickname}
-                  </div>
-                  <div className='min-w-0 flex-1'>
-                    <div className='flex space-x-2'>
-                      <button
-                        className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
-                        onClick={() =>
-                          handleInvitationResponse(invitation.id, true)
-                        }
-                      >
-                        수락
-                      </button>
-                      <button
-                        className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'
-                        onClick={() =>
-                          handleInvitationResponse(invitation.id, false)
-                        }
-                      >
-                        거절
-                      </button>
-                    </div>
+            {filteredInvitations.map((invitation) => (
+              <div
+                key={invitation.id}
+                className='flex items-center justify-between border-b p-4'
+              >
+                <div className='min-w-0 flex-1'>
+                  {invitation.dashboard.title}
+                </div>
+                <div className='min-w-0 flex-1'>
+                  {invitation.inviter.nickname}
+                </div>
+                <div className='min-w-0 flex-1'>
+                  <div className='flex space-x-2'>
+                    <button
+                      className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
+                      onClick={() =>
+                        handleInvitationResponse(invitation.id, true)
+                      }
+                    >
+                      수락
+                    </button>
+                    <button
+                      className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'
+                      onClick={() =>
+                        handleInvitationResponse(invitation.id, false)
+                      }
+                    >
+                      거절
+                    </button>
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         </>
       )}
+      <div id='intersection-target' style={{ height: '1px' }}></div>
     </div>
   );
 };
