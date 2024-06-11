@@ -6,6 +6,7 @@ import Pagination from './Pagination';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import NewDashboardModal from './modals/NewDashboardModal';
+import { useDashboardData } from '@/context/DashboardDataContext';
 import instance from '@/app/api/axios';
 
 type ColorPalette = {
@@ -20,17 +21,10 @@ const ColorPalette: ColorPalette = {
   '#e876ea': 'bg-custom_pink',
 };
 
-type DashboardData = {
-  id: string;
-  title: string;
-  color: string;
-  createdByMe: boolean;
-};
-
 export default function DashboardList() {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [totalCount, setTotalCount] = useState<number>(10);
-  const [dashboardsData, setDashboardsData] = useState<DashboardData[]>([]);
+  const { dashboardsData, setDashboardsData } = useDashboardData();
   const { openModal } = useModal();
   const startIndex = (currentPage - 1) * 10; //시작페이지
   const totalPage = Math.ceil(totalCount / 10); //마지막페이지

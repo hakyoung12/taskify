@@ -69,7 +69,6 @@ export default function InvitationList({
       const res = await instance.get(`dashboards/${dashboardid}/invitations`, {
         params: queryParams,
       });
-      console.log(res);
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };

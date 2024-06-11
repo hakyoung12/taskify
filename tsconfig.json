@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "api/axios.js"
+    "api/axios.js",
+    "src/context/DashboardDataContext.ㅓsx"
   ],
   "exclude": ["node_modules"]
 }

@@ -3,10 +3,12 @@
 import { useState } from 'react';
 import { useModal } from '@/context/ModalContext';
 import { useRouter } from 'next/navigation';
+import { useDashboardData } from '@/context/DashboardDataContext';
 import instance from '@/app/api/axios';
 
 const NewDashboardModal: React.FC = () => {
   const router = useRouter();
+  const { dashboardsData, setDashboardsData } = useDashboardData();
   const { closeModal } = useModal();
   const [selectedColor, setSelectedColor] = useState<string>('#7ac555');
   const [dashboardName, setDashboardName] = useState<string>('');
@@ -44,6 +46,12 @@ const NewDashboardModal: React.FC = () => {
       const response = await instance.post('dashboards', requestData);
       if (response.status >= 200 && response.status < 300) {
         console.log('POST 요청 성공:', response.data);
+        setDashboardsData((prev) => {
+          const newData = [...prev];
+          newData.pop();
+          newData.unshift(response.data);
+          return newData;
+        });
         router.push(`/dashboard/${response.data.id}`);
       }
     } catch (e) {
