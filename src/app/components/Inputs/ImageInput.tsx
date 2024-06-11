@@ -9,17 +9,17 @@ import axios from '@/app/api/axios';
 interface Props {
   setData: SetData;
   columnId: string;
-  imgUrl: string;
+  initImageUrl: string;
   loginToken: string;
 }
 
 export default function ImageInput({
   setData,
   columnId,
-  imgUrl,
+  initImageUrl,
   loginToken,
 }: Props) {
-  const [imageUrl, setImageUrl] = useState<string>(imgUrl);
+  const [imageUrl, setImageUrl] = useState<string>(initImageUrl);
   const image = useRef<HTMLInputElement>(null);
 
   const setImage = async () => {
@@ -30,13 +30,12 @@ export default function ImageInput({
     }
     try {
       const { data } = await axios.post(
-        `/columns/${30202}/card-image`,
+        `/columns/${columnId}/card-image`,
         formData,
         {
           headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU4NCwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MDg2OTUxLCJpc3MiOiJzcC10YXNraWZ5In0.wooLN4zkICnds7Q9cFBlVJVH7CQpRAi7_bsMu0f8iHY',
+            Authorization: `Bearer ${loginToken}`,
           },
         },
       );
@@ -67,7 +66,7 @@ export default function ImageInput({
       />
       {imageUrl && (
         <div className='absolute top-[35px] h-[76px] w-[76px] cursor-pointer overflow-hidden rounded-md'>
-          <Image src={imageUrl} fill alt='' />
+          <Image src={imageUrl} fill alt='' sizes='30vw' />
         </div>
       )}
     </div>

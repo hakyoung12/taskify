@@ -6,10 +6,10 @@ import { SetData } from './InputTypes';
 
 interface Props {
   setData: SetData;
+  initDueDate: string;
 }
-
-export default function DueDateInput({ setData }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function DueDateInput({ setData, initDueDate }: Props) {
+  const [inputValue, setInputValue] = useState<string>(initDueDate);
 
   function getToday() {
     const date = new Date();

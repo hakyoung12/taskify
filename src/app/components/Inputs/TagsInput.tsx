@@ -7,11 +7,12 @@ import InputTags from '../InputTags';
 
 interface Props {
   setData: SetData;
+  initTags: string[];
 }
 
-export default function TagInput({ setData }: Props) {
+export default function TagInput({ setData, initTags }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
-  const [tags, setTags] = useState<string[]>([]);
+  const [tags, setTags] = useState<string[]>(initTags);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const tagInput = useRef<HTMLInputElement>(null);
 

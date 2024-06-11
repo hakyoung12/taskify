@@ -6,10 +6,11 @@ import { SetData } from './InputTypes';
 
 interface Props {
   setData: SetData;
+  initTitle: string;
 }
 
-export default function TitleInput({ setData }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function TitleInput({ setData, initTitle }: Props) {
+  const [inputValue, setInputValue] = useState<string>(initTitle);
 
   useEffect(() => {
     setData({ title: inputValue });
@@ -24,7 +25,7 @@ export default function TitleInput({ setData }: Props) {
         placeholder='제목을 입력해주세요'
         type='text'
         onChange={(e) => {
-          setInputValue(e.target.value || '');
+          setInputValue(e.target.value.trim() || '');
         }}
         value={inputValue}
         className={`${INPUT_STYLE} text-black`}

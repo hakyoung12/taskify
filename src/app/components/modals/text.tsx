@@ -1,39 +1,22 @@
 'use client';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import AssigneeInput from '../Inputs/AssigneeInput';
 import TitleInput from '../Inputs/TitleInput';
 import DescriptionInput from '../Inputs/DescriptionInput';
-import { Input } from '../ui/input';
 import DueDateInput from '../Inputs/DueDateInput';
 import TagInput from '../Inputs/TagsInput';
 import ImageInput from '../Inputs/ImageInput';
-
-type Assignee = {
-  id?: number;
-  userId: number;
-  email: string;
-  nickname: string;
-  profileImageUrl?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  isOwner?: boolean;
-};
-
-interface Datas {
-  assignee: Assignee;
-  title: string;
-  description: string;
-  dueDate: string;
-  tags: string[];
-  imageUrl: string;
-}
+import { Assignee, Datas, Members } from '../Inputs/InputTypes';
+import axios from '@/app/api/axios';
+import { Button } from '../ui/button';
 
 interface ModalProps {
   columnId: string;
   dashboardId: string;
+  loginToken: string;
 }
 
-const Test = ({ columnId, dashboardId }: ModalProps) => {
+const Test = ({ columnId, dashboardId, loginToken }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
       userId: 0,
@@ -47,14 +30,38 @@ const Test = ({ columnId, dashboardId }: ModalProps) => {
     imageUrl: '',
   });
   const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [members, setMembers] = useState<Members>([]);
+  const [isMounted, setIsMounted] = useState<boolean>(false);
 
-  const members = [
-    { userId: 1, email: 'aa@aa.com', nickname: '가 고래' },
-    { userId: 2, email: 'ba@aa.com', nickname: '나 고래' },
-    { userId: 3, email: 'ca@aa.com', nickname: '다 고래' },
-    { userId: 4, email: 'da@aa.com', nickname: '라 고래' },
-    { userId: 5, email: 'ea@aa.com', nickname: '마 고래' },
-  ];
+  const getMembers = useCallback(async () => {
+    try {
+      const { data } = await axios.get(
+        `/members?size=409&dashboardId=${dashboardId}`,
+        {
+          headers: {
+            Authorization: `Bearer ${loginToken}`,
+          },
+        },
+      );
+      const { members } = data;
+      setMembers(members);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dashboardId, loginToken]);
+
+  const createCard = async () => {
+    try {
+      const res = await axios.post('/cards', datas, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      });
+    } catch (err) {
+      console.log(err);
+      alert('미안하지만 카드 생성은 실패다');
+    }
+  };
 
   const setData = useCallback(
     (data: { [key: string]: string | Assignee | string[] }) => {
@@ -65,6 +72,17 @@ const Test = ({ columnId, dashboardId }: ModalProps) => {
     [],
   );
 
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (isMounted) {
+      getMembers();
+    }
+  }, [isMounted, getMembers]);
+
+  if (!isMounted) return;
   return (
     <div
       className='w-full max-w-[506px] bg-white'
@@ -76,16 +94,30 @@ const Test = ({ columnId, dashboardId }: ModalProps) => {
         setData={setData}
         controlFocus={{ isFocused, setIsFocused }}
       />
-      <TitleInput setData={setData} />
-      <DescriptionInput setData={setData} />
-      <DueDateInput setData={setData} />
-      <TagInput setData={setData} />
+      <TitleInput setData={setData} initTitle={datas.title} />
+      <DescriptionInput setData={setData} initDescription={datas.description} />
+      <DueDateInput setData={setData} initDueDate={datas.dueDate} />
+      <TagInput setData={setData} initTags={datas.tags} />
       <ImageInput
         setData={setData}
         columnId={columnId}
-        imgUrl={datas.imageUrl}
-        loginToken=''
+        initImageUrl={datas.imageUrl}
+        loginToken={loginToken}
       />
+      <Button
+        onClick={createCard}
+        disabled={
+          datas.assignee.nickname === '' ||
+          datas.title === '' ||
+          datas.description === '' ||
+          datas.dueDate === '' ||
+          datas.tags.length === 0 ||
+          datas.imageUrl === ''
+        }
+        className='bg-custom_violet-_5534da disabled:bg-custom_gray-_9fa6b2'
+      >
+        생성
+      </Button>
     </div>
   );
 };

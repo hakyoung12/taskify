@@ -9,7 +9,7 @@ import React, {
   useState,
 } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
-import { Assignee, SetData } from './InputTypes';
+import { Assignee, SetData, Members } from './InputTypes';
 
 interface AssigneeProps {
   assignee: Assignee;
@@ -29,17 +29,6 @@ interface AssigneeProps {
     setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   };
 }
-
-type Members = {
-  id?: number;
-  userId: number;
-  email: string;
-  nickname: string;
-  profileImageUrl?: string;
-  createdAt?: string;
-  updatedAt?: string;
-  isOwner?: boolean;
-}[];
 
 const CIRCLE =
   'flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
