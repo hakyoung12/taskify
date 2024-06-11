@@ -12,15 +12,18 @@ interface LayoutProps {
 
 const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   const pathname = usePathname();
+  const dashboardId = `${pathname}/edit`;
 
   const renderHeader = () => {
     if (pathname === '/mydashboard') {
       return <DashboardHeader title={'내 대시보드'} />;
     } else if (
-      pathname === '/mydashboard/edit' ||
-      pathname.startsWith('/dashboard/')
+      pathname.startsWith('/dashboard/') &&
+      !pathname.endsWith('/edit')
     ) {
-      return <DashboardHeaderInSettings />;
+      return <DashboardHeaderInSettings link={dashboardId} />;
+    } else if (pathname.endsWith('/edit')) {
+      return <DashboardHeaderInSettings link={''} />;
     } else if (pathname === '/mypage') {
       return <DashboardHeader title={'계정관리'} />;
     } else {
