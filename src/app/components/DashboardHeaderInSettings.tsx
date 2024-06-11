@@ -19,7 +19,6 @@ const DashboardHeaderInSettings = ({
 }: DashboardHeaderInSettingsProps) => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-
   const router = useRouter();
 
   const { openModal } = useModal();

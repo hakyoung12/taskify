@@ -1,16 +1,20 @@
 'use client';
 import EditMenuTitle from './EditMenuTitle';
-import { DeleteButton } from './DeleteButton';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import instance from '../api/axios';
 import { CheckMembersRes } from '../api/apiTypes/membersType';
+import SettingChangedModal from './modals/SettingChangedModal';
+import { useModal } from '@/context/ModalContext';
+import axios from 'axios';
 
 export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [memberList, setMemberList] = useState<CheckMembersRes[]>([]);
   const [totalCount, setTotalCount] = useState<number>(10);
   const totalPage = Math.ceil(totalCount / 4);
+  const { openModal } = useModal();
+
   /** 멤버리스트 조회 파라미터 */
   const queryParams = { dashboardId: dashboardid, page: currentPage, size: 4 };
 
@@ -23,6 +27,26 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const handlePrevPage = () => {
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
+  /** 멤버삭제 */
+  const onClick = async (id: number) => {
+    try {
+      const response = await instance.delete(`members/${id}`);
+      handleOpenModal(
+        <SettingChangedModal>멤버가 삭제되었습니다.</SettingChangedModal>,
+      );
+    } catch (e: unknown) {
+      //변경실패시
+      if (axios.isAxiosError(e)) {
+        const error = e.response?.data.message; // 에러발생시 메시지 저장
+        handleOpenModal(<SettingChangedModal>{error}</SettingChangedModal>);
+      }
     }
   };
 
@@ -66,7 +90,12 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
                   </div>
                   {member.nickname}
                 </div>
-                <DeleteButton title='삭제' />
+                <button
+                  className='w-21 border-gray-D9D9D9 text-violet-_5534da font-Pretendard flex h-8 flex-shrink-0 items-center justify-center gap-2.5 rounded border bg-white px-7 py-1.5 text-base text-sm font-medium max-sm:w-[52px] max-sm:px-2 max-sm:text-xs'
+                  onClick={() => onClick(member.id)}
+                >
+                  삭제
+                </button>
               </div>
             );
           })}

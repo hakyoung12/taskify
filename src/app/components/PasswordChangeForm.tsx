@@ -6,6 +6,10 @@ import { Button } from '@radix-ui/themes';
 import { useRef } from 'react';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
+import instance from '../api/axios';
+import axios from 'axios';
+import { LOGIN_TOKEN } from '../api/apiStrings';
+import { useRouter } from 'next/navigation';
 
 interface PasswordChangeValues {
   password: string;
@@ -14,6 +18,7 @@ interface PasswordChangeValues {
 }
 
 export default function PasswordChangeForm() {
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,9 +35,32 @@ export default function PasswordChangeForm() {
   const passwordRef = useRef<string | null>(null);
   passwordRef.current = watch('newPassword');
 
-  const onSubmit: SubmitHandler<PasswordChangeValues> = (data) => {
-    console.log(data.password, data.newPassword);
-    handleOpenModal(<SettingChangedModal text='현재 비밀번호가 틀렸습니다.' />);
+  //비밀번호 변경폼 제출
+  const onSubmit: SubmitHandler<PasswordChangeValues> = async (data) => {
+    // 새 비밀번호 확인을 제외한 데이터 제출
+    const submitData = {
+      password: data.password,
+      newPassword: data.newPassword,
+    };
+    try {
+      const response = await instance.put('auth/password', submitData);
+      if (response.status >= 200 && response.status < 300) {
+        //변경성공시
+        handleOpenModal(
+          <SettingChangedModal>
+            비밀번호가 변경되었습니다. 다시 로그인해주세요.
+          </SettingChangedModal>,
+        );
+        localStorage.removeItem(LOGIN_TOKEN);
+        router.push('/');
+      }
+    } catch (e: unknown) {
+      //변경실패시
+      if (axios.isAxiosError(e)) {
+        const error = e.response?.data.message; // 에러발생시 메시지 저장
+        handleOpenModal(<SettingChangedModal>{error}</SettingChangedModal>);
+      }
+    }
   };
 
   return (
@@ -64,7 +92,10 @@ export default function PasswordChangeForm() {
             className='h-12'
             placeholder='새 비밀번호 입력'
             {...register('newPassword', {
-              required: { value: true, message: '새 비밀번호를 입력해주세요.' },
+              required: {
+                value: true,
+                message: '새 비밀번호를 입력해주세요.',
+              },
             })}
           />
           {

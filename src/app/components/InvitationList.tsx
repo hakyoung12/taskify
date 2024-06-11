@@ -1,17 +1,20 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { DeleteButton } from './DeleteButton';
 import EditMenuTitle from './EditMenuTitle';
 import { mockData } from './mockdata/InvitationMock';
 import Image from 'next/image';
-import instance from '../api/axios';
+import instance from '@/app/api/axios';
 import { LoadInvitationsRes } from '../api/apiTypes/dashboardsType';
+import { useModal } from '@/context/ModalContext';
+import SettingChangedModal from './modals/SettingChangedModal';
+import axios from 'axios';
 
 export default function InvitationList({
   dashboardid,
 }: {
   dashboardid: number;
 }) {
+  const { openModal } = useModal();
   const [currentPage, setCurrentPage] = useState(1);
   const [invitationList, setInvitationList] = useState<LoadInvitationsRes[]>(
     [],
@@ -20,7 +23,7 @@ export default function InvitationList({
   const totalPage = Math.ceil(totalCount / 5) || 1;
 
   /** 대시보드 조회 파라미터 */
-  const queryParams = { dashboardId: dashboardid, page: currentPage, size: 5 };
+  const queryParams = { page: currentPage, size: 5 };
 
   const handleNextPage = () => {
     if (currentPage * 5 < mockData.length) {
@@ -34,12 +37,34 @@ export default function InvitationList({
     }
   };
 
+  const handleOpenModal = (content: React.ReactNode) => {
+    openModal(content);
+  };
+
+  /** 초대내역 삭제 */
+  const onClick = async (id: number) => {
+    const link = `dashboards/${dashboardid}/invitations/${id}`;
+    try {
+      const response = await instance.delete(link);
+      handleOpenModal(
+        <SettingChangedModal>초대가 취소되었습니다.</SettingChangedModal>,
+      );
+    } catch (e: unknown) {
+      //변경실패시
+      if (axios.isAxiosError(e)) {
+        const error = e.response?.data.message; // 에러발생시 메시지 저장
+        handleOpenModal(<SettingChangedModal>{error}</SettingChangedModal>);
+      }
+    }
+  };
+
   /** 멤버리스트 조회 */
   useEffect(() => {
     const fetchInvitationListData = async () => {
       const res = await instance.get(`dashboards/${dashboardid}/invitations`, {
         params: queryParams,
       });
+      console.log(res);
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };
@@ -75,13 +100,18 @@ export default function InvitationList({
             {invitationList.map((email) => {
               return (
                 <div
-                  key={email.invitations[0].inviter.id}
+                  key={email.id}
                   className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'
                 >
                   <div className='flex items-center gap-3 max-sm:text-sm'>
-                    {email.invitations[0].inviter.email}
+                    {email.invitee.email}
                   </div>
-                  <DeleteButton title='삭제' />
+                  <button
+                    className='w-21 border-gray-D9D9D9 text-violet-_5534da font-Pretendard flex h-8 flex-shrink-0 items-center justify-center gap-2.5 rounded border bg-white px-7 py-1.5 text-base text-sm font-medium max-sm:w-[52px] max-sm:px-2 max-sm:text-xs'
+                    onClick={() => onClick(email.id)}
+                  >
+                    삭제
+                  </button>
                 </div>
               );
             })}

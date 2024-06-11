@@ -5,7 +5,7 @@ import DashboardListMobile from './DashboardListMobile';
 
 export default function SideBar() {
   return (
-    <aside className='relative h-screen w-[67px] border-r-2 border-solid border-gray-300 bg-white sm:w-[160px] xl:w-[300px]'>
+    <aside className='relative w-[67px] border-r-2 border-solid border-gray-300 bg-white sm:w-[160px] xl:w-[300px]'>
       <Link href='/' className='flex p-5 px-6 pb-0 max-sm:px-5'>
         <div className='relative h-[33px] w-[28px] max-sm:w-6'>
           <Image fill src='/images/sideBarLogo.svg' alt='Taskify 로고' />
