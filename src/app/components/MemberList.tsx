@@ -7,6 +7,7 @@ import { CheckMembersRes } from '../api/apiTypes/membersType';
 import SettingChangedModal from './modals/SettingChangedModal';
 import { useModal } from '@/context/ModalContext';
 import axios from 'axios';
+import CustomAvatar from './CustomAvatar';
 
 export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -67,6 +68,8 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
     fetchMembersData();
   }, []);
 
+  console.log(memberList);
+
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <EditMenuTitle
@@ -86,13 +89,11 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
                 className='text-black-_333236 stroke-gray-_eeeeee flex flex-shrink-0 items-center justify-between border-b stroke-1 py-4'
               >
                 <div className='flex items-center gap-3 max-sm:text-sm'>
-                  <div className='relative h-[38px] w-[38px]'>
-                    <Image
-                      fill
-                      src='/images/mockprofile4.svg'
-                      alt='프로필 사진'
-                    />
-                  </div>
+                  <CustomAvatar
+                    profileUrl={member.profileImageUrl}
+                    nickName={member.nickname}
+                    size='medium'
+                  />
                   {member.nickname}
                 </div>
                 <button

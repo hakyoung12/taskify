@@ -23,7 +23,7 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
     ) {
       return <DashboardHeaderInSettings link={dashboardId} />;
     } else if (pathname.endsWith('/edit')) {
-      return <DashboardHeaderInSettings link={''} />;
+      return <DashboardHeaderInSettings />;
     } else if (pathname === '/mypage') {
       return <DashboardHeader title={'계정관리'} />;
     } else {
