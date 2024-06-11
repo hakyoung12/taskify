@@ -6,7 +6,7 @@ import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import instance from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 
-const DashboardHeader = () => {
+const DashboardHeader = ({ title }: { title: string }) => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -16,7 +16,7 @@ const DashboardHeader = () => {
     setShowDropdown(!showDropdown);
   };
 
-  // 로그아웃 부분 custom hook 구분 or 컴포넌트 작성해서 구분
+  // 로그아웃 부분 custom hook 구분 or 컴포넌트 작성해서 구분 => 로그아웃 버튼 컴포넌트로 분리
   const handleLogout = () => {
     localStorage.removeItem(LOGIN_TOKEN);
     setUser(null);
@@ -45,7 +45,7 @@ const DashboardHeader = () => {
   return (
     <div className='flex h-[60px] items-center justify-between border-b border-r border-t border-custom_gray-_d9d9d9 py-1'>
       <div className='ml-10 text-lg font-bold text-custom_black-_333236'>
-        내 대시보드
+        {title}
       </div>
       <div className='relative'>
         <div className='flex items-center' onClick={handleNicknameClick}>

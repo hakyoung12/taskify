@@ -7,8 +7,10 @@ import { useEffect, useState } from 'react';
 import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import instance from '../api/axios';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+import UserIcon from './UserIcon';
+import { CheckMembersRes } from '../api/apiTypes/membersType';
 
 interface DashboardHeaderInSettingsProps {
   link?: string;
@@ -17,9 +19,18 @@ interface DashboardHeaderInSettingsProps {
 const DashboardHeaderInSettings = ({
   link,
 }: DashboardHeaderInSettingsProps) => {
+  const router = useRouter();
+  const params = useParams();
+
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const router = useRouter();
+  const [title, setTitle] = useState<string | null>(null);
+  const [page, setPage] = useState<number | null>(1);
+  const [size, setSize] = useState<number | null>(10);
+  const [dashboardId, setDashboardId] = useState<string | string[]>(
+    params.dashboardid,
+  );
+  const [members, setMembers] = useState<CheckMembersRes[]>();
 
   const { openModal } = useModal();
 
@@ -40,6 +51,11 @@ const DashboardHeaderInSettings = ({
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOGIN_TOKEN);
+
+    if (!accessToken) {
+      router.push('/');
+    }
+
     const fetchUserData = async () => {
       try {
         const res = await instance.get('users/me');
@@ -49,17 +65,40 @@ const DashboardHeaderInSettings = ({
       }
     };
 
-    if (!accessToken) {
-      router.push('/');
-    }
+    const fetchDashboardData = async () => {
+      try {
+        const res = await instance.get(`dashboards/${params.dashboardid}`);
+        setTitle(res.data.title);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const fetchDashboardMemberData = async () => {
+      try {
+        const res = await instance.get('members', {
+          params: {
+            page,
+            size,
+            dashboardId: params.dashboardid,
+          },
+        });
+        setMembers(res.data.members);
+      } catch (error) {
+        console.error(error);
+      }
+    };
 
     fetchUserData();
-  }, []);
+    fetchDashboardData();
+    fetchDashboardMemberData();
+  }, [params.dashboardid]);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
-        <span className='ml-10 text-lg font-bold'>비브리지</span>
+        <span className='ml-10 text-lg font-bold'>{title}</span>
+        {/* TODO: 내가 만든 부분에서만 crown 설정 */}
         <span className='ml-2 text-yellow-500'>
           <Image
             src='/images/createByMe.svg'
@@ -103,41 +142,18 @@ const DashboardHeaderInSettings = ({
         </div>
         <div className='ml-6 flex items-center sm:-space-x-2'>
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
-            <div className='relative z-10'>
-              <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-red-500 text-white'>
-                <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                  Y
-                </p>
+            {members?.map((member: CheckMembersRes, index: number) =>
+              index < 4 ? <UserIcon key={member.id} member={member} /> : null,
+            )}
+            {members && members.length > 4 && (
+              <div className='relative z-10'>
+                <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-blue-500 text-white'>
+                  <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
+                    +{members.length - 4}
+                  </p>
+                </div>
               </div>
-            </div>
-            <div className='relative z-10'>
-              <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-green-500 text-white'>
-                <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                  Y
-                </p>
-              </div>
-            </div>
-            <div className='relative z-10 hidden sm:block'>
-              <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-orange-500 text-white'>
-                <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                  Y
-                </p>
-              </div>
-            </div>
-            <div className='relative z-10 hidden sm:block'>
-              <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-yellow-500 text-white'>
-                <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                  Y
-                </p>
-              </div>
-            </div>
-            <div className='relative z-10'>
-              <div className='h-[34px] w-[34px] rounded-full border-2 border-white bg-blue-500 text-white'>
-                <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                  +2
-                </p>
-              </div>
-            </div>
+            )}
           </div>
         </div>
         <div className='h-10 border-r sm:pl-3'></div>
