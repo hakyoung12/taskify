@@ -51,6 +51,11 @@ const DashboardHeaderInSettings = ({
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOGIN_TOKEN);
+
+    if (!accessToken) {
+      router.push('/');
+    }
+
     const fetchUserData = async () => {
       try {
         const res = await instance.get('users/me');
@@ -68,10 +73,6 @@ const DashboardHeaderInSettings = ({
         console.error(error);
       }
     };
-
-    if (!accessToken) {
-      router.push('/');
-    }
 
     const fetchDashboardMemberData = async () => {
       try {
@@ -97,7 +98,7 @@ const DashboardHeaderInSettings = ({
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
         <span className='ml-10 text-lg font-bold'>{title}</span>
-        {/* 내가 만든 부분에서만 crown 설정 */}
+        {/* TODO: 내가 만든 부분에서만 crown 설정 */}
         <span className='ml-2 text-yellow-500'>
           <Image
             src='/images/createByMe.svg'
