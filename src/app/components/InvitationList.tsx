@@ -46,9 +46,14 @@ export default function InvitationList({
     const link = `dashboards/${dashboardid}/invitations/${id}`;
     try {
       const response = await instance.delete(link);
-      handleOpenModal(
-        <SettingChangedModal>초대가 취소되었습니다.</SettingChangedModal>,
-      );
+      if (response.status >= 200 && response.status < 300) {
+        handleOpenModal(
+          <SettingChangedModal>초대가 취소되었습니다.</SettingChangedModal>,
+        );
+        setInvitationList(
+          (prev) => prev?.filter((invitation) => invitation.id !== id) || null,
+        );
+      }
     } catch (e: unknown) {
       //변경실패시
       if (axios.isAxiosError(e)) {

@@ -38,9 +38,14 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
   const onClick = async (id: number) => {
     try {
       const response = await instance.delete(`members/${id}`);
-      handleOpenModal(
-        <SettingChangedModal>멤버가 삭제되었습니다.</SettingChangedModal>,
-      );
+      if (response.status >= 200 && response.status < 300) {
+        handleOpenModal(
+          <SettingChangedModal>멤버가 삭제되었습니다.</SettingChangedModal>,
+        );
+        setMemberList(
+          (prev) => prev?.filter((member) => member.id !== id) || null,
+        );
+      }
     } catch (e: unknown) {
       //변경실패시
       if (axios.isAxiosError(e)) {
