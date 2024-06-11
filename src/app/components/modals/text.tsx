@@ -41,6 +41,7 @@ const Test = () => {
     tags: [],
     imageUrl: '',
   });
+  const [isFocused, setIsFocused] = useState<boolean>(false);
 
   const members = [
     { userId: 1, email: 'aa@aa.com', nickname: '가 고래' },
@@ -60,18 +61,19 @@ const Test = () => {
   );
 
   return (
-    <>
+    <div onClick={() => setIsFocused(false)}>
       <AssigneeInput
         assignee={datas.assignee}
         members={members}
         setData={setData}
+        controlFocus={{ isFocused, setIsFocused }}
       />
       <TitleInput setData={setData} />
       <DescriptionInput setData={setData} />
       <DueDateInput setData={setData} />
       <TagInput setData={setData} />
       <ImageInput setData={setData} />
-    </>
+    </div>
   );
 };
 

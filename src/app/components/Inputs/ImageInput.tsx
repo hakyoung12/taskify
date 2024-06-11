@@ -29,7 +29,6 @@ export default function ImageInput({ setData }: Props) {
 
   useEffect(() => {
     setData({ imageUrl: imageUrl });
-    console.log(imageUrl);
   }, [imageUrl, setData]);
 
   return (

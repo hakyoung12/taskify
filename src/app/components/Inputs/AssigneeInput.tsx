@@ -1,6 +1,7 @@
 'use client';
 
 import React, {
+  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   useEffect,
@@ -23,6 +24,10 @@ interface AssigneeProps {
     isOwner?: boolean;
   }[];
   setData: SetData;
+  controlFocus: {
+    isFocused: boolean;
+    setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
+  };
 }
 
 type Members = {
@@ -43,37 +48,34 @@ export default function AssigneeInput({
   assignee,
   members,
   setData,
+  controlFocus,
 }: AssigneeProps) {
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>(assignee.nickname);
   const input = useRef<HTMLInputElement>(null);
   const [searchedMembers, setSearchedMembers] = useState<Members>(members);
-  const [isDropShow, setIsDropShow] = useState<boolean>(false);
-  const [isCircleShow, setIsCircleShow] = useState<boolean>(false);
+  const { isFocused, setIsFocused } = controlFocus;
 
   const clickAssignee = (e: MouseEvent<HTMLButtonElement>) => {
     const selected = members.filter(
       (member) => String(member.userId) === e.currentTarget.value,
     );
     setData({ assignee: selected[0] });
-    setIsCircleShow(true);
-    setIsDropShow(false);
+    setIsFocused(false);
   };
 
   const chooseAssignee = () => {
     if (searchedMembers.length === 1) {
       setData({ assignee: searchedMembers[0] });
-      setIsCircleShow(true);
-      setIsDropShow(false);
+    } else {
+      setInputValue('');
     }
+    setIsFocused(false);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       chooseAssignee();
       e.currentTarget.blur();
-    } else if (isCircleShow && !isDropShow) {
-      setIsCircleShow(false);
-      setIsDropShow(true);
     }
   };
 
@@ -93,17 +95,20 @@ export default function AssigneeInput({
   }, [assignee]);
 
   return (
-    <div className={`${LABLE_INPUT_STYLE} relative text-black`}>
+    <div
+      className={`${LABLE_INPUT_STYLE} relative text-black`}
+      onClick={(e) => e.stopPropagation()}
+    >
       <label htmlFor='assignee' className={LABLE_STYLE}>
         담당자
       </label>
       <div
-        className={`${INPUT_STYLE} ${isDropShow ? 'border-custom_violet-_5534da' : ''} flex items-center bg-white`}
+        className={`${INPUT_STYLE} ${isFocused ? 'border-custom_violet-_5534da' : ''} flex items-center bg-white`}
         onClick={() => {
           input.current?.focus();
         }}
       >
-        {isCircleShow && (
+        {!isFocused && inputValue && (
           <div className={CIRCLE}>{assignee.email?.charAt(0)}</div>
         )}
         <input
@@ -115,8 +120,7 @@ export default function AssigneeInput({
             setInputValue(e.target.value || '');
           }}
           onFocus={() => {
-            setIsDropShow(true);
-            setIsCircleShow(false);
+            setIsFocused(true);
           }}
           onBlur={chooseAssignee}
           onKeyDown={onKeyDown}
@@ -124,8 +128,8 @@ export default function AssigneeInput({
           ref={input}
         />
       </div>
-      {isDropShow && (
-        <div className='absolute top-[83px] max-h-[96px] w-full overflow-y-scroll bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
+      {isFocused && (
+        <div className='absolute top-[83px] max-h-[96px] w-full overflow-y-scroll rounded-sm bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
           {searchedMembers.map((member) => {
             return (
               <button
