@@ -36,9 +36,9 @@ export default function dashboardPage(dashboardid: any) {
 
   return (
     <>
-      <div className='flex bg-custom_gray-_fafafa'>
-        <div className='flex min-w-0 max-w-full flex-1 overflow-x-auto'>
-          <div className='flex flex-nowrap'>
+      <div className='relative flex'>
+        <div className='w-screen'>
+          <div className='flex overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'>
             {/* 컬럼 컴포넌트 뿌리기 */}
             {columnData &&
               columnData.length > 0 &&
