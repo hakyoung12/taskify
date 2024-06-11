@@ -35,7 +35,7 @@ const UpdateColumnModal = ({
       <div className='text-[24px] font-bold text-custom_black-_333236'>
         컬럼 관리
       </div>
-      <form onSubmit={() => handleUpdateColumn(value)}>
+      <div>
         <ModalInput
           labelName='이름'
           inputId='title'
@@ -55,11 +55,12 @@ const UpdateColumnModal = ({
           </div>
           <ModalFooterButtons
             actionName={'변경'}
+            onAction={() => handleUpdateColumn(value)}
             value={value}
             isDisabled={isValueChange(title, value)}
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };

@@ -29,7 +29,8 @@ const postNewColumnData = async (title: string, dashboardid: number) => {
 
   try {
     const res = await instance.post(`columns`, data);
-    return await res.data;
+    console.log(res.data);
+    return res.data;
   } catch (error) {
     console.error(error);
   }
