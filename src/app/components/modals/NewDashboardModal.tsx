@@ -2,9 +2,11 @@
 
 import { useState } from 'react';
 import { useModal } from '@/context/ModalContext';
+import { useRouter } from 'next/navigation';
 import instance from '@/app/api/axios';
 
 const NewDashboardModal: React.FC = () => {
+  const router = useRouter();
   const { closeModal } = useModal();
   const [selectedColor, setSelectedColor] = useState<string>('#7ac555');
   const [dashboardName, setDashboardName] = useState<string>('');
@@ -40,7 +42,10 @@ const NewDashboardModal: React.FC = () => {
   const onClick = async () => {
     try {
       const response = await instance.post('dashboards', requestData);
-      console.log('POST 요청 성공:', response.data);
+      if (response.status >= 200 && response.status < 300) {
+        console.log('POST 요청 성공:', response.data);
+        router.push(`/dashboard/${response.data.id}`);
+      }
     } catch (e) {
       alert('대시보드 생성에 실패했습니다.');
     } finally {
