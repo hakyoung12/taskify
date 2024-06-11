@@ -71,7 +71,6 @@ const DashboardHeaderInSettings = ({
         const res = await instance.get(`dashboards/${params.dashboardid}`);
         setTitle(res.data.title);
         setCreatedByMe(res.data.createdByMe);
-        // console.log(res.data.createdByMe);
       } catch (error) {
         console.error(error);
       }
@@ -96,8 +95,6 @@ const DashboardHeaderInSettings = ({
     fetchDashboardData();
     fetchDashboardMemberData();
   }, [params.dashboardid]);
-
-  console.log(createdByMe);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
