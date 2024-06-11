@@ -16,9 +16,15 @@ export default function DueDateInput({ setData }: Props) {
     const year = date.getFullYear();
     const month = ('0' + (1 + date.getMonth())).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
+    const hour = ('0' + date.getHours()).slice(-2);
+    const min = ('0' + date.getMinutes()).slice(-2);
 
-    return year + '-' + month + '-' + day;
+    return year + '-' + month + '-' + day + 'T' + hour + ':' + min;
   }
+
+  const removeT = (time: string) => {
+    return time.replace('T', ' ');
+  };
 
   useEffect(() => {
     setData({ DueDate: inputValue });
@@ -31,10 +37,10 @@ export default function DueDateInput({ setData }: Props) {
       <input
         id='dueDate'
         data-placeholder='날짜를 입력해주세요'
-        type='date'
+        type='datetime-local'
         min={getToday()}
         onChange={(e) => {
-          setInputValue(e.target.value || '');
+          setInputValue(removeT(e.target.value) || '');
         }}
         required
         value={inputValue}

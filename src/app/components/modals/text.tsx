@@ -28,7 +28,12 @@ interface Datas {
   imageUrl: string;
 }
 
-const Test = () => {
+interface ModalProps {
+  columnId: string;
+  dashboardId: string;
+}
+
+const Test = ({ columnId, dashboardId }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
       userId: 0,
@@ -61,7 +66,10 @@ const Test = () => {
   );
 
   return (
-    <div onClick={() => setIsFocused(false)}>
+    <div
+      className='w-full max-w-[506px] bg-white'
+      onClick={() => setIsFocused(false)}
+    >
       <AssigneeInput
         assignee={datas.assignee}
         members={members}
@@ -72,7 +80,12 @@ const Test = () => {
       <DescriptionInput setData={setData} />
       <DueDateInput setData={setData} />
       <TagInput setData={setData} />
-      <ImageInput setData={setData} />
+      <ImageInput
+        setData={setData}
+        columnId={columnId}
+        imgUrl={datas.imageUrl}
+        loginToken=''
+      />
     </div>
   );
 };

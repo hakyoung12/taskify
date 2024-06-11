@@ -4,26 +4,45 @@ import React, { useEffect, useRef, useState } from 'react';
 import { LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
 import { SetData } from './InputTypes';
 import Image from 'next/image';
+import axios from '@/app/api/axios';
 
 interface Props {
   setData: SetData;
+  columnId: string;
+  imgUrl: string;
+  loginToken: string;
 }
 
-export default function ImageInput({ setData }: Props) {
-  const [imageUrl, setImageUrl] = useState<string>('');
+export default function ImageInput({
+  setData,
+  columnId,
+  imgUrl,
+  loginToken,
+}: Props) {
+  const [imageUrl, setImageUrl] = useState<string>(imgUrl);
   const image = useRef<HTMLInputElement>(null);
 
   const setImage = async () => {
+    const formData = new FormData();
     const imgFile = image.current?.files;
-    if (imageUrl !== undefined) {
-      URL.revokeObjectURL(imageUrl);
+    if (imgFile) {
+      formData.append('image', imgFile[0]);
     }
-    if (imgFile?.length) {
-      console.log(imgFile);
-      const newImg = URL.createObjectURL(imgFile[0]);
-      setImageUrl(newImg);
-    } else {
-      setImageUrl('');
+    try {
+      const { data } = await axios.post(
+        `/columns/${30202}/card-image`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU4NCwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MDg2OTUxLCJpc3MiOiJzcC10YXNraWZ5In0.wooLN4zkICnds7Q9cFBlVJVH7CQpRAi7_bsMu0f8iHY',
+          },
+        },
+      );
+      setImageUrl(data.imageUrl);
+    } catch (err) {
+      console.log(err);
     }
   };
 
