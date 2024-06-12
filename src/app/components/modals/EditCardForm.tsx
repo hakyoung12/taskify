@@ -13,7 +13,7 @@ import StateInput from '../Inputs/StateInput';
 
 interface ModalProps {
   columnId: number;
-  dashboardId: string;
+  dashboardId: string | number;
   loginToken: string;
   cardId: number | string;
   closeModal: () => void;
@@ -201,7 +201,7 @@ const EditCardForm = ({
         <Button
           onClick={editCard}
           type='button'
-          disabled={datas === initDatas}
+          disabled={datas == initDatas}
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
           수정

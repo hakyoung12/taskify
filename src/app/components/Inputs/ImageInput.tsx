@@ -8,7 +8,7 @@ import axios from '@/app/api/axios';
 
 interface Props {
   setData: SetData;
-  columnId: string;
+  columnId: number;
   initImageUrl: string;
   loginToken: string;
 }
@@ -19,7 +19,7 @@ export default function ImageInput({
   initImageUrl,
   loginToken,
 }: Props) {
-  const [imageUrl, setImageUrl] = useState<string>(initImageUrl);
+  const [imageUrl, setImageUrl] = useState<string>('');
   const image = useRef<HTMLInputElement>(null);
 
   const setImage = async () => {
@@ -48,6 +48,10 @@ export default function ImageInput({
   useEffect(() => {
     setData({ imageUrl: imageUrl });
   }, [imageUrl, setData]);
+
+  useEffect(() => {
+    setImageUrl(initImageUrl);
+  }, [initImageUrl]);
 
   return (
     <div className={`${LABLE_INPUT_STYLE} relative`}>

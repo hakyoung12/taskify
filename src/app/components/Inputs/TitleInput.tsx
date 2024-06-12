@@ -10,11 +10,15 @@ interface Props {
 }
 
 export default function TitleInput({ setData, initTitle }: Props) {
-  const [inputValue, setInputValue] = useState<string>(initTitle);
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
     setData({ title: inputValue });
   }, [inputValue, setData]);
+
+  useEffect(() => {
+    setInputValue(initTitle);
+  }, [initTitle]);
   return (
     <div className={LABLE_INPUT_STYLE}>
       <label htmlFor='title' className={LABLE_STYLE}>

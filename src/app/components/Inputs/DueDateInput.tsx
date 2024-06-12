@@ -18,7 +18,7 @@ const addT = (time: string) => {
 };
 
 export default function DueDateInput({ setData, initDueDate }: Props) {
-  const [inputValue, setInputValue] = useState<string>(addT(initDueDate));
+  const [inputValue, setInputValue] = useState<string>('');
 
   function getToday() {
     const date = new Date();
@@ -34,6 +34,10 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
   useEffect(() => {
     setData({ dueDate: inputValue });
   }, [inputValue, setData]);
+
+  useEffect(() => {
+    setInputValue(addT(initDueDate));
+  }, [initDueDate]);
 
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>

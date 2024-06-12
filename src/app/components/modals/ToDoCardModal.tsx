@@ -7,6 +7,7 @@ import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
 import { useEffect, useState } from 'react';
 import { getCommentsByCardId } from '../ToDoCardModal/api';
+import EditCardModal from './EditCardModal';
 
 interface assigner {
   profileImageUrl?: string;
@@ -71,6 +72,12 @@ export default function ToDoCardModal({
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>
+      <EditCardModal
+        cardId={cardId}
+        columnId={columnId}
+        dashboardId={dashboardId}
+        loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzU4NCwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MTgwNTU5LCJpc3MiOiJzcC10YXNraWZ5In0.VP2eOJcQ95vH5y4ORqdw9fBsfjKi4xor-yVQH2UqsYk'
+      />
     </div>
   );
 }

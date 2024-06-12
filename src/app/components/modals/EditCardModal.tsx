@@ -5,13 +5,13 @@ import { useModal } from '@/context/ModalContext';
 import EditCardForm from './EditCardForm';
 
 export type ModalProps = {
-  dashboardId: string;
+  dashboardId: string | number;
   columnId: number;
   loginToken: string;
   cardId: number;
 };
 
-const CreateCardModal = ({
+const EditCardModal = ({
   dashboardId,
   columnId,
   loginToken,
@@ -41,4 +41,4 @@ const CreateCardModal = ({
   );
 };
 
-export default CreateCardModal;
+export default EditCardModal;
