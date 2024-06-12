@@ -6,12 +6,13 @@ import DescriptionInput from '../Inputs/DescriptionInput';
 import DueDateInput from '../Inputs/DueDateInput';
 import TagInput from '../Inputs/TagsInput';
 import ImageInput from '../Inputs/ImageInput';
-import { Assignee, Datas, Members } from '../Inputs/InputTypes';
+import { Assignee, Datas, Members, State } from '../Inputs/InputTypes';
 import axios from '@/app/api/axios';
 import { Button } from '../ui/button';
+import StateInput from '../Inputs/StateInput';
 
 interface ModalProps {
-  columnId: string;
+  columnId: number;
   dashboardId: string;
   loginToken: string;
   cardId: number | string;
@@ -33,7 +34,6 @@ const EditCardForm = ({
   const [datas, setDatas] = useState<Datas>({
     assignee: {
       userId: 0,
-      email: '',
       nickname: '',
     },
     title: '',
@@ -41,10 +41,14 @@ const EditCardForm = ({
     dueDate: '',
     tags: [],
     imageUrl: '',
+    columnId: 0,
   });
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [isAssigneeFocused, setIsAssigneeFocused] = useState<boolean>(false);
+  const [isStateFocused, setIsStateFocused] = useState<boolean>(false);
   const [members, setMembers] = useState<Members>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const [initDatas, setInitDatas] = useState<Datas>();
+  const [states, setStates] = useState<State[]>([]);
 
   const getMembers = useCallback(async () => {
     try {
@@ -63,7 +67,7 @@ const EditCardForm = ({
     }
   }, [dashboardId, loginToken]);
 
-  const getPrevCardDatas = useCallback(async () => {
+  const getCardDatas = useCallback(async () => {
     try {
       const { data } = await axios.get(`/cards/${cardId}`, {
         headers: {
@@ -79,14 +83,48 @@ const EditCardForm = ({
         assignee,
         columnId,
       } = data;
+      const cardData = {
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl,
+        assignee,
+        columnId,
+      };
+      setDatas(cardData);
+      setInitDatas(cardData);
     } catch (err) {
       console.log(err);
     }
-  }, []);
+  }, [cardId, loginToken]);
+
+  const getStates = useCallback(async () => {
+    try {
+      const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      });
+      const { data: states } = data;
+      setStates(states);
+    } catch (err) {
+      console.log(err);
+    }
+  }, [dashboardId, loginToken]);
 
   const editCard = async () => {
+    const postBody = {
+      assigneeUserId: datas.assignee.userId,
+      columnId: datas.columnId,
+      title: datas.title,
+      description: datas.description,
+      dueDate: datas.dueDate,
+      tags: datas.tags,
+      imageUrl: datas.imageUrl,
+    };
     try {
-      const res = await axios.post('/cards', datas, {
+      const res = await axios.put(`/cards/${cardId}`, postBody, {
         headers: {
           Authorization: `Bearer ${loginToken}`,
         },
@@ -94,12 +132,12 @@ const EditCardForm = ({
       closeModal();
     } catch (err) {
       console.log(err);
-      alert('미안하지만 카드 생성은 실패다');
+      alert('미안하지만 카드 수정은 실패다');
     }
   };
 
   const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] }) => {
+    (data: { [key: string]: string | Assignee | string[] | number }) => {
       setDatas((prev) => {
         return { ...prev, ...data };
       });
@@ -114,22 +152,39 @@ const EditCardForm = ({
   useEffect(() => {
     if (isMounted) {
       getMembers();
+      getCardDatas();
+      getStates();
     }
-  }, [isMounted, getMembers]);
+  }, [isMounted, getMembers, getCardDatas, getStates]);
 
   if (!isMounted) return;
   return (
     <div
       className='max-sm:mb=[-8px] mb-[-4px] mr-[-4px] flex w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] bg-white max-sm:mr-[-8px] max-sm:mt-[8px]'
-      onClick={() => setIsFocused(false)}
+      onClick={() => {
+        setIsAssigneeFocused(false);
+        setIsStateFocused(false);
+      }}
     >
       <h2 className={MODAL_TITLE_STYLE}>할 일 수정</h2>
       <div className='flex gap-x-[16px]'>
+        <StateInput
+          states={states}
+          columnId={columnId}
+          setData={setData}
+          controlFocus={{
+            isFocused: isStateFocused,
+            setIsFocused: setIsStateFocused,
+          }}
+        />
         <AssigneeInput
           assignee={datas.assignee}
           members={members}
           setData={setData}
-          controlFocus={{ isFocused, setIsFocused }}
+          controlFocus={{
+            isFocused: isAssigneeFocused,
+            setIsFocused: setIsAssigneeFocused,
+          }}
         />
       </div>
       <TitleInput setData={setData} initTitle={datas.title} />
@@ -146,14 +201,7 @@ const EditCardForm = ({
         <Button
           onClick={editCard}
           type='button'
-          disabled={
-            datas.assignee.nickname === '' ||
-            datas.title === '' ||
-            datas.description === '' ||
-            datas.dueDate === '' ||
-            datas.tags.length === 0 ||
-            datas.imageUrl === ''
-          }
+          disabled={datas === initDatas}
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
           수정

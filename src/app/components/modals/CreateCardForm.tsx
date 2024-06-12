@@ -86,7 +86,7 @@ const CreateCardForm = ({
   };
 
   const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] }) => {
+    (data: { [key: string]: string | Assignee | string[] | number }) => {
       setDatas((prev) => {
         return { ...prev, ...data };
       });

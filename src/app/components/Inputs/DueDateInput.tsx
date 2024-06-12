@@ -8,8 +8,17 @@ interface Props {
   setData: SetData;
   initDueDate: string;
 }
+
+const removeT = (time: string) => {
+  return time.replace('T', ' ');
+};
+
+const addT = (time: string) => {
+  return time.replace(' ', 'T');
+};
+
 export default function DueDateInput({ setData, initDueDate }: Props) {
-  const [inputValue, setInputValue] = useState<string>(initDueDate);
+  const [inputValue, setInputValue] = useState<string>(addT(initDueDate));
 
   function getToday() {
     const date = new Date();
@@ -22,13 +31,10 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
     return year + '-' + month + '-' + day + 'T' + hour + ':' + min;
   }
 
-  const removeT = (time: string) => {
-    return time.replace('T', ' ');
-  };
-
   useEffect(() => {
-    setData({ DueDate: inputValue });
+    setData({ dueDate: inputValue });
   }, [inputValue, setData]);
+
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>
       <label htmlFor='dueDate' className={LABLE_STYLE}>

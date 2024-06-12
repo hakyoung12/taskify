@@ -7,6 +7,7 @@ import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import { useEffect } from 'react';
 import CreateCardModal from './components/modals/CreateCardModal';
+import EditCardForm from './components/modals/EditCardForm';
 
 function checkToken() {
   if (typeof window === undefined) return;
@@ -24,7 +25,6 @@ export default function Home() {
       <LandingHeader />
       <LandingMain />
       <LandingFooter />
-      <CreateCardModal loginToken='1' columnId='l' dashboardId='l' />
     </div>
   );
 }
