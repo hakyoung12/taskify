@@ -23,6 +23,7 @@ export default function ToDoCardModal({
   imageUrl,
   cardId,
   columnTitle,
+  setIsCardChange,
 }: {
   dashboardId: number;
   columnId: number;
@@ -34,10 +35,15 @@ export default function ToDoCardModal({
   assigner: assigner;
   cardId: number;
   columnTitle: string;
+  setIsCardChange: any;
 }) {
   return (
     <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
-      <CardHeader cardId={cardId} title={title} />
+      <CardHeader
+        cardId={cardId}
+        title={title}
+        setIsCardChange={setIsCardChange}
+      />
       {/* 컨텐츠 */}
       <div className='flex gap-[24px] max-sm:flex-col'>
         <div className='flex w-[450px] flex-col gap-[16px] max-xl:w-[420px] max-sm:order-2 max-sm:w-full'>

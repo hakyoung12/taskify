@@ -10,9 +10,11 @@ import ModalInput from '../ModalInput';
 const UpdateColumnModal = ({
   columnId,
   title,
+  setIsCardChange,
 }: {
   columnId: number;
   title: string;
+  setIsCardChange: any;
 }) => {
   const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
@@ -50,7 +52,12 @@ const UpdateColumnModal = ({
           <div
             className='mb-3 cursor-pointer self-start text-custom_gray-_9fa6b2 underline sm:mb-0 sm:self-end'
             onClick={() =>
-              handleOpenModal(<DeleteColumnAlertModal columnId={columnId} />)
+              handleOpenModal(
+                <DeleteColumnAlertModal
+                  columnId={columnId}
+                  setIsCardChange={setIsCardChange}
+                />,
+              )
             }
           >
             삭제하기

@@ -15,6 +15,7 @@ interface ModalProps {
   dashboardId: number;
   loginToken: string;
   closeModal: () => void;
+  setIsCardChange: any;
 }
 
 const BUTTON_STYLE =
@@ -27,6 +28,7 @@ const CreateCardForm = ({
   dashboardId,
   loginToken,
   closeModal,
+  setIsCardChange,
 }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
@@ -78,10 +80,12 @@ const CreateCardForm = ({
           Authorization: `Bearer ${loginToken}`,
         },
       });
+      setIsCardChange(true);
       closeModal();
     } catch (err) {
       console.log(err);
       alert('미안하지만 카드 생성은 실패다');
+    } finally {
     }
   };
 

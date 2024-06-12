@@ -22,7 +22,8 @@ export default function Column({
   const [totalCount, setTotalCount] = useState<number>(0);
   const [size, setSize] = useState(4);
   const { openModal, closeModal } = useModal();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [isChange, setIsCardChange] = useState(false);
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -83,8 +84,16 @@ export default function Column({
 
   useEffect(() => {
     fetchCards(size);
-  }, []);
+  }, [size, columnId, isChange]); // isChange를 디펜던시로 추가
 
+  useEffect(() => {
+    if (isChange) {
+      fetchCards(size);
+      setIsCardChange(false);
+    }
+  }, [isChange, size]);
+
+  console.log(isChange);
   return (
     <div className='border-gray-_eeeeee flex h-[900px] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
       {/* 카드 info */}
@@ -108,7 +117,11 @@ export default function Column({
           alt='설정 아이콘'
           onClick={() =>
             handleOpenModal(
-              <UpdateColumnModal title={title} columnId={columnId} />,
+              <UpdateColumnModal
+                title={title}
+                columnId={columnId}
+                setIsCardChange={setIsCardChange}
+              />,
             )
           }
         />
@@ -124,6 +137,7 @@ export default function Column({
                 columnId={columnId}
                 loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYzMSwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MTAyNjMzLCJpc3MiOiJzcC10YXNraWZ5In0.2TW3zMPzt0xkG5d94WA_ARH7FIEe6A9KFXlV_SO3bMg'
                 closeModal={closeModal}
+                setIsCardChange={setIsCardChange}
               />,
             )
           }
@@ -146,6 +160,7 @@ export default function Column({
                 assigner={card.assignee}
                 cardId={card.id}
                 columnTitle={title}
+                setIsCardChange={setIsCardChange}
               />
             );
           })}

@@ -16,6 +16,7 @@ interface ColumnCardProps {
   columnId: number;
   dashboardId: number;
   columnTitle: string;
+  setIsCardChange: any;
 }
 
 export default function ColumnCard({
@@ -29,6 +30,7 @@ export default function ColumnCard({
   assigner,
   columnId,
   columnTitle,
+  setIsCardChange,
 }: ColumnCardProps) {
   const { openModal } = useModal();
 
@@ -52,6 +54,7 @@ export default function ColumnCard({
             assigner={assigner}
             imageUrl={imageUrl}
             columnTitle={columnTitle}
+            setIsCardChange={setIsCardChange}
           />,
         )
       }

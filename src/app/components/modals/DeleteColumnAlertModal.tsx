@@ -4,12 +4,19 @@ import { useModal } from '@/context/ModalContext';
 import { deleteColumnByID } from '../ToDoCardModal/api';
 import ModalFooterButtons from '../ModalFooterButtons';
 
-const DeleteColumnAlertModal = ({ columnId }: { columnId: number }) => {
+const DeleteColumnAlertModal = ({
+  columnId,
+  setIsCardChange,
+}: {
+  columnId: number;
+  setIsCardChange: any;
+}) => {
   const { closeModal } = useModal();
 
   const handleDeleteColumn = (columnId: number) => {
     deleteColumnByID(columnId);
     closeModal();
+    setIsCardChange(true);
   };
 
   return (

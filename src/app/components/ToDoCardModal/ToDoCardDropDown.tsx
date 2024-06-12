@@ -4,9 +4,11 @@ import DeleteCardModal from '../modals/DeleteCardModal';
 export default function ToDoCardDropDown({
   isOpen,
   cardId,
+  setIsCardChange,
 }: {
   isOpen: boolean;
   cardId: number;
+  setIsCardChange: any;
 }) {
   const { openModal } = useModal();
 
@@ -22,7 +24,14 @@ export default function ToDoCardDropDown({
         </button>
         <button
           className={buttonStyle}
-          onClick={() => handleOpenModal(<DeleteCardModal cardId={cardId} />)}
+          onClick={() =>
+            handleOpenModal(
+              <DeleteCardModal
+                cardId={cardId}
+                setIsCardChange={setIsCardChange}
+              />,
+            )
+          }
         >
           <span>삭제하기</span>
         </button>

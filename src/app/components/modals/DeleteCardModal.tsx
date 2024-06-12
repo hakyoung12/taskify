@@ -4,11 +4,18 @@ import { useModal } from '@/context/ModalContext';
 import { deleteCard } from '../ToDoCardModal/api';
 import ModalFooterButtons from '../ModalFooterButtons';
 
-const DeleteCardModal = ({ cardId }: { cardId: number }) => {
+const DeleteCardModal = ({
+  cardId,
+  setIsCardChange,
+}: {
+  cardId: number;
+  setIsCardChange: any;
+}) => {
   const { closeModal } = useModal();
 
   const handleDeleteCard = () => {
     deleteCard(cardId);
+    setIsCardChange(true);
     closeModal();
   };
 
