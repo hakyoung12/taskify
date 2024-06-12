@@ -12,6 +12,7 @@ import Link from 'next/link';
 import UserIcon from './UserIcon';
 import { CheckMembersRes } from '../api/apiTypes/membersType';
 import CustomAvatar from './CustomAvatar';
+import { useDashboardData } from '@/context/DashboardDataContext';
 
 interface DashboardHeaderInSettingsProps {
   link?: string;
@@ -33,7 +34,7 @@ const DashboardHeaderInSettings = ({
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
   const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
-
+  const { dashboardsData, setDashboardsData } = useDashboardData();
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -66,17 +67,19 @@ const DashboardHeaderInSettings = ({
         console.error(error);
       }
     };
-
     const fetchDashboardData = async () => {
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
-        setTitle(res.data.title);
+        dashboardsData.map((data) => {
+          if (data.id == dashboardId) {
+            setTitle(data.title);
+          }
+        });
         setCreatedByMe(res.data.createdByMe);
       } catch (error) {
         console.error(error);
       }
     };
-
     const fetchDashboardMemberData = async () => {
       try {
         const res = await instance.get('members', {
@@ -95,7 +98,7 @@ const DashboardHeaderInSettings = ({
     fetchUserData();
     fetchDashboardData();
     fetchDashboardMemberData();
-  }, [params.dashboardid]);
+  }, [params.dashboardid, dashboardsData]);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
