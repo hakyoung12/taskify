@@ -120,6 +120,7 @@ const CreateCardForm = ({
       <div className='flex flex-row-reverse gap-x-[12px]'>
         <Button
           onClick={createCard}
+          type='button'
           disabled={
             datas.assignee.nickname === '' ||
             datas.title === '' ||
@@ -134,6 +135,7 @@ const CreateCardForm = ({
         </Button>
         <Button
           onClick={closeModal}
+          type='button'
           className={`${BUTTON_STYLE} border border-solid border-custom_gray-_d9d9d9 bg-custom_white text-custom_gray-_787486 hover:text-custom_white`}
         >
           취소

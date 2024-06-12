@@ -16,6 +16,7 @@ const CreateCardModal = ({ dashboardId, columnId, loginToken }: ModalProps) => {
     <div>
       <button
         className='rounded bg-green-500 px-4 py-2 text-white'
+        type='button'
         onClick={() =>
           openModal(
             <CreateCardForm
