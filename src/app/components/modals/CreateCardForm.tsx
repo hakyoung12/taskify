@@ -14,9 +14,20 @@ interface ModalProps {
   columnId: string;
   dashboardId: string;
   loginToken: string;
+  closeModal: () => void;
 }
 
-const Test = ({ columnId, dashboardId, loginToken }: ModalProps) => {
+const BUTTON_STYLE =
+  'flex h-[48px] w-[120px] items-center justify-center font-medium max-sm:h-[42px] max-sm:flex-grow max-sm:text-[14px]';
+const MODAL_TITLE_STYLE =
+  'w-full text-[24px] font-bold text-custom_black-_333236';
+
+const CreateCardForm = ({
+  columnId,
+  dashboardId,
+  loginToken,
+  closeModal,
+}: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
       userId: 0,
@@ -57,6 +68,7 @@ const Test = ({ columnId, dashboardId, loginToken }: ModalProps) => {
           Authorization: `Bearer ${loginToken}`,
         },
       });
+      closeModal();
     } catch (err) {
       console.log(err);
       alert('미안하지만 카드 생성은 실패다');
@@ -85,9 +97,10 @@ const Test = ({ columnId, dashboardId, loginToken }: ModalProps) => {
   if (!isMounted) return;
   return (
     <div
-      className='w-full max-w-[506px] bg-white'
+      className='max-sm:mb=[-8px] mb-[-4px] mr-[-4px] flex w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] bg-white max-sm:mr-[-8px] max-sm:mt-[8px]'
       onClick={() => setIsFocused(false)}
     >
+      <h2 className={MODAL_TITLE_STYLE}>할 일 생성</h2>
       <AssigneeInput
         assignee={datas.assignee}
         members={members}
@@ -104,22 +117,30 @@ const Test = ({ columnId, dashboardId, loginToken }: ModalProps) => {
         initImageUrl={datas.imageUrl}
         loginToken={loginToken}
       />
-      <Button
-        onClick={createCard}
-        disabled={
-          datas.assignee.nickname === '' ||
-          datas.title === '' ||
-          datas.description === '' ||
-          datas.dueDate === '' ||
-          datas.tags.length === 0 ||
-          datas.imageUrl === ''
-        }
-        className='bg-custom_violet-_5534da disabled:bg-custom_gray-_9fa6b2'
-      >
-        생성
-      </Button>
+      <div className='flex flex-row-reverse gap-x-[12px]'>
+        <Button
+          onClick={createCard}
+          disabled={
+            datas.assignee.nickname === '' ||
+            datas.title === '' ||
+            datas.description === '' ||
+            datas.dueDate === '' ||
+            datas.tags.length === 0 ||
+            datas.imageUrl === ''
+          }
+          className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
+        >
+          생성
+        </Button>
+        <Button
+          onClick={closeModal}
+          className={`${BUTTON_STYLE} border border-solid border-custom_gray-_d9d9d9 bg-custom_white text-custom_gray-_787486 hover:text-custom_white`}
+        >
+          취소
+        </Button>
+      </div>
     </div>
   );
 };
 
-export default Test;
+export default CreateCardForm;
