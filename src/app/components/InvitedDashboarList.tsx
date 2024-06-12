@@ -1,34 +1,99 @@
-/** TODO
- * 1. 버튼을 하나의 컴포넌트로 관리해서 재상용성 높임
- * 2. 모바일 리스트 컴포넌트는 반응형이 아닌 로직으로 조건부 렌더링으로 구현
- * 3. 검색 기능 => 네트워크 요청 최적화; 디바운스,  => onChange 로 req, res 계속 받는거보다 단어 단위로
- */
-
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
 import instance from '../api/axios';
 import Image from 'next/image';
 
 const InvitedDashboardList = () => {
   const [invitations, setInvitations] = useState<
-    CheckInvitationsRes['invitations'] | null
-  >(null);
+    CheckInvitationsRes['invitations']
+  >([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredInvitations, setFilteredInvitations] = useState<
+    CheckInvitationsRes['invitations']
+  >([]);
+  const [cursorId, setCursorId] = useState<number | null>(null);
+  const [loading, setLoading] = useState(false);
+  const size = 6;
+
+  const fetchInvitations = async (cursorId: number | null) => {
+    setLoading(true);
+    try {
+      const res = await instance.get('invitations', {
+        params: {
+          cursorId,
+          size,
+        },
+      });
+      const newInvitations = res.data.invitations;
+      setInvitations((prev) => {
+        const mergedInvitations = [...prev, ...newInvitations];
+        const uniqueInvitations = mergedInvitations.filter(
+          (invitation, index, self) =>
+            index === self.findIndex((i) => i.id === invitation.id),
+        );
+        return uniqueInvitations;
+      });
+      setFilteredInvitations((prev) => {
+        const mergedFilteredInvitations = [...prev, ...newInvitations];
+        const uniqueFilteredInvitations = mergedFilteredInvitations.filter(
+          (invitation, index, self) =>
+            index === self.findIndex((i) => i.id === invitation.id),
+        );
+        return uniqueFilteredInvitations;
+      });
+
+      if (newInvitations.length > 0) {
+        setCursorId(newInvitations[newInvitations.length - 1].id);
+      }
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleIntersection = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const target = entries[0];
+      if (target.isIntersecting && !loading) {
+        fetchInvitations(cursorId);
+      }
+    },
+    [cursorId, loading],
+  );
 
   useEffect(() => {
-    const fetchInvitation = async () => {
-      try {
-        const res = await instance.get('invitations');
-        console.log(res.data.invitations);
-        setInvitations(res.data.invitations);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    });
 
-    fetchInvitation();
+    const target = document.getElementById('intersection-target');
+    if (target) {
+      observer.observe(target);
+    }
+
+    return () => {
+      observer.disconnect();
+    };
+  }, [handleIntersection]);
+
+  useEffect(() => {
+    fetchInvitations(null);
   }, []);
+
+  const debounce = (func: Function, delay: number) => {
+    let timer: ReturnType<typeof setTimeout>;
+    return (...args: any[]) => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        func(...args);
+      }, delay);
+    };
+  };
 
   const handleInvitationResponse = async (
     invitationId: number,
@@ -36,26 +101,47 @@ const InvitedDashboardList = () => {
   ) => {
     try {
       await instance.put(`invitations/${invitationId}`, {
-        inviteAccepted: inviteAccepted,
+        inviteAccepted,
       });
-
-      setInvitations(
-        (prevInvitations) =>
-          prevInvitations?.filter(
-            (invitation) => invitation.id !== invitationId,
-          ) || null,
+      setInvitations((prev) =>
+        prev.filter((invitation) => invitation.id !== invitationId),
+      );
+      setFilteredInvitations((prev) =>
+        prev.filter((invitation) => invitation.id !== invitationId),
       );
     } catch (error) {
       console.error(error);
     }
   };
 
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    debouncedFilterInvitations(e.target.value);
+  };
+
+  const debouncedFilterInvitations = useCallback(
+    debounce((term: string) => {
+      if (term === '') {
+        setFilteredInvitations(invitations);
+      } else {
+        setFilteredInvitations(
+          invitations.filter((invitation) =>
+            invitation.dashboard.title
+              .toLowerCase()
+              .includes(term.toLowerCase()),
+          ),
+        );
+      }
+    }, 500),
+    [invitations],
+  );
+
   return (
-    <div className='ml-6 mt-6 hidden rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
+    <div className='ml-6 mt-6 hidden h-[600px] overflow-scroll rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
         초대받은 대시보드
       </div>
-      {invitations?.length === 0 ? (
+      {invitations.length === 0 ? (
         <div className='flex flex-col items-center justify-center'>
           <Image
             src='/images/no-invitation.svg'
@@ -71,6 +157,8 @@ const InvitedDashboardList = () => {
             <input
               className='w-full rounded-md border border-custom_gray-_d9d9d9 p-3 indent-8 text-[16px]'
               placeholder='검색'
+              value={searchTerm}
+              onChange={handleSearchChange}
             />
             <img
               className='absolute top-[15px] ml-4'
@@ -86,46 +174,43 @@ const InvitedDashboardList = () => {
               <div className='min-w-0 flex-1'>초대자</div>
               <div className='min-w-0 flex-1'>수락 여부</div>
             </div>
-            {invitations?.map((invitation) => {
-              return (
-                <>
-                  <div
-                    key={invitation.id}
-                    className='flex items-center justify-between border-b p-4'
-                  >
-                    <div className='min-w-0 flex-1'>
-                      {invitation.dashboard.title}
-                    </div>
-                    <div className='min-w-0 flex-1'>
-                      {invitation.inviter.nickname}
-                    </div>
-                    <div className='min-w-0 flex-1'>
-                      <div className='flex space-x-2'>
-                        <button
-                          className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
-                          onClick={() =>
-                            handleInvitationResponse(invitation.id, true)
-                          }
-                        >
-                          수락
-                        </button>
-                        <button
-                          className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'
-                          onClick={() =>
-                            handleInvitationResponse(invitation.id, false)
-                          }
-                        >
-                          거절
-                        </button>
-                      </div>
-                    </div>
+            {filteredInvitations.map((invitation) => (
+              <div
+                key={invitation.id}
+                className='flex items-center justify-between border-b p-4'
+              >
+                <div className='min-w-0 flex-1'>
+                  {invitation.dashboard.title}
+                </div>
+                <div className='min-w-0 flex-1'>
+                  {invitation.inviter.nickname}
+                </div>
+                <div className='min-w-0 flex-1'>
+                  <div className='flex space-x-2'>
+                    <button
+                      className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
+                      onClick={() =>
+                        handleInvitationResponse(invitation.id, true)
+                      }
+                    >
+                      수락
+                    </button>
+                    <button
+                      className='rounded border border-custom_gray-_d9d9d9 bg-custom_white px-7 py-2 text-custom_violet-_5534da'
+                      onClick={() =>
+                        handleInvitationResponse(invitation.id, false)
+                      }
+                    >
+                      거절
+                    </button>
                   </div>
-                </>
-              );
-            })}
+                </div>
+              </div>
+            ))}
           </div>
         </>
       )}
+      <div id='intersection-target' style={{ height: '1px' }}></div>
     </div>
   );
 };

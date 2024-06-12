@@ -1,10 +1,15 @@
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import instance from '../api/axios';
+import { useParams } from 'next/navigation';
 
 const UpdateDashboardName = ({ dashboardid }: { dashboardid: number }) => {
+  const params = useParams();
+
   const [selectedColor, setSelectedColor] = useState<string>('#7ac555');
   const [dashboardName, setDashboardName] = useState<string>('');
+  const [title, setTitle] = useState<string | null>(null);
+
   const colors = [
     { name: '#7ac555', bgColor: 'bg-custom_green-_7ac555' },
     { name: '#760dde', bgColor: 'bg-custom_purple' },
@@ -34,15 +39,31 @@ const UpdateDashboardName = ({ dashboardid }: { dashboardid: number }) => {
         requestData,
       );
       console.log('POST 요청 성공:', response.data);
+      setTitle(response.data.title);
+      setDashboardName('');
     } catch (e) {
       alert('대시보드 수정에 실패했습니다.');
     }
   };
 
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const res = await instance.get(`dashboards/${params.dashboardid}`);
+        setTitle(res.data.title);
+        setDashboardName('');
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchDashboardData();
+  }, [params.dashboardid]);
+
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white px-[28px] py-8 max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <div className='flex justify-between'>
-        <div className='text-xl font-bold'>비브리지</div>
+        <div className='text-xl font-bold'>{title}</div>
         <div className='flex gap-x-3'>
           <div className='flex gap-x-3'>
             {colors.map((color) => (

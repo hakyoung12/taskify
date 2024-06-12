@@ -1,3 +1,4 @@
+import axios from 'axios';
 import instance from '@/app/api/axios';
 
 const getDashBoard = async () => {
@@ -21,18 +22,18 @@ const getColumnsByDashBoardId = async (dashboardid: number) => {
   }
 };
 
-const postNewColumnData = async (title: string, dashboardid: number) => {
-  const data = {
-    title: title,
-    dashboardId: dashboardid,
-  };
+const getCardsByColumnId = async (columId: number) => {
+  const res = await instance.get(`cards`, {
+    params: { columnId: `${columId}` },
+  });
+  return res.data;
+};
 
-  try {
-    const res = await instance.post(`columns`, data);
-    return await res.data;
-  } catch (error) {
-    console.error(error);
-  }
+const getCommentsByCardId = async (cardId: number) => {
+  const res = await instance.get(`comments`, {
+    params: { cardId: `${cardId}` },
+  });
+  return res.data;
 };
 
 const getCardsList = async (
@@ -61,20 +62,80 @@ const deleteColumnByID = async (columnId: number) => {
   }
 };
 
-const putColumnByID = async (columnId: number, title: string) => {
-  const data = { title: title };
+const deleteComment = async (commentId: number) => {
   try {
-    const res = await instance.put(`columns/${columnId}`, data);
+    const res = await instance.delete(`comments/${commentId}`);
   } catch (error) {
     console.log(error);
   }
 };
 
+const deleteCard = async (cardId: number) => {
+  try {
+    const res = await instance.delete(`cards/${cardId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const putColumnByID = async (columnId: number, title: string) => {
+  const data = { title: title };
+  try {
+    const res = await instance.put(`columns/${columnId}`, data);
+  } catch (error) {
+    console.log(axios.isAxiosError(error));
+  }
+};
+
+const postComment = async (
+  content: string,
+  cardId: number,
+  columnId: number,
+  dashboardId: number,
+) => {
+  const data = {
+    content: content,
+    cardId: cardId,
+    columnId: columnId,
+    dashboardId: dashboardId,
+  };
+  console.log(data);
+  try {
+    const res = await instance.post('comments', data);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const putComment = async (commentId: number, content: string) => {
+  const data = { content: content };
+  try {
+    const res = await instance.put(`comments/${commentId}`, data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+const getMyUserData = async () => {
+  try {
+    const res = await instance.get('users/me');
+    console.log(res.data);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 export {
   getDashBoard,
+  getMyUserData,
   getColumnsByDashBoardId,
-  postNewColumnData,
   getCardsList,
   deleteColumnByID,
   putColumnByID,
+  getCardsByColumnId,
+  getCommentsByCardId,
+  postComment,
+  putComment,
+  deleteComment,
+  deleteCard,
 };

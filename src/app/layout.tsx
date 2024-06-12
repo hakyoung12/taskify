@@ -1,5 +1,6 @@
 import './globals.css';
 import { ModalProvider } from '@/context/ModalContext';
+import { DashboardDataProvider } from '@/context/DashboardDataContext';
 import CommonModal from './components/modals/CommonModal';
 
 export default function RootLayout({
@@ -11,8 +12,10 @@ export default function RootLayout({
     <html lang='ko'>
       <body>
         <ModalProvider>
-          {children}
-          <CommonModal />
+          <DashboardDataProvider>
+            {children}
+            <CommonModal />
+          </DashboardDataProvider>
         </ModalProvider>
       </body>
     </html>

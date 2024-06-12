@@ -16,12 +16,14 @@ const ModalInput = ({
   placeFolder,
   value,
   setValue,
+  error,
 }: {
   labelName: string;
   inputId: string;
   placeFolder: string;
   value: any;
   setValue: any;
+  error?: any;
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newvalue = e.target.value;
@@ -43,6 +45,7 @@ const ModalInput = ({
         onChange={handleChange}
         placeholder={placeFolder}
       />
+      {error}
     </div>
   );
 };

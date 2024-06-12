@@ -2,7 +2,7 @@ import { useModal } from '@/context/ModalContext';
 import ToDoCardDropDown from './ToDoCardDropDown';
 import { useState } from 'react';
 
-const CardHeader = ({ title }: { title: string }) => {
+const CardHeader = ({ title, cardId }: { title: string; cardId: number }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { closeModal } = useModal();
 
@@ -23,7 +23,7 @@ const CardHeader = ({ title }: { title: string }) => {
             className='max-sm:h-[20px] max-sm:w-[20px]'
           />
         </button>
-        <ToDoCardDropDown isOpen={isOpen} />
+        <ToDoCardDropDown isOpen={isOpen} cardId={cardId} />
         <button onClick={closeModal}>
           <img
             src='/images/close-button.svg'
