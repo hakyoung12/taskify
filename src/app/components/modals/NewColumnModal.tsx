@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import instance from '@/app/api/axios';
 import { useState } from 'react';
 import ModalFooterButtons from '../ModalFooterButtons';

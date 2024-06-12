@@ -33,7 +33,4 @@ const DeleteColumnAlertModal = ({
   );
 };
 
-const modalButtonStyle =
-  'text-center w-[120px] h-[48px] text-[16px] rounded-lg border border-[#d9d9d9] max-sm:w-[138px]';
-
 export default DeleteColumnAlertModal;

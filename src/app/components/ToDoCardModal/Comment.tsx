@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { deleteColumnByID, deleteComment, putComment } from './api';
+import { deleteComment, putComment } from './api';
 
 interface CommentProps {
   createdAt: string;

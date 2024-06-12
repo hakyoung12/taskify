@@ -1,8 +1,8 @@
 'use client';
 
 import { useModal } from '@/context/ModalContext';
-import { deleteColumnByID, putColumnByID } from '../ToDoCardModal/api';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { putColumnByID } from '../ToDoCardModal/api';
+import { useState } from 'react';
 import DeleteColumnAlertModal from './DeleteColumnAlertModal';
 import ModalFooterButtons from '../ModalFooterButtons';
 import ModalInput from '../ModalInput';

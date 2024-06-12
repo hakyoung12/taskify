@@ -49,8 +49,6 @@ export default function Column({
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
       if (target.isIntersecting && !loading) {
-        console.log('detected');
-
         setSize((prev) => {
           const newSize = prev + 1;
           fetchCards(newSize);
@@ -68,8 +66,6 @@ export default function Column({
       rootMargin: '0px',
       threshold: 1.0,
     });
-
-    console.log(`${columnId}: observer`);
 
     const target = document.getElementById(`intersection-target${columnId}`);
 

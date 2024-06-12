@@ -36,12 +36,8 @@ export default function CommentsList({
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      console.log('handleIntersection');
-
       const target = entries[0];
       if (target.isIntersecting && !loading) {
-        console.log('detected');
-
         setSize((prev) => {
           const newSize = prev + 1;
           fetchComments(newSize);

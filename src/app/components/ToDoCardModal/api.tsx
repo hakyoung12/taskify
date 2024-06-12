@@ -110,7 +110,6 @@ const postComment = async (
     columnId: columnId,
     dashboardId: dashboardId,
   };
-  console.log(data);
   try {
     const res = await instance.post('comments', data);
   } catch (err) {
@@ -138,7 +137,6 @@ const putComment = async (
 const getMyUserData = async () => {
   try {
     const res = await instance.get('users/me');
-    console.log(res.data);
   } catch (error) {
     console.error(error);
   }
