@@ -27,6 +27,7 @@ const InvitedDashboardList = () => {
         },
       });
       const newInvitations = res.data.invitations;
+
       setInvitations((prev) => {
         const mergedInvitations = [...prev, ...newInvitations];
         const uniqueInvitations = mergedInvitations.filter(
@@ -35,6 +36,7 @@ const InvitedDashboardList = () => {
         );
         return uniqueInvitations;
       });
+
       setFilteredInvitations((prev) => {
         const mergedFilteredInvitations = [...prev, ...newInvitations];
         const uniqueFilteredInvitations = mergedFilteredInvitations.filter(
@@ -160,7 +162,7 @@ const InvitedDashboardList = () => {
               value={searchTerm}
               onChange={handleSearchChange}
             />
-            <img
+            <Image
               className='absolute top-[15px] ml-4'
               src='/images/search.svg'
               alt='search'
