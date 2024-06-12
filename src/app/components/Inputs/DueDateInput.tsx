@@ -26,9 +26,11 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
     return time.replace('T', ' ');
   };
 
+  console.log(inputValue);
   useEffect(() => {
-    setData({ DueDate: inputValue });
+    setData({ dueDate: inputValue });
   }, [inputValue, setData]);
+
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>
       <label htmlFor='dueDate' className={LABLE_STYLE}>

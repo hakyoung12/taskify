@@ -8,7 +8,7 @@ import axios from '@/app/api/axios';
 
 interface Props {
   setData: SetData;
-  columnId: string;
+  columnId: number;
   initImageUrl: string;
   loginToken: string;
 }

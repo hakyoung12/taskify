@@ -7,6 +7,7 @@ import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
 import { useEffect, useState } from 'react';
 import { getCardsByColumnId } from './ToDoCardModal/api';
+import CreateCardForm from './modals/CreateCardForm';
 
 export default function Column({
   title,
@@ -19,7 +20,7 @@ export default function Column({
 }) {
   const [cards, setCards] = useState<string[]>([]);
   const [totalCount, setTotalCount] = useState<number>();
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -72,7 +73,19 @@ export default function Column({
       </div>
       <div className='flex flex-col gap-[16px]'>
         {/* 카드 추가 버튼 */}
-        <div className='border-gray-_d9d9d9 flex h-[40px] items-center justify-center rounded-md border bg-white'>
+        <div
+          className='border-gray-_d9d9d9 flex h-[40px] items-center justify-center rounded-md border bg-white'
+          onClick={() =>
+            handleOpenModal(
+              <CreateCardForm
+                dashboardId={dashboardId}
+                columnId={columnId}
+                loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYzMSwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MTAyNjMzLCJpc3MiOiJzcC10YXNraWZ5In0.2TW3zMPzt0xkG5d94WA_ARH7FIEe6A9KFXlV_SO3bMg'
+                closeModal={closeModal}
+              />,
+            )
+          }
+        >
           <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}
