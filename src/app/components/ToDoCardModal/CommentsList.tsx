@@ -27,8 +27,12 @@ export default function CommentsList({ cardId }: { cardId: number }) {
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
+      console.log('handleIntersection');
+
       const target = entries[0];
       if (target.isIntersecting && !loading) {
+        console.log('detected');
+
         setSize((prev) => {
           const newSize = prev + 1;
           fetchComments(newSize);
@@ -44,22 +48,18 @@ export default function CommentsList({ cardId }: { cardId: number }) {
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: '0px',
-      threshold: 1.0,
+      threshold: 0.5,
     });
 
     const target = document.getElementById(`intersection-target${cardId}`);
-    console.log(target);
 
     if (target && totalCount > size) {
-      console.log('observer connect');
       observer.observe(target);
     }
     if (comments.length === 0) {
-      console.log('observer length disconnect');
       observer.disconnect();
     }
     return () => {
-      console.log('observer disconnect');
       observer.disconnect();
     };
   }, [handleIntersection, totalCount, size, cardId]);
@@ -72,7 +72,6 @@ export default function CommentsList({ cardId }: { cardId: number }) {
 
   // 아래 state는 api적용 이후 수정 예정입니다.
   const isMobile = window.innerWidth < 768;
-  console.log(comments);
   return (
     comments.length > 0 && (
       <div className='flex h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
@@ -99,10 +98,8 @@ export default function CommentsList({ cardId }: { cardId: number }) {
             </div>
           );
         })}
-        <div
-          id={`intersection-target${cardId}`}
-          className='min-h-[10px] bg-white'
-        ></div>
+        {loading && <span>로딩중</span>}
+        <div id={`intersection-target${cardId}`} className='min-h-[10px]'></div>
       </div>
     )
   );

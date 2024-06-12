@@ -44,9 +44,10 @@ export default function Column({
 
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
-      console.log(entries);
       const target = entries[0];
       if (target.isIntersecting && !loading) {
+        console.log('detected');
+
         setSize((prev) => {
           const newSize = prev + 1;
           fetchCards(newSize);
