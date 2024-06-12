@@ -28,11 +28,11 @@ export default function dashboardEditPage({ params }: PageProps) {
   /** 대시보드 삭제 */
   const onClick = async () => {
     try {
-      const response = await instance.delete(backLink);
+      const response = await instance.delete(`/dashboards/${dashboardid}`);
       handleOpenModal(
         <SettingChangedModal>대시보드가 삭제되었습니다.</SettingChangedModal>,
       );
-      router.push('/');
+      router.push('/mydashboard');
     } catch (e: unknown) {
       <SettingChangedModal>
         대시보드가 삭제에 실패하였습니다.
