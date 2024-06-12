@@ -149,7 +149,11 @@ const DashboardHeaderInSettings = ({
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
             {members?.map((member: CheckMembersRes, index: number) =>
               index < 4 ? (
-                <CustomAvatar nickName={member.nickname} size='medium' />
+                <CustomAvatar
+                  nickName={member.nickname}
+                  profileUrl={member.profileImageUrl}
+                  size='medium'
+                />
               ) : null,
             )}
             {members && members.length > 4 && (
@@ -169,7 +173,13 @@ const DashboardHeaderInSettings = ({
             className='flex items-center gap-[8px]'
             onClick={handleNicknameClick}
           >
-            {user && <CustomAvatar nickName={user?.nickname} size='medium' />}
+            {user && (
+              <CustomAvatar
+                nickName={user?.nickname}
+                profileUrl={user.profileImageUrl}
+                size='medium'
+              />
+            )}
             <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
               {user && user.nickname}
             </div>

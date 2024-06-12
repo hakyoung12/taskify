@@ -6,10 +6,16 @@ import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import instance from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import CustomAvatar from './CustomAvatar';
+import Image from 'next/image';
 
-const DashboardHeader = ({ title }: { title: string }) => {
+interface DashboardHeaderProps {
+  title: string;
+}
+
+const DashboardHeader = ({ title }: DashboardHeaderProps) => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [userProfile, setUserProfile] = useState();
 
   const router = useRouter();
 
@@ -24,6 +30,7 @@ const DashboardHeader = ({ title }: { title: string }) => {
     setShowDropdown(false);
     router.push('/');
   };
+  console.log(user);
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOGIN_TOKEN);
@@ -53,7 +60,13 @@ const DashboardHeader = ({ title }: { title: string }) => {
           className='flex items-center gap-[8px]'
           onClick={handleNicknameClick}
         >
-          {user && <CustomAvatar nickName={user?.nickname} size='medium' />}
+          {user && (
+            <CustomAvatar
+              nickName={user?.nickname}
+              profileUrl={user.profileImageUrl}
+              size='medium'
+            />
+          )}
           <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
             {user && user.nickname}
           </div>
