@@ -14,6 +14,7 @@ interface ModalProps {
   columnId: string;
   dashboardId: string;
   loginToken: string;
+  cardId: number | string;
   closeModal: () => void;
 }
 
@@ -22,10 +23,11 @@ const BUTTON_STYLE =
 const MODAL_TITLE_STYLE =
   'w-full text-[24px] font-bold text-custom_black-_333236';
 
-const CreateCardForm = ({
+const EditCardForm = ({
   columnId,
   dashboardId,
   loginToken,
+  cardId,
   closeModal,
 }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
@@ -61,19 +63,30 @@ const CreateCardForm = ({
     }
   }, [dashboardId, loginToken]);
 
-  const createCard = async () => {
-    const postBody = {
-      assigneeUserId: datas.assignee.userId,
-      dashboardId: dashboardId,
-      columnId: columnId,
-      title: datas.title,
-      description: datas.description,
-      dueDate: datas.dueDate,
-      tags: datas.tags,
-      imageUrl: datas.imageUrl,
-    };
+  const getPrevCardDatas = useCallback(async () => {
     try {
-      const res = await axios.post('/cards', postBody, {
+      const { data } = await axios.get(`/cards/${cardId}`, {
+        headers: {
+          Authorization: `Bearer ${loginToken}`,
+        },
+      });
+      const {
+        title,
+        description,
+        dueDate,
+        tags,
+        imageUrl,
+        assignee,
+        columnId,
+      } = data;
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
+  const editCard = async () => {
+    try {
+      const res = await axios.post('/cards', datas, {
         headers: {
           Authorization: `Bearer ${loginToken}`,
         },
@@ -110,13 +123,15 @@ const CreateCardForm = ({
       className='max-sm:mb=[-8px] mb-[-4px] mr-[-4px] flex w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] bg-white max-sm:mr-[-8px] max-sm:mt-[8px]'
       onClick={() => setIsFocused(false)}
     >
-      <h2 className={MODAL_TITLE_STYLE}>할 일 생성</h2>
-      <AssigneeInput
-        assignee={datas.assignee}
-        members={members}
-        setData={setData}
-        controlFocus={{ isFocused, setIsFocused }}
-      />
+      <h2 className={MODAL_TITLE_STYLE}>할 일 수정</h2>
+      <div className='flex gap-x-[16px]'>
+        <AssigneeInput
+          assignee={datas.assignee}
+          members={members}
+          setData={setData}
+          controlFocus={{ isFocused, setIsFocused }}
+        />
+      </div>
       <TitleInput setData={setData} initTitle={datas.title} />
       <DescriptionInput setData={setData} initDescription={datas.description} />
       <DueDateInput setData={setData} initDueDate={datas.dueDate} />
@@ -129,7 +144,8 @@ const CreateCardForm = ({
       />
       <div className='flex flex-row-reverse gap-x-[12px]'>
         <Button
-          onClick={createCard}
+          onClick={editCard}
+          type='button'
           disabled={
             datas.assignee.nickname === '' ||
             datas.title === '' ||
@@ -140,7 +156,7 @@ const CreateCardForm = ({
           }
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
-          생성
+          수정
         </Button>
         <Button
           onClick={closeModal}
@@ -154,4 +170,4 @@ const CreateCardForm = ({
   );
 };
 
-export default CreateCardForm;
+export default EditCardForm;
