@@ -102,6 +102,18 @@
     -webkit-appearance: none;
     display: none;
   }
+  .delDate:invalid::-webkit-datetime-edit-ampm-field {
+    -webkit-appearance: none;
+    display: none;
+  }
+  .delDate:invalid::-webkit-datetime-edit-hour-field {
+    -webkit-appearance: none;
+    display: none;
+  }
+  .delDate:invalid::-webkit-datetime-edit-minute-field {
+    -webkit-appearance: none;
+    display: none;
+  }
 }
 
 @layer utilities {

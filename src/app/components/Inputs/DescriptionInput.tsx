@@ -1,15 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
+import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { SetData } from './InputTypes';
 
 interface Props {
   setData: SetData;
+  initDescription: string;
 }
 
-export default function DescriptionInput({ setData }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function DescriptionInput({ setData, initDescription }: Props) {
+  const [inputValue, setInputValue] = useState<string>(initDescription);
 
   useEffect(() => {
     setData({ description: inputValue });
@@ -24,7 +25,7 @@ export default function DescriptionInput({ setData }: Props) {
         id='description'
         placeholder='설명을 입력해주세요'
         onChange={(e) => {
-          setInputValue(e.target.value || '');
+          setInputValue(e.target.value.trim() || '');
         }}
         value={inputValue}
         className={`${INPUT_STYLE} no-scrollbar h-[96px] resize-none text-black max-sm:h-[84px]`}

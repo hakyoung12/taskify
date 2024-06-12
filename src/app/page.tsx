@@ -6,9 +6,7 @@ import LandingFooter from './components/Landing/LandingFooter';
 import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import { useEffect } from 'react';
-import CreateToDoModal from './components/modals/CreateToDoModal';
-import ModToDoForm from './components/modals/ModToDoForm';
-import Test from './components/modals/text';
+import CreateCardModal from './components/modals/CreateCardModal';
 
 function checkToken() {
   if (typeof window === undefined) return;
@@ -20,15 +18,13 @@ export default function Home() {
     const userToken = checkToken();
     if (userToken) redirect('/mydashboard');
   }, []);
+
   return (
     <div className='bg-custom_black-_000000 text-custom_white'>
       <LandingHeader />
       <LandingMain />
       <LandingFooter />
-      <Test />
-      {/* <AssigneeInput /> */}
-      {/* <CreateToDoModal />
-      <ModToDoForm /> */}
+      <CreateCardModal loginToken='1' columnId='l' dashboardId='l' />
     </div>
   );
 }

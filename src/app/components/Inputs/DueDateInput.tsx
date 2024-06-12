@@ -1,24 +1,30 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
-import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
+import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { SetData } from './InputTypes';
 
 interface Props {
   setData: SetData;
+  initDueDate: string;
 }
-
-export default function DueDateInput({ setData }: Props) {
-  const [inputValue, setInputValue] = useState<string>('');
+export default function DueDateInput({ setData, initDueDate }: Props) {
+  const [inputValue, setInputValue] = useState<string>(initDueDate);
 
   function getToday() {
     const date = new Date();
     const year = date.getFullYear();
     const month = ('0' + (1 + date.getMonth())).slice(-2);
     const day = ('0' + date.getDate()).slice(-2);
+    const hour = ('0' + date.getHours()).slice(-2);
+    const min = ('0' + date.getMinutes()).slice(-2);
 
-    return year + '-' + month + '-' + day;
+    return year + '-' + month + '-' + day + 'T' + hour + ':' + min;
   }
+
+  const removeT = (time: string) => {
+    return time.replace('T', ' ');
+  };
 
   useEffect(() => {
     setData({ DueDate: inputValue });
@@ -31,13 +37,14 @@ export default function DueDateInput({ setData }: Props) {
       <input
         id='dueDate'
         data-placeholder='날짜를 입력해주세요'
-        type='date'
+        type='datetime-local'
         min={getToday()}
         onChange={(e) => {
-          setInputValue(e.target.value || '');
+          setInputValue(removeT(e.target.value) || '');
         }}
+        required
         value={inputValue}
-        className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] w-[100%] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
+        className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
       />
     </div>
   );

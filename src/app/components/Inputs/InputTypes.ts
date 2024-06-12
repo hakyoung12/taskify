@@ -18,6 +18,17 @@ export interface Datas {
   imageUrl: string;
 }
 
+export type Members = {
+  id?: number;
+  userId: number;
+  email: string;
+  nickname: string;
+  profileImageUrl?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  isOwner?: boolean;
+}[];
+
 export type SetData = (data: {
   [key: string]: string | Assignee | string[];
 }) => void;
