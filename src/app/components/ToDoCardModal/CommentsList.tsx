@@ -5,7 +5,15 @@ import CustomAvatar from '../CustomAvatar';
 import Comment from './Comment';
 import { getCommentsByCardId } from './api';
 
-export default function CommentsList({ cardId }: { cardId: number }) {
+export default function CommentsList({
+  cardId,
+  isCommentChange,
+  setIsCommentChange,
+}: {
+  cardId: number;
+  isCommentChange: boolean;
+  setIsCommentChange: any;
+}) {
   const [comments, setComments] = useState<string[]>([]);
   const [size, setSize] = useState<number>(3);
   const [loading, setLoading] = useState(false);
@@ -22,6 +30,7 @@ export default function CommentsList({ cardId }: { cardId: number }) {
       console.log(error);
     } finally {
       setLoading(false);
+      setIsCommentChange(false);
     }
   };
 
@@ -68,7 +77,12 @@ export default function CommentsList({ cardId }: { cardId: number }) {
     fetchComments(size);
   }, []);
 
-  console.log(totalCount);
+  useEffect(() => {
+    if (isCommentChange) {
+      fetchComments(size);
+      setIsCommentChange(false);
+    }
+  }, [isCommentChange, size]);
 
   // 아래 state는 api적용 이후 수정 예정입니다.
   const isMobile = window.innerWidth < 768;
@@ -94,6 +108,7 @@ export default function CommentsList({ cardId }: { cardId: number }) {
                 createdAt={comment.createdAt}
                 content={comment.content}
                 commenterName={comment.author.nickname}
+                setIsCommentChange={setIsCommentChange}
               />
             </div>
           );

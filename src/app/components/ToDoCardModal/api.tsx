@@ -64,11 +64,13 @@ const deleteColumnByID = async (columnId: number, setIsColumnChange: any) => {
   }
 };
 
-const deleteComment = async (commentId: number) => {
+const deleteComment = async (commentId: number, setIsCommentChange: any) => {
   try {
     const res = await instance.delete(`comments/${commentId}`);
   } catch (error) {
     console.log(error);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 
@@ -100,6 +102,7 @@ const postComment = async (
   cardId: number,
   columnId: number,
   dashboardId: number,
+  setIsCommentChange: any,
 ) => {
   const data = {
     content: content,
@@ -112,15 +115,23 @@ const postComment = async (
     const res = await instance.post('comments', data);
   } catch (err) {
     console.log(err);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 
-const putComment = async (commentId: number, content: string) => {
+const putComment = async (
+  commentId: number,
+  content: string,
+  setIsCommentChange: any,
+) => {
   const data = { content: content };
   try {
     const res = await instance.put(`comments/${commentId}`, data);
   } catch (error) {
     console.error(error);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 

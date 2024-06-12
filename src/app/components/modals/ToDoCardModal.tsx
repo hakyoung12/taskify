@@ -5,6 +5,7 @@ import CardHeader from '../ToDoCardModal/CardHeader';
 import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
+import { useState } from 'react';
 
 interface assigner {
   profileImageUrl?: string;
@@ -37,6 +38,8 @@ export default function ToDoCardModal({
   columnTitle: string;
   setIsCardChange: any;
 }) {
+  const [isCommentChange, setIsCommentChange] = useState(false);
+
   return (
     <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
       <CardHeader
@@ -57,8 +60,13 @@ export default function ToDoCardModal({
             columnId={columnId}
             dashboardId={dashboardId}
             cardId={cardId}
+            setIsCommentChange={setIsCommentChange}
           />
-          <CommentsList cardId={cardId} />
+          <CommentsList
+            cardId={cardId}
+            isCommentChange={isCommentChange}
+            setIsCommentChange={setIsCommentChange}
+          />
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>
