@@ -132,7 +132,7 @@ const InvitedDashboardList = () => {
           ),
         );
       }
-    }, 300),
+    }, 500),
     [invitations],
   );
 
