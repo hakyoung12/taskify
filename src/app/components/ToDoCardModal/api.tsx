@@ -29,9 +29,9 @@ const getCardsByColumnId = async (columId: number, size?: number) => {
   return res.data;
 };
 
-const getCommentsByCardId = async (cardId: number) => {
+const getCommentsByCardId = async (cardId: number, size: number = 10) => {
   const res = await instance.get(`comments`, {
-    params: { cardId: `${cardId}` },
+    params: { cardId: `${cardId}`, size: `${size}` },
   });
   return res.data;
 };

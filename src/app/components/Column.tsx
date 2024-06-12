@@ -71,15 +71,12 @@ export default function Column({
 
     if (target && totalCount > size) {
       observer.observe(target);
-      // console.log(`${columnId}: connected`);
     }
     if (cards.length === 0) {
       observer.disconnect();
-      // console.log(`${columnId}: disconnect`);
     }
     return () => {
       observer.disconnect();
-      // console.log(`${columnId}: disconnect`);
     };
   }, [handleIntersection, totalCount, size]);
 
@@ -150,7 +147,7 @@ export default function Column({
               />
             );
           })}
-        <div id={`intersection-target${columnId}`} className='h-100px'></div>
+        <div id={`intersection-target${columnId}`}></div>
       </div>
     </div>
   );

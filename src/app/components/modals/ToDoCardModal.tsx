@@ -35,22 +35,6 @@ export default function ToDoCardModal({
   assigner: assigner;
   cardId: number;
 }) {
-  const [comments, setComments] = useState<string[]>([]);
-
-  const fetchComments = async () => {
-    try {
-      const res = await getCommentsByCardId(cardId);
-      setComments(res.comments);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  // console.log(comments);
-  useEffect(() => {
-    fetchComments();
-  }, []);
-
   return (
     <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
       <CardHeader cardId={cardId} title={title} />
@@ -67,7 +51,7 @@ export default function ToDoCardModal({
             dashboardId={dashboardId}
             cardId={cardId}
           />
-          {comments && <CommentsList comments={comments} />}
+          <CommentsList cardId={cardId} />
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>
