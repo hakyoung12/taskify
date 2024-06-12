@@ -11,6 +11,7 @@ import CreateCardModal from '@/app/components/modals/CreateCardModal';
 export default function dashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);
   const [columnTitles, setColumnTitles] = useState([]);
+  const [isColumnChange, setIsColumnChange] = useState(false);
   const { openModal } = useModal();
 
   const id = Number(dashboardid.params.dashboardid);
@@ -28,12 +29,22 @@ export default function dashboardPage(dashboardid: any) {
       setColumnTitles(titles);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsColumnChange(false);
     }
   }
 
   useEffect(() => {
     fetchColumns();
   }, []);
+
+  useEffect(() => {
+    if (isColumnChange) {
+      fetchColumns();
+    }
+  }, [isColumnChange]);
+
+  console.log(isColumnChange);
 
   return (
     <>
@@ -47,6 +58,7 @@ export default function dashboardPage(dashboardid: any) {
             columnData.map((column: any, index: number) => {
               return (
                 <Column
+                  setIsColumnChange={setIsColumnChange}
                   key={index}
                   columnId={column.id}
                   title={column.title}
@@ -58,7 +70,11 @@ export default function dashboardPage(dashboardid: any) {
             className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
             onClick={() =>
               handleOpenModal(
-                <NewColumnModal dashboardId={id} columnTitles={columnTitles} />,
+                <NewColumnModal
+                  dashboardId={id}
+                  columnTitles={columnTitles}
+                  setIsColumnChange={setIsColumnChange}
+                />,
               )
             }
           >

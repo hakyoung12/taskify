@@ -54,11 +54,13 @@ const getCardsList = async (
   }
 };
 
-const deleteColumnByID = async (columnId: number) => {
+const deleteColumnByID = async (columnId: number, setIsColumnChange: any) => {
   try {
     const res = await instance.delete(`columns/${columnId}`);
   } catch (error) {
     console.log(error);
+  } finally {
+    setIsColumnChange(true);
   }
 };
 
@@ -78,12 +80,18 @@ const deleteCard = async (cardId: number) => {
   }
 };
 
-const putColumnByID = async (columnId: number, title: string) => {
+const putColumnByID = async (
+  columnId: number,
+  title: string,
+  setIsColumnChange: any,
+) => {
   const data = { title: title };
   try {
     const res = await instance.put(`columns/${columnId}`, data);
   } catch (error) {
     console.log(axios.isAxiosError(error));
+  } finally {
+    setIsColumnChange(true);
   }
 };
 

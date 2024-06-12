@@ -10,11 +10,11 @@ import ModalInput from '../ModalInput';
 const UpdateColumnModal = ({
   columnId,
   title,
-  setIsCardChange,
+  setIsColumnChange,
 }: {
   columnId: number;
   title: string;
-  setIsCardChange: any;
+  setIsColumnChange: any;
 }) => {
   const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
@@ -29,7 +29,7 @@ const UpdateColumnModal = ({
 
   const handleUpdateColumn = (inputTitleData: string) => {
     if (isValueChange(title, inputTitleData)) {
-      putColumnByID(columnId, inputTitleData);
+      putColumnByID(columnId, inputTitleData, setIsColumnChange);
       closeModal();
     }
   };
@@ -55,7 +55,7 @@ const UpdateColumnModal = ({
               handleOpenModal(
                 <DeleteColumnAlertModal
                   columnId={columnId}
-                  setIsCardChange={setIsCardChange}
+                  setIsColumnChange={setIsColumnChange}
                 />,
               )
             }

@@ -13,10 +13,12 @@ export default function Column({
   title,
   columnId,
   dashboardId,
+  setIsColumnChange,
 }: {
   title: string;
   columnId: number;
   dashboardId: number;
+  setIsColumnChange: any;
 }) {
   const [cards, setCards] = useState<string[]>([]);
   const [totalCount, setTotalCount] = useState<number>(0);
@@ -93,7 +95,6 @@ export default function Column({
     }
   }, [isChange, size]);
 
-  console.log(isChange);
   return (
     <div className='border-gray-_eeeeee flex h-[900px] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
       {/* 카드 info */}
@@ -120,7 +121,7 @@ export default function Column({
               <UpdateColumnModal
                 title={title}
                 columnId={columnId}
-                setIsCardChange={setIsCardChange}
+                setIsColumnChange={setIsColumnChange}
               />,
             )
           }

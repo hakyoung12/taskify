@@ -6,17 +6,17 @@ import ModalFooterButtons from '../ModalFooterButtons';
 
 const DeleteColumnAlertModal = ({
   columnId,
-  setIsCardChange,
+  setIsColumnChange,
 }: {
   columnId: number;
-  setIsCardChange: any;
+  setIsColumnChange: any;
 }) => {
   const { closeModal } = useModal();
 
   const handleDeleteColumn = (columnId: number) => {
-    deleteColumnByID(columnId);
+    deleteColumnByID(columnId, setIsColumnChange);
     closeModal();
-    setIsCardChange(true);
+    setIsColumnChange(true);
   };
 
   return (
