@@ -5,9 +5,11 @@ import { deleteColumnByID } from '../ToDoCardModal/api';
 import ModalFooterButtons from '../ModalFooterButtons';
 
 const DeleteColumnAlertModal = ({ columnId }: { columnId: number }) => {
+  const { closeModal } = useModal();
+
   const handleDeleteColumn = (columnId: number) => {
     deleteColumnByID(columnId);
-    location.reload();
+    closeModal();
   };
 
   return (

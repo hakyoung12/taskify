@@ -10,11 +10,13 @@ import { useModal } from '@/context/ModalContext';
 const ModalFooterButtons = ({
   actionName = '생성',
   onAction,
+  onCancel,
   value,
   isDisabled = value,
 }: {
   actionName?: string;
   onAction?: () => void;
+  onCancel?: () => void;
   value?: string | boolean;
   isDisabled?: any;
 }) => {
@@ -26,7 +28,7 @@ const ModalFooterButtons = ({
       <button
         type='button'
         className={`${modalButtonStyle} bg-white text-[#787486]`}
-        onClick={closeModal}
+        onClick={onCancel || closeModal}
       >
         취소
       </button>

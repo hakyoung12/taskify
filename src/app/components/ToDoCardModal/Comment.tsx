@@ -1,11 +1,19 @@
 import { ChangeEvent, useState } from 'react';
+import { deleteColumnByID, deleteComment, putComment } from './api';
 
 interface CommentProps {
   createdAt: string;
   content: string;
+  commentId: number;
+  commenterName: string;
 }
 
-const Comment = ({ createdAt, content }: CommentProps) => {
+const Comment = ({
+  createdAt,
+  content,
+  commentId,
+  commenterName,
+}: CommentProps) => {
   const [value, setValue] = useState(content);
   const [isEditing, setIsEditing] = useState(false);
 
@@ -14,13 +22,18 @@ const Comment = ({ createdAt, content }: CommentProps) => {
   };
 
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
-    setIsEditing(false);
     e.preventDefault();
+    setIsEditing(false);
+    putComment(commentId, value);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
+  };
+
+  const handleDelete = () => {
+    deleteComment(commentId);
   };
 
   const cancelEdit = () => {
@@ -31,7 +44,7 @@ const Comment = ({ createdAt, content }: CommentProps) => {
   return (
     <div className='w-full text-[14px] max-sm:text-[12px]'>
       <div className='mt-[6px] flex items-center gap-[8px]'>
-        <span className='font-semibold'>장만철</span>
+        <span className='font-semibold'>{commenterName}</span>
         <span className='text-[12px] text-[#9FA6B2] max-sm:text-[10px]'>
           {createdAt}
         </span>
@@ -56,7 +69,7 @@ const Comment = ({ createdAt, content }: CommentProps) => {
         ) : (
           <button onClick={handleOnClick}>수정</button>
         )}
-        <button>삭제</button>
+        <button onClick={handleDelete}>삭제</button>
       </div>
     </div>
   );

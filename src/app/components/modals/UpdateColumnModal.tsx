@@ -14,7 +14,7 @@ const UpdateColumnModal = ({
   columnId: number;
   title: string;
 }) => {
-  const { openModal } = useModal();
+  const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -26,8 +26,10 @@ const UpdateColumnModal = ({
   };
 
   const handleUpdateColumn = (inputTitleData: string) => {
-    if (isValueChange(title, inputTitleData))
+    if (isValueChange(title, inputTitleData)) {
       putColumnByID(columnId, inputTitleData);
+      closeModal();
+    }
   };
 
   return (
@@ -35,7 +37,7 @@ const UpdateColumnModal = ({
       <div className='text-[24px] font-bold text-custom_black-_333236'>
         컬럼 관리
       </div>
-      <form onSubmit={() => handleUpdateColumn(value)}>
+      <div>
         <ModalInput
           labelName='이름'
           inputId='title'
@@ -55,11 +57,12 @@ const UpdateColumnModal = ({
           </div>
           <ModalFooterButtons
             actionName={'변경'}
+            onAction={() => handleUpdateColumn(value)}
             value={value}
             isDisabled={isValueChange(title, value)}
           />
         </div>
-      </form>
+      </div>
     </div>
   );
 };
