@@ -1,4 +1,5 @@
 'use client';
+
 import { useEffect, useState } from 'react';
 import EditMenuTitle from './EditMenuTitle';
 import { mockData } from './mockdata/InvitationMock';
@@ -8,6 +9,7 @@ import { LoadInvitationsRes } from '../api/apiTypes/dashboardsType';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
 import axios from 'axios';
+import InvitationModal from './modals/InvitationModal';
 
 export default function InvitationList({
   dashboardid,
@@ -64,12 +66,11 @@ export default function InvitationList({
       const res = await instance.get(`dashboards/${dashboardid}/invitations`, {
         params: queryParams,
       });
-      console.log(res);
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };
     fetchInvitationListData();
-  }, []);
+  }, [invitationList]);
 
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
@@ -83,7 +84,10 @@ export default function InvitationList({
           onPrev={handlePrevPage}
           onNext={handleNextPage}
         />
-        <button className='font-Pretendard max-sm:text-sx mt-8 flex h-8 w-[105px] items-center gap-2 rounded-md bg-custom_violet-_5534da px-3 py-2 text-base font-medium text-white max-sm:absolute max-sm:bottom-4 max-sm:right-7 max-sm:text-xs'>
+        <button
+          className='font-Pretendard max-sm:text-sx mt-8 flex h-8 w-[105px] items-center gap-2 rounded-md bg-custom_violet-_5534da px-3 py-2 text-base font-medium text-white max-sm:absolute max-sm:bottom-4 max-sm:right-7 max-sm:text-xs'
+          onClick={() => handleOpenModal(<InvitationModal />)}
+        >
           <div className='relative h-4 w-4 max-sm:h-3.5 max-sm:w-3.5'>
             <Image
               fill
