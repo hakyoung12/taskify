@@ -145,6 +145,7 @@ export default function Column({
                 dueDate={card.dueDate}
                 assigner={card.assignee}
                 cardId={card.id}
+                columnTitle={title}
               />
             );
           })}

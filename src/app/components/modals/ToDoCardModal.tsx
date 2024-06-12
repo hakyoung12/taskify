@@ -5,8 +5,6 @@ import CardHeader from '../ToDoCardModal/CardHeader';
 import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
-import { useEffect, useState } from 'react';
-import { getCommentsByCardId } from '../ToDoCardModal/api';
 
 interface assigner {
   profileImageUrl?: string;
@@ -24,6 +22,7 @@ export default function ToDoCardModal({
   assigner,
   imageUrl,
   cardId,
+  columnTitle,
 }: {
   dashboardId: number;
   columnId: number;
@@ -34,6 +33,7 @@ export default function ToDoCardModal({
   imageUrl?: string;
   assigner: assigner;
   cardId: number;
+  columnTitle: string;
 }) {
   return (
     <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
@@ -45,6 +45,7 @@ export default function ToDoCardModal({
             imageUrl={imageUrl}
             description={description}
             tags={tags}
+            columntitle={columnTitle}
           />
           <CommentInput
             columnId={columnId}

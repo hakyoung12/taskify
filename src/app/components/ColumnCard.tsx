@@ -15,6 +15,7 @@ interface ColumnCardProps {
   cardId: number;
   columnId: number;
   dashboardId: number;
+  columnTitle: string;
 }
 
 export default function ColumnCard({
@@ -27,6 +28,7 @@ export default function ColumnCard({
   dueDate,
   assigner,
   columnId,
+  columnTitle,
 }: ColumnCardProps) {
   const { openModal } = useModal();
 
@@ -49,6 +51,7 @@ export default function ColumnCard({
             dueDate={dueDate}
             assigner={assigner}
             imageUrl={imageUrl}
+            columnTitle={columnTitle}
           />,
         )
       }
