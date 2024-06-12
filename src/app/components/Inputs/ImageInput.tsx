@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
+import { LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { SetData } from './InputTypes';
 import Image from 'next/image';
 import axios from '@/app/api/axios';

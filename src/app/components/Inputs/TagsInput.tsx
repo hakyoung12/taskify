@@ -1,7 +1,7 @@
 'use client';
 
 import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
-import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
+import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { SetData } from './InputTypes';
 import InputTags from '../InputTags';
 

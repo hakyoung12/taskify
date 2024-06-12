@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './BaseInput';
+import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { Assignee, SetData, Members } from './InputTypes';
 
 interface AssigneeProps {
@@ -85,14 +85,14 @@ export default function AssigneeInput({
 
   return (
     <div
-      className={`${LABLE_INPUT_STYLE} relative text-black`}
+      className={`${LABLE_INPUT_STYLE} relative w-[217px] text-black max-sm:w-auto`}
       onClick={(e) => e.stopPropagation()}
     >
       <label htmlFor='assignee' className={LABLE_STYLE}>
         담당자
       </label>
       <div
-        className={`${INPUT_STYLE} ${isFocused ? 'border-custom_violet-_5534da' : ''} flex items-center bg-white`}
+        className={`${INPUT_STYLE} ${isFocused ? 'border-custom_violet-_5534da' : ''} flex items-center bg-white bg-[url('/images/dropDownArrow.svg')] bg-right bg-no-repeat`}
         onClick={() => {
           input.current?.focus();
         }}
@@ -103,7 +103,7 @@ export default function AssigneeInput({
         <input
           id='assignee'
           placeholder='이름을 입력해주세요'
-          className='no-autofill flex-grow outline-none'
+          className='no-autofill flex-grow bg-transparent outline-none'
           autoComplete='off'
           onChange={(e) => {
             setInputValue(e.target.value || '');
