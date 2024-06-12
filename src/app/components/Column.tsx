@@ -5,7 +5,7 @@ import Image from 'next/image';
 import ChipAddIcon from './ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getCardsByColumnId } from './ToDoCardModal/api';
 import CreateCardForm from './modals/CreateCardForm';
 
@@ -19,32 +19,76 @@ export default function Column({
   dashboardId: number;
 }) {
   const [cards, setCards] = useState<string[]>([]);
-  const [totalCount, setTotalCount] = useState<number>();
+  const [totalCount, setTotalCount] = useState<number>(0);
+  const [size, setSize] = useState(4);
   const { openModal, closeModal } = useModal();
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
   };
 
-  const fetchCards = async () => {
+  const fetchCards = async (size: number) => {
+    setLoading(true);
     try {
-      const res = await getCardsByColumnId(columnId);
-      console.log(res);
-      setCards(res.cards);
+      const res = await getCardsByColumnId(columnId, size);
+      const newCards = res.cards;
+      setCards(newCards);
       setTotalCount(res.totalCount);
     } catch (error: any) {
       console.log(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  console.log(cards);
+  const handleIntersection = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      console.log(entries);
+      const target = entries[0];
+      if (target.isIntersecting && !loading) {
+        setSize((prev) => {
+          const newSize = prev + 1;
+          fetchCards(newSize);
+          return newSize;
+        });
+      }
+    },
+    [size, loading],
+  );
+
+  //옵저버 객체 만들기
+  useEffect(() => {
+    const observer = new IntersectionObserver(handleIntersection, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 1.0,
+    });
+
+    console.log(`${columnId}: observer`);
+
+    const target = document.getElementById(`intersection-target${columnId}`);
+
+    if (target && totalCount > size) {
+      observer.observe(target);
+      // console.log(`${columnId}: connected`);
+    }
+    if (cards.length === 0) {
+      observer.disconnect();
+      // console.log(`${columnId}: disconnect`);
+    }
+    return () => {
+      observer.disconnect();
+      // console.log(`${columnId}: disconnect`);
+    };
+  }, [handleIntersection, totalCount, size]);
 
   useEffect(() => {
-    fetchCards();
+    fetchCards(size);
   }, []);
 
   return (
-    <div className='border-gray-_eeeeee flex min-w-[354px] flex-col gap-[25px] border-r p-[20px] max-xl:w-full'>
+    <div className='border-gray-_eeeeee flex h-[900px] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
       {/* 카드 info */}
       <div className='flex items-center justify-between'>
         <div className='flex items-center justify-center text-[16px] font-bold'>
@@ -106,6 +150,7 @@ export default function Column({
               />
             );
           })}
+        <div id={`intersection-target${columnId}`} className='h-100px'></div>
       </div>
     </div>
   );

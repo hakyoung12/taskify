@@ -37,38 +37,35 @@ export default function dashboardPage(dashboardid: any) {
 
   return (
     <>
-      <div className='relative flex'>
-        <div className='w-screen'>
-          <div className='flex overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'>
-            {/* 컬럼 컴포넌트 뿌리기 */}
-            {columnData &&
-              columnData.length > 0 &&
-              columnData.map((column: any, index: number) => {
-                return (
-                  <Column
-                    key={index}
-                    columnId={column.id}
-                    title={column.title}
-                    dashboardId={id}
-                  />
-                );
-              })}
-            <div
-              className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
-              onClick={() =>
-                handleOpenModal(
-                  <NewColumnModal
-                    dashboardId={id}
-                    columnTitles={columnTitles}
-                  />,
-                )
-              }
-            >
-              <p className='mr-[12px] text-[16px] font-bold'>
-                새로운 컬럼 추가하기
-              </p>
-              <ChipAddIcon size={'large'} />
-            </div>
+      <div className='flex'>
+        <div
+          style={{ width: 'calc(100vw - 250px)' }}
+          className='flex h-full overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'
+        >
+          {columnData &&
+            columnData.length > 0 &&
+            columnData.map((column: any, index: number) => {
+              return (
+                <Column
+                  key={index}
+                  columnId={column.id}
+                  title={column.title}
+                  dashboardId={id}
+                />
+              );
+            })}
+          <div
+            className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
+            onClick={() =>
+              handleOpenModal(
+                <NewColumnModal dashboardId={id} columnTitles={columnTitles} />,
+              )
+            }
+          >
+            <p className='mr-[12px] text-[16px] font-bold'>
+              새로운 컬럼 추가하기
+            </p>
+            <ChipAddIcon size={'large'} />
           </div>
         </div>
       </div>

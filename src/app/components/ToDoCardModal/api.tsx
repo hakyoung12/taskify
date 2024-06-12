@@ -22,9 +22,9 @@ const getColumnsByDashBoardId = async (dashboardid: number) => {
   }
 };
 
-const getCardsByColumnId = async (columId: number) => {
+const getCardsByColumnId = async (columId: number, size?: number) => {
   const res = await instance.get(`cards`, {
-    params: { columnId: `${columId}` },
+    params: { columnId: `${columId}`, size: `${size}` },
   });
   return res.data;
 };

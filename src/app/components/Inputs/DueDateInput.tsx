@@ -26,7 +26,6 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
     return time.replace('T', ' ');
   };
 
-  console.log(inputValue);
   useEffect(() => {
     setData({ dueDate: inputValue });
   }, [inputValue, setData]);

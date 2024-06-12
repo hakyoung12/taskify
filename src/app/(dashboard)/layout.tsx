@@ -32,13 +32,15 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className='flex'>
-      <SideBar />
-      <div className='w-full'>
-        {renderHeader()}
-        <main>{children}</main>
+    <>
+      <div className='flex'>
+        <SideBar />
+        <div className='w-full'>
+          {renderHeader()}
+          <main>{children}</main>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

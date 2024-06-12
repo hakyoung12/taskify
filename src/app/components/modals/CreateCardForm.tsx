@@ -28,7 +28,6 @@ const CreateCardForm = ({
   loginToken,
   closeModal,
 }: ModalProps) => {
-  console.log('hi');
   const [datas, setDatas] = useState<Datas>({
     assignee: {
       userId: 0,
@@ -107,7 +106,6 @@ const CreateCardForm = ({
 
   if (!isMounted) return;
 
-  console.log(datas);
   return (
     <div
       className='max-sm:mb=[-8px] mb-[-4px] mr-[-4px] flex w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] bg-white max-sm:mr-[-8px] max-sm:mt-[8px]'
