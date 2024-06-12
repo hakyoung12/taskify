@@ -34,7 +34,7 @@ const DashboardHeaderInSettings = ({
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
   const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
-  const { dashboardsData, setDashboardsData } = useDashboardData();
+  const { dashboardsData } = useDashboardData();
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {

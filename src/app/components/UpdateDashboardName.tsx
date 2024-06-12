@@ -45,7 +45,11 @@ const UpdateDashboardName = ({ dashboardid }: { dashboardid: number }) => {
       setDashboardsData((prevDashboardsData) =>
         prevDashboardsData.map((dashboard) =>
           parseInt(dashboard.id) == dashboardid
-            ? { ...dashboard, title: response.data.title }
+            ? {
+                ...dashboard,
+                title: response.data.title,
+                color: response.data.color,
+              }
             : dashboard,
         ),
       );

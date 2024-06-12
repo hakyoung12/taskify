@@ -6,7 +6,7 @@ import { CheckUserRes } from '@/app/api/apiTypes/userType';
 import instance from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import CustomAvatar from './CustomAvatar';
-import Image from 'next/image';
+import { useUserData } from '@/context/UserDataContext';
 
 interface DashboardHeaderProps {
   title: string;
@@ -15,7 +15,7 @@ interface DashboardHeaderProps {
 const DashboardHeader = ({ title }: DashboardHeaderProps) => {
   const [user, setUser] = useState<CheckUserRes | null>(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [userProfile, setUserProfile] = useState();
+  const { userData, setUserData } = useUserData();
 
   const router = useRouter();
 
@@ -30,7 +30,6 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
     setShowDropdown(false);
     router.push('/');
   };
-  console.log(user);
 
   useEffect(() => {
     const accessToken = localStorage.getItem(LOGIN_TOKEN);
@@ -50,6 +49,10 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    console.log(userData);
+  }, [userData]);
+
   return (
     <div className='flex h-[60px] items-center justify-between border-b border-r border-t border-custom_gray-_d9d9d9 py-1'>
       <div className='ml-10 text-lg font-bold text-custom_black-_333236'>
@@ -60,15 +63,15 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
           className='flex items-center gap-[8px]'
           onClick={handleNicknameClick}
         >
-          {user && (
+          {userData && (
             <CustomAvatar
-              nickName={user?.nickname}
-              profileUrl={user.profileImageUrl}
+              nickName={userData.nickname}
+              profileUrl={userData.profileImageUrl}
               size='medium'
             />
           )}
           <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
-            {user && user.nickname}
+            {userData && userData.nickname}
           </div>
         </div>
         {showDropdown && (
