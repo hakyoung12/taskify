@@ -167,7 +167,7 @@ const EditCardForm = ({
       }}
     >
       <h2 className={MODAL_TITLE_STYLE}>할 일 수정</h2>
-      <div className='flex gap-x-[16px]'>
+      <div className='flex gap-[16px] max-sm:flex-col'>
         <StateInput
           states={states}
           columnId={columnId}
@@ -201,7 +201,16 @@ const EditCardForm = ({
         <Button
           onClick={editCard}
           type='button'
-          disabled={datas == initDatas}
+          disabled={
+            datas.assignee === initDatas?.assignee &&
+            datas.columnId === initDatas.columnId &&
+            datas.description === initDatas.description &&
+            datas.dueDate === initDatas.dueDate &&
+            datas.imageUrl === initDatas.imageUrl &&
+            datas.tags.length === initDatas.tags.length &&
+            datas.tags.every((v, i) => v === initDatas.tags[i]) &&
+            datas.title === initDatas.title
+          }
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
           수정

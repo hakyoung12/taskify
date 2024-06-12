@@ -82,7 +82,7 @@ export default function StateInput({
 
   return (
     <div
-      className={`${LABLE_INPUT_STYLE} relative w-[217px] text-black max-sm:w-auto`}
+      className={`${LABLE_INPUT_STYLE} relative max-w-[217px] text-black max-sm:w-auto max-sm:max-w-none`}
       onClick={(e) => e.stopPropagation()}
     >
       <label htmlFor='state' className={LABLE_STYLE}>
