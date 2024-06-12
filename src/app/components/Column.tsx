@@ -26,6 +26,7 @@ export default function Column({
   const { openModal, closeModal } = useModal();
   const [loading, setLoading] = useState(true);
   const [isChange, setIsCardChange] = useState(false);
+  const [loginToken, setLoginToken] = useState<any>('');
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -82,7 +83,14 @@ export default function Column({
 
   useEffect(() => {
     fetchCards(size);
-  }, [size, columnId, isChange]); // isChange를 디펜던시로 추가
+  }, [size, columnId, isChange]);
+
+  // 빈 배열로 변경하여 초기 렌더링 시 한 번만 실행되도록 변경
+  useEffect(() => {
+    const token = window.localStorage.getItem('loginToken'); // 수정된 부분
+    console.log(token);
+    setLoginToken(token);
+  }, []); // 빈 배열로 변경하여 초기 렌더링 시 한 번만 실행되도록 변경
 
   useEffect(() => {
     if (isChange) {
@@ -132,7 +140,7 @@ export default function Column({
               <CreateCardForm
                 dashboardId={dashboardId}
                 columnId={columnId}
-                loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYzMSwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MTAyNjMzLCJpc3MiOiJzcC10YXNraWZ5In0.2TW3zMPzt0xkG5d94WA_ARH7FIEe6A9KFXlV_SO3bMg'
+                loginToken={loginToken}
                 closeModal={closeModal}
                 setIsCardChange={setIsCardChange}
               />,
