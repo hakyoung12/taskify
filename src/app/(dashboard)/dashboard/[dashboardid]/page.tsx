@@ -46,10 +46,7 @@ export default function dashboardPage(dashboardid: any) {
   return (
     <>
       <div className='flex'>
-        <div
-          style={{ width: 'calc(100vw - 250px)' }}
-          className='flex h-full overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'
-        >
+        <div className='flex h-full w-[calc(100vw-250px)] overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:w-[calc(100vw-156px)] max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal max-sm:w-[calc(100vw-64px)]'>
           {columnData &&
             columnData.length > 0 &&
             columnData.map((column: any, index: number) => {
