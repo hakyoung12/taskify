@@ -23,7 +23,6 @@ export default function dashboardPage(dashboardid: any) {
     try {
       const columnData = await getColumnsByDashBoardId(id);
       setColumnData(columnData.data);
-
       const titles = columnData.data.map((column: any) => column.title);
       setColumnTitles(titles);
     } catch (error) {
