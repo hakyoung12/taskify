@@ -15,9 +15,12 @@ const InvitedDashboardList = () => {
   >([]);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const size = 6;
 
   const fetchInvitations = async (cursorId: number | null) => {
+    if (!hasMore) return;
+
     setLoading(true);
     try {
       const res = await instance.get('invitations', {
@@ -48,6 +51,8 @@ const InvitedDashboardList = () => {
 
       if (newInvitations.length > 0) {
         setCursorId(newInvitations[newInvitations.length - 1].id);
+      } else {
+        setHasMore(false);
       }
     } catch (error) {
       console.error(error);
@@ -59,11 +64,11 @@ const InvitedDashboardList = () => {
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && !loading) {
+      if (target.isIntersecting && !loading && hasMore) {
         fetchInvitations(cursorId);
       }
     },
-    [cursorId, loading],
+    [cursorId, loading, hasMore],
   );
 
   useEffect(() => {
