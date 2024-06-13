@@ -114,6 +114,16 @@
     -webkit-appearance: none;
     display: none;
   }
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 2px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #d9d9d9;
+    border-radius: 10px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
 }
 
 @layer utilities {
@@ -132,8 +142,5 @@
   }
   .no-datalist-arrow::-webkit-calendar-picker-indicator {
     display: none;
-  }
-  .no-drag {
-    -webkit-user-drag: none;
   }
 }

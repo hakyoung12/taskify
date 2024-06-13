@@ -25,13 +25,6 @@ export default function Home() {
       <LandingHeader />
       <LandingMain />
       <LandingFooter />
-      <EditCardForm
-        cardId={1}
-        closeModal={() => {}}
-        columnId={1}
-        dashboardId={1}
-        loginToken='1'
-      />
     </div>
   );
 }

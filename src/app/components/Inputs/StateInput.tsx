@@ -37,6 +37,7 @@ export default function StateInput({
       (state) => state.title === e.currentTarget.value,
     );
     setData({ columnId: selected[0]?.id });
+    setInputValue(selected[0]?.title);
     setIsFocused(false);
   };
 
@@ -47,7 +48,6 @@ export default function StateInput({
     } else {
       setInputValue('');
     }
-    setIsFocused(false);
   };
 
   const getInitState = useCallback(() => {
