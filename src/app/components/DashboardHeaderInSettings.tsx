@@ -71,7 +71,7 @@ const DashboardHeaderInSettings = ({
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
         dashboardsData.map((data) => {
-          if (data.id == dashboardId) {
+          if (data.id == params.dashboardid) {
             setTitle(data.title);
           }
         });
