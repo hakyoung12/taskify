@@ -11,8 +11,8 @@ import axios from '@/app/api/axios';
 import { Button } from '../ui/button';
 
 interface ModalProps {
-  columnId: string;
-  dashboardId: string;
+  columnId: number;
+  dashboardId: string | number;
   loginToken: string;
   closeModal: () => void;
 }
@@ -86,7 +86,7 @@ const CreateCardForm = ({
   };
 
   const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] }) => {
+    (data: { [key: string]: string | Assignee | string[] | number }) => {
       setDatas((prev) => {
         return { ...prev, ...data };
       });

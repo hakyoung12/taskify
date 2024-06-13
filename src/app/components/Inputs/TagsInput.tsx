@@ -40,6 +40,10 @@ export default function TagInput({ setData, initTags }: Props) {
     setData({ tags: tags });
   }, [tags, setData]);
 
+  useEffect(() => {
+    setTags(initTags);
+  }, [initTags]);
+
   return (
     <div className={LABLE_INPUT_STYLE}>
       <label htmlFor='tags' className={LABLE_STYLE}>
