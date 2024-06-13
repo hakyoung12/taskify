@@ -41,7 +41,7 @@ export default function ToDoCardModal({
   const [isCommentChange, setIsCommentChange] = useState(false);
 
   return (
-    <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
+    <div className='flex max-h-[calc(100vh-100px)] flex-col gap-[24px] overflow-y-auto whitespace-nowrap p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
       <CardHeader
         cardId={cardId}
         title={title}

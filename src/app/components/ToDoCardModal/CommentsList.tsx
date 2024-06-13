@@ -80,11 +80,10 @@ export default function CommentsList({
     }
   }, [isCommentChange, size]);
 
-  // 아래 state는 api적용 이후 수정 예정입니다.
   const isMobile = window.innerWidth < 768;
   return (
     comments.length > 0 && (
-      <div className='flex h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
+      <div className='max max-h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
         {comments.map((comment: any, index: number) => {
           return (
             <div key={index} className='flex gap-[12px]'>
