@@ -74,8 +74,9 @@ export default function InvitationList({
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };
+
     fetchInvitationListData();
-  }, [invitationList]);
+  }, [currentPage]);
 
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>

@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
+import { useUserData } from '@/context/UserDataContext';
 import instance from '../api/axios';
 import axios from 'axios';
 
@@ -16,7 +17,8 @@ interface ProfileSettingValues {
 }
 
 export default function ProfileSetting() {
-  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [uploadedImage, setUploadedImage] = useState<string | undefined>();
+  const { userData, setUserData } = useUserData();
 
   const {
     register,
@@ -48,7 +50,7 @@ export default function ProfileSetting() {
     const { files } = e.target;
 
     if (!files || files.length === 0) {
-      setUploadedImage(null);
+      setUploadedImage(undefined);
       return;
     }
 
@@ -70,9 +72,12 @@ export default function ProfileSetting() {
     };
     try {
       const response = await instance.put('users/me', formData);
-      handleOpenModal(
-        <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
-      );
+      if (response.status >= 200 && response.status < 300) {
+        setUserData(formData);
+        handleOpenModal(
+          <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
+        );
+      }
     } catch (e: unknown) {
       if (axios.isAxiosError(e)) {
         const error = e.response?.data.message; // 에러발생시 메시지 저장

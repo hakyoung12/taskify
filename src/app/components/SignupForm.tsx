@@ -5,6 +5,9 @@ import axios from '@/app/api/axios';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { useState } from 'react';
+import { useModal } from '@/context/ModalContext';
+import SettingChangedModal from './modals/SettingChangedModal';
+import SignupDoneModal from './modals/SignupDoneModal';
 
 type Inputs = {
   Id: string;
@@ -21,9 +24,9 @@ export default function SignupForm() {
     getValues,
     formState: { errors, isDirty, isValid },
   } = useForm<Inputs>({ mode: 'onBlur' });
-  const router = useRouter();
   const [ispassShow, setIsPassShow] = useState<boolean>(false);
   const [ispassCheckShow, setIsPassCheckShow] = useState<boolean>(false);
+  const { openModal } = useModal();
 
   const INPUT_STYLE =
     'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
@@ -37,10 +40,13 @@ export default function SignupForm() {
         nickname: getValues('nickname'),
         password: getValues('password'),
       });
-      alert('가입이 완료되었습니다!');
-      router.push('/login');
+      openModal(<SignupDoneModal>가입이 완료되었습니다!</SignupDoneModal>);
     } catch (err: any) {
-      alert(err.response.data.message);
+      openModal(
+        <SettingChangedModal>
+          {err.response?.data.message || '에러! 에러!'}
+        </SettingChangedModal>,
+      );
     }
   };
 
@@ -119,7 +125,7 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute right-4 top-3'
+          className='absolute right-4 top-4'
           type='button'
           onClick={() => setIsPassShow(!ispassShow)}
         >
@@ -164,11 +170,11 @@ export default function SignupForm() {
           })}
         />
         <button
-          className='absolute right-4 top-3'
+          className='absolute right-4 top-4'
           type='button'
           onClick={() => setIsPassCheckShow(!ispassCheckShow)}
         >
-          {ispassShow ? (
+          {ispassCheckShow ? (
             <Image
               src='/AuthPage/eyeOn.svg'
               width={24}

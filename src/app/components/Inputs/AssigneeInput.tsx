@@ -1,7 +1,6 @@
 'use client';
 
 import React, {
-  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   useEffect,
@@ -13,16 +12,7 @@ import { Assignee, SetData, Members } from './InputTypes';
 
 interface AssigneeProps {
   assignee: Assignee;
-  members: {
-    id?: number;
-    userId: number;
-    email: string;
-    nickname: string;
-    profileImageUrl?: string;
-    createdAt?: string;
-    updatedAt?: string;
-    isOwner?: boolean;
-  }[];
+  members: Members;
   setData: SetData;
   controlFocus: {
     isFocused: boolean;
@@ -85,7 +75,7 @@ export default function AssigneeInput({
 
   return (
     <div
-      className={`${LABLE_INPUT_STYLE} relative w-[217px] text-black max-sm:w-auto`}
+      className={`${LABLE_INPUT_STYLE} relative max-w-[217px] text-black max-sm:max-w-none`}
       onClick={(e) => e.stopPropagation()}
     >
       <label htmlFor='assignee' className={LABLE_STYLE}>
@@ -98,11 +88,12 @@ export default function AssigneeInput({
         }}
       >
         {!isFocused && inputValue && (
-          <div className={CIRCLE}>{assignee.email?.charAt(0)}</div>
+          <div className={CIRCLE}>{assignee.nickname?.charAt(0)}</div>
         )}
         <input
           id='assignee'
           placeholder='이름을 입력해주세요'
+          type='text'
           className='no-autofill flex-grow bg-transparent outline-none'
           autoComplete='off'
           onChange={(e) => {
@@ -128,7 +119,7 @@ export default function AssigneeInput({
                 className='flex items-center'
                 onClick={clickAssignee}
               >
-                <div className={CIRCLE}>{member.email.charAt(0)}</div>
+                <div className={CIRCLE}>{member.nickname.charAt(0)}</div>
                 {member.nickname}
               </button>
             );

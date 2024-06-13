@@ -6,7 +6,7 @@ import LandingFooter from './components/Landing/LandingFooter';
 import { redirect } from 'next/navigation';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
 import { useEffect } from 'react';
-import CreateCardModal from './components/modals/CreateCardModal';
+import EditCardForm from './components/modals/EditCardForm';
 
 function checkToken() {
   if (typeof window === undefined) return;
@@ -17,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     const userToken = checkToken();
     if (userToken) redirect('/mydashboard');
+    return;
   }, []);
 
   return (
@@ -24,7 +25,13 @@ export default function Home() {
       <LandingHeader />
       <LandingMain />
       <LandingFooter />
-      <CreateCardModal loginToken='1' columnId='l' dashboardId='l' />
+      <EditCardForm
+        cardId={1}
+        closeModal={() => {}}
+        columnId={1}
+        dashboardId={1}
+        loginToken='1'
+      />
     </div>
   );
 }

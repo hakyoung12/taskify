@@ -11,6 +11,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import UserIcon from './UserIcon';
 import { CheckMembersRes } from '../api/apiTypes/membersType';
+import CustomAvatar from './CustomAvatar';
+import { useDashboardData } from '@/context/DashboardDataContext';
 
 interface DashboardHeaderInSettingsProps {
   link?: string;
@@ -32,7 +34,7 @@ const DashboardHeaderInSettings = ({
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
   const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
-
+  const { dashboardsData } = useDashboardData();
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -65,17 +67,19 @@ const DashboardHeaderInSettings = ({
         console.error(error);
       }
     };
-
     const fetchDashboardData = async () => {
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
-        setTitle(res.data.title);
+        dashboardsData.map((data) => {
+          if (data.id == dashboardId) {
+            setTitle(data.title);
+          }
+        });
         setCreatedByMe(res.data.createdByMe);
       } catch (error) {
         console.error(error);
       }
     };
-
     const fetchDashboardMemberData = async () => {
       try {
         const res = await instance.get('members', {
@@ -94,13 +98,12 @@ const DashboardHeaderInSettings = ({
     fetchUserData();
     fetchDashboardData();
     fetchDashboardMemberData();
-  }, [params.dashboardid]);
+  }, [params.dashboardid, dashboardsData]);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
         <span className='ml-10 text-lg font-bold'>{title}</span>
-        {/* TODO: 내가 만든 부분에서만 crown 설정 */}
         {createdByMe === true ? (
           <span className='ml-2 text-yellow-500'>
             <Image
@@ -115,7 +118,7 @@ const DashboardHeaderInSettings = ({
       <div className='flex items-center space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
           {/* 대시보드 설정페이지에서 비활성화 */}
-          {link && (
+          {createdByMe === true && link && (
             <Link
               href={link}
               className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
@@ -130,24 +133,32 @@ const DashboardHeaderInSettings = ({
               <p>관리</p>
             </Link>
           )}
-          <button
-            className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
-            onClick={() => handleOpenModal(<InvitationModal />)}
-          >
-            <Image
-              className='mr-2 hidden sm:block'
-              src='/images/addTaskButton.svg'
-              alt='add'
-              width={20}
-              height={20}
-            />
-            <p>초대하기</p>
-          </button>
+          {createdByMe && (
+            <button
+              className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
+              onClick={() => handleOpenModal(<InvitationModal />)}
+            >
+              <Image
+                className='mr-2 hidden sm:block'
+                src='/images/addTaskButton.svg'
+                alt='add'
+                width={20}
+                height={20}
+              />
+              <p>초대하기</p>
+            </button>
+          )}
         </div>
         <div className='ml-6 flex items-center sm:-space-x-2'>
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
             {members?.map((member: CheckMembersRes, index: number) =>
-              index < 4 ? <UserIcon key={member.id} member={member} /> : null,
+              index < 4 ? (
+                <CustomAvatar
+                  nickName={member.nickname}
+                  profileUrl={member.profileImageUrl}
+                  size='medium'
+                />
+              ) : null,
             )}
             {members && members.length > 4 && (
               <div className='relative z-10'>
@@ -162,12 +173,17 @@ const DashboardHeaderInSettings = ({
         </div>
         <div className='h-10 border-r sm:pl-3'></div>
         <div className='relative'>
-          <div className='flex items-center' onClick={handleNicknameClick}>
-            <div className='relative mx-3 h-[34px] w-[34px] cursor-pointer rounded-full border-2 border-white bg-blue-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                {user && user.nickname[0]}
-              </p>
-            </div>
+          <div
+            className='flex items-center gap-[8px]'
+            onClick={handleNicknameClick}
+          >
+            {user && (
+              <CustomAvatar
+                nickName={user?.nickname}
+                profileUrl={user.profileImageUrl}
+                size='medium'
+              />
+            )}
             <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
               {user && user.nickname}
             </div>

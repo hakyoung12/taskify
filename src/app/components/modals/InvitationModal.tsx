@@ -2,6 +2,7 @@
 
 import instance from '@/app/api/axios';
 import { useModal } from '@/context/ModalContext';
+import axios, { AxiosError } from 'axios';
 import { useParams } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
 
@@ -30,7 +31,11 @@ const InvitationModal: React.FC = () => {
 
       closeModal();
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.message);
+      } else {
+        console.log('알 수 없는 에러가 발생했습니다.', error);
+      }
     }
   };
 

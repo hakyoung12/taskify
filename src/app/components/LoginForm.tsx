@@ -7,6 +7,8 @@ import Image from 'next/image';
 import { useState } from 'react';
 import { loginRes } from '@/app/api/apiTypes/authType';
 import { LOGIN_TOKEN } from '@/app/api/apiStrings';
+import { useModal } from '@/context/ModalContext';
+import SettingChangedModal from './modals/SettingChangedModal';
 
 type Inputs = {
   Id: string;
@@ -22,6 +24,7 @@ export default function LoginForm() {
   } = useForm<Inputs>({ mode: 'onBlur' });
   const router = useRouter();
   const [passShow, setPassShow] = useState<boolean>(false);
+  const { openModal } = useModal();
 
   const INPUT_STYLE =
     'px-4 py-[15px] outline-none rounded-lg border border-solid border-custom_gray-_d9d9d9 focus:border-custom_violet-_5534da no-autofill';
@@ -37,7 +40,11 @@ export default function LoginForm() {
       localStorage.setItem(LOGIN_TOKEN, accessToken);
       router.push('/mydashboard');
     } catch (err: any) {
-      alert(err.response.data.message);
+      openModal(
+        <SettingChangedModal>
+          {err.response?.data.message || '에러! 에러!'}
+        </SettingChangedModal>,
+      );
     }
   };
 

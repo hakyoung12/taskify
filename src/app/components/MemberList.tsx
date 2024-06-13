@@ -68,8 +68,6 @@ export default function MemberList({ dashboardid }: { dashboardid: number }) {
     fetchMembersData();
   }, []);
 
-  console.log(memberList);
-
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
       <EditMenuTitle
