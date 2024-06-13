@@ -37,9 +37,9 @@ export default function CustomAvatar({
   const [backgroundColor, setBackgroundColor] = useState<string>('');
 
   const getRandomBackgroundColor = () => {
-    const randomIndex = Math.floor(Math.random() * colors.length);
-    const randomColor = colors[randomIndex];
-    return randomColor;
+    const firstLetter = nickName.charCodeAt(0);
+    const index = firstLetter % colors.length;
+    return colors[index];
   };
 
   useEffect(() => {

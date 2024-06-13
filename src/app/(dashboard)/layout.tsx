@@ -1,9 +1,10 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import SideBar from '../components/SideBar';
 import DashboardHeader from '../components/DashboardHeader';
 import DashboardHeaderInSettings from '../components/DashboardHeaderInSettings';
+import { UserDataProvider } from '@/context/UserDataContext';
 import { usePathname } from 'next/navigation';
 
 interface LayoutProps {
@@ -32,13 +33,15 @@ const DashboardLayout: React.FC<LayoutProps> = ({ children }) => {
   };
 
   return (
-    <div className='flex'>
-      <SideBar />
-      <div className='w-full'>
-        {renderHeader()}
-        <main>{children}</main>
+    <UserDataProvider>
+      <div className='flex'>
+        <SideBar />
+        <div className='w-full'>
+          {renderHeader()}
+          <main>{children}</main>
+        </div>
       </div>
-    </div>
+    </UserDataProvider>
   );
 };
 

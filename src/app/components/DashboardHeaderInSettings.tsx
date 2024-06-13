@@ -11,6 +11,8 @@ import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import UserIcon from './UserIcon';
 import { CheckMembersRes } from '../api/apiTypes/membersType';
+import CustomAvatar from './CustomAvatar';
+import { useDashboardData } from '@/context/DashboardDataContext';
 
 interface DashboardHeaderInSettingsProps {
   link?: string;
@@ -32,7 +34,7 @@ const DashboardHeaderInSettings = ({
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
   const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
-
+  const { dashboardsData } = useDashboardData();
   const { openModal } = useModal();
 
   const handleOpenModal = (content: React.ReactNode) => {
@@ -65,17 +67,19 @@ const DashboardHeaderInSettings = ({
         console.error(error);
       }
     };
-
     const fetchDashboardData = async () => {
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
-        setTitle(res.data.title);
+        dashboardsData.map((data) => {
+          if (data.id == dashboardId) {
+            setTitle(data.title);
+          }
+        });
         setCreatedByMe(res.data.createdByMe);
       } catch (error) {
         console.error(error);
       }
     };
-
     const fetchDashboardMemberData = async () => {
       try {
         const res = await instance.get('members', {
@@ -94,7 +98,7 @@ const DashboardHeaderInSettings = ({
     fetchUserData();
     fetchDashboardData();
     fetchDashboardMemberData();
-  }, [params.dashboardid]);
+  }, [params.dashboardid, dashboardsData]);
 
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
@@ -147,7 +151,13 @@ const DashboardHeaderInSettings = ({
         <div className='ml-6 flex items-center sm:-space-x-2'>
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
             {members?.map((member: CheckMembersRes, index: number) =>
-              index < 4 ? <UserIcon key={member.id} member={member} /> : null,
+              index < 4 ? (
+                <CustomAvatar
+                  nickName={member.nickname}
+                  profileUrl={member.profileImageUrl}
+                  size='medium'
+                />
+              ) : null,
             )}
             {members && members.length > 4 && (
               <div className='relative z-10'>
@@ -162,12 +172,17 @@ const DashboardHeaderInSettings = ({
         </div>
         <div className='h-10 border-r sm:pl-3'></div>
         <div className='relative'>
-          <div className='flex items-center' onClick={handleNicknameClick}>
-            <div className='relative mx-3 h-[34px] w-[34px] cursor-pointer rounded-full border-2 border-white bg-blue-500 text-white'>
-              <p className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform'>
-                {user && user.nickname[0]}
-              </p>
-            </div>
+          <div
+            className='flex items-center gap-[8px]'
+            onClick={handleNicknameClick}
+          >
+            {user && (
+              <CustomAvatar
+                nickName={user?.nickname}
+                profileUrl={user.profileImageUrl}
+                size='medium'
+              />
+            )}
             <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
               {user && user.nickname}
             </div>
