@@ -191,9 +191,9 @@ const InvitedDashboardList = () => {
                   <div className='flex space-x-2'>
                     <button
                       className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
-                      onClick={() =>
-                        handleInvitationResponse(invitation.id, true)
-                      }
+                      onClick={() => {
+                        handleInvitationResponse(invitation.id, true);
+                      }}
                     >
                       수락
                     </button>
