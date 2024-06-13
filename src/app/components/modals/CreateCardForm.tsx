@@ -113,7 +113,9 @@ const CreateCardForm = ({
   return (
     <div
       className='max-sm:mb=[-8px] custom-scrollbar mb-[-4px] mr-[-4px] flex max-h-[calc(100vh-100px)] w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] overflow-y-scroll bg-white pr-[4px] max-sm:mr-[-8px] max-sm:mt-[8px]'
-      onClick={() => setIsFocused(false)}
+      onClick={() => {
+        setIsFocused(false);
+      }}
     >
       <h2 className={MODAL_TITLE_STYLE}>할 일 생성</h2>
       <AssigneeInput

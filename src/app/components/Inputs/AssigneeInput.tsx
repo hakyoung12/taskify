@@ -39,16 +39,17 @@ export default function AssigneeInput({
       (member) => String(member.userId) === e.currentTarget.value,
     );
     setData({ assignee: selected[0] });
+    setInputValue(assignee.nickname);
     setIsFocused(false);
   };
 
   const chooseAssignee = () => {
     if (searchedMembers.length === 1) {
       setData({ assignee: searchedMembers[0] });
+      setInputValue(assignee.nickname);
     } else {
       setInputValue('');
     }
-    setIsFocused(false);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
