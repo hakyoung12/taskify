@@ -91,7 +91,7 @@ export default function DashboardList() {
             <div
               className={`h-2 w-2 rounded-full ${ColorPalette[todo.color]}`}
             />
-            <div className='max-sm:hidden'>{todo.title}</div>
+            <div className='w-[80px] truncate max-sm:hidden'>{todo.title}</div>
             {todo.createdByMe && (
               <div className='relative h-3.5 w-5 max-sm:hidden'>
                 <Image

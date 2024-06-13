@@ -45,13 +45,21 @@ const NewDashboardModal: React.FC = () => {
     try {
       const response = await instance.post('dashboards', requestData);
       if (response.status >= 200 && response.status < 300) {
-        console.log('POST 요청 성공:', response.data);
-        setDashboardsData((prev) => {
-          const newData = [...prev];
-          newData.pop();
-          newData.unshift(response.data);
-          return newData;
-        });
+        if (dashboardsData.length >= 10) {
+          console.log('POST 요청 성공:', response.data);
+          setDashboardsData((prev) => {
+            const newData = [...prev];
+            newData.pop();
+            newData.unshift(response.data);
+            return newData;
+          });
+        } else {
+          setDashboardsData((prev) => {
+            const newData = [...prev];
+            newData.unshift(response.data);
+            return newData;
+          });
+        }
         router.push(`/dashboard/${response.data.id}`);
       }
     } catch (e) {
