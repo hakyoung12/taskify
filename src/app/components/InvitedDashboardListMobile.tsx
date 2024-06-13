@@ -3,6 +3,8 @@
 import Image from 'next/image';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
+import { useDashboardData } from '@/context/DashboardDataContext';
+import { useRouter } from 'next/navigation';
 import instance from '../api/axios';
 
 const InvitedDashboardListMobile = () => {
@@ -16,6 +18,8 @@ const InvitedDashboardListMobile = () => {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const size = 6;
+  const { setDashboardsData } = useDashboardData();
+  const router = useRouter();
 
   const intersectionTargetRef = useRef<HTMLDivElement | null>(null);
 
@@ -102,13 +106,27 @@ const InvitedDashboardListMobile = () => {
     inviteAccepted: boolean,
   ) => {
     try {
-      await instance.put(`invitations/${invitationId}`, { inviteAccepted });
+      const res = await instance.put(`invitations/${invitationId}`, {
+        inviteAccepted,
+      });
       setInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+      if (inviteAccepted) {
+        const dashboardRes = await instance.get(
+          `/dashboards/${res.data.dashboard.id}`,
+        );
+        setDashboardsData((prev) => {
+          const newData = [...prev];
+          newData.pop();
+          newData.unshift(dashboardRes.data);
+          return newData;
+        });
+        router.push(`/dashboard/${dashboardRes.data.id}`);
+      }
     } catch (error) {
       console.error('Error responding to invitation:', error);
     }

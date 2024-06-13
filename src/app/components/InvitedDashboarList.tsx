@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
+import { useDashboardData } from '@/context/DashboardDataContext';
+import { useRouter } from 'next/navigation';
 import instance from '../api/axios';
 import Image from 'next/image';
 
@@ -16,6 +18,8 @@ const InvitedDashboardList = () => {
   const [cursorId, setCursorId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const size = 6;
+  const { setDashboardsData } = useDashboardData();
+  const router = useRouter();
 
   const fetchInvitations = async (cursorId: number | null) => {
     setLoading(true);
@@ -102,7 +106,7 @@ const InvitedDashboardList = () => {
     inviteAccepted: boolean,
   ) => {
     try {
-      await instance.put(`invitations/${invitationId}`, {
+      const res = await instance.put(`invitations/${invitationId}`, {
         inviteAccepted,
       });
       setInvitations((prev) =>
@@ -111,6 +115,18 @@ const InvitedDashboardList = () => {
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+      if (inviteAccepted) {
+        const dashboardRes = await instance.get(
+          `/dashboards/${res.data.dashboard.id}`,
+        );
+        setDashboardsData((prev) => {
+          const newData = [...prev];
+          newData.pop();
+          newData.unshift(dashboardRes.data);
+          return newData;
+        });
+        router.push(`/dashboard/${dashboardRes.data.id}`);
+      }
     } catch (error) {
       console.error(error);
     }
