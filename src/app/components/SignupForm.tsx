@@ -43,7 +43,9 @@ export default function SignupForm() {
       openModal(<SignupDoneModal>가입이 완료되었습니다!</SignupDoneModal>);
     } catch (err: any) {
       openModal(
-        <SettingChangedModal>{err.response.data.message}</SettingChangedModal>,
+        <SettingChangedModal>
+          {err.response?.data.message || '에러! 에러!'}
+        </SettingChangedModal>,
       );
     }
   };

@@ -41,7 +41,9 @@ export default function LoginForm() {
       router.push('/mydashboard');
     } catch (err: any) {
       openModal(
-        <SettingChangedModal>{err.response.data.message}</SettingChangedModal>,
+        <SettingChangedModal>
+          {err.response?.data.message || '에러! 에러!'}
+        </SettingChangedModal>,
       );
     }
   };

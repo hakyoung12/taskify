@@ -13,12 +13,13 @@ export default function TitleInput({ setData, initTitle }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    setData({ title: inputValue });
+    setData({ title: inputValue.trim() });
   }, [inputValue, setData]);
 
   useEffect(() => {
     setInputValue(initTitle);
   }, [initTitle]);
+
   return (
     <div className={LABLE_INPUT_STYLE}>
       <label htmlFor='title' className={LABLE_STYLE}>
@@ -29,7 +30,7 @@ export default function TitleInput({ setData, initTitle }: Props) {
         placeholder='제목을 입력해주세요'
         type='text'
         onChange={(e) => {
-          setInputValue(e.target.value.trim() || '');
+          setInputValue(e.target.value || '');
         }}
         value={inputValue}
         className={`${INPUT_STYLE} text-black`}

@@ -13,7 +13,7 @@ export default function DescriptionInput({ setData, initDescription }: Props) {
   const [inputValue, setInputValue] = useState<string>(initDescription);
 
   useEffect(() => {
-    setData({ description: inputValue });
+    setData({ description: inputValue.trim() });
   }, [inputValue, setData]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ export default function DescriptionInput({ setData, initDescription }: Props) {
         id='description'
         placeholder='설명을 입력해주세요'
         onChange={(e) => {
-          setInputValue(e.target.value.trim() || '');
+          setInputValue(e.target.value || '');
         }}
         value={inputValue}
         className={`${INPUT_STYLE} no-scrollbar h-[96px] resize-none text-black max-sm:h-[84px]`}
