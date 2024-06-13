@@ -1,8 +1,8 @@
 'use client';
 
 import { useModal } from '@/context/ModalContext';
-import { deleteColumnByID, putColumnByID } from '../ToDoCardModal/api';
-import { ChangeEvent, useCallback, useState } from 'react';
+import { putColumnByID } from '../ToDoCardModal/api';
+import { useState } from 'react';
 import DeleteColumnAlertModal from './DeleteColumnAlertModal';
 import ModalFooterButtons from '../ModalFooterButtons';
 import ModalInput from '../ModalInput';
@@ -10,9 +10,11 @@ import ModalInput from '../ModalInput';
 const UpdateColumnModal = ({
   columnId,
   title,
+  setIsColumnChange,
 }: {
   columnId: number;
   title: string;
+  setIsColumnChange: any;
 }) => {
   const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
@@ -27,7 +29,7 @@ const UpdateColumnModal = ({
 
   const handleUpdateColumn = (inputTitleData: string) => {
     if (isValueChange(title, inputTitleData)) {
-      putColumnByID(columnId, inputTitleData);
+      putColumnByID(columnId, inputTitleData, setIsColumnChange);
       closeModal();
     }
   };
@@ -50,7 +52,12 @@ const UpdateColumnModal = ({
           <div
             className='mb-3 cursor-pointer self-start text-custom_gray-_9fa6b2 underline sm:mb-0 sm:self-end'
             onClick={() =>
-              handleOpenModal(<DeleteColumnAlertModal columnId={columnId} />)
+              handleOpenModal(
+                <DeleteColumnAlertModal
+                  columnId={columnId}
+                  setIsColumnChange={setIsColumnChange}
+                />,
+              )
             }
           >
             삭제하기

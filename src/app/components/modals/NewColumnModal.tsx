@@ -1,6 +1,5 @@
 'use client';
 
-import axios from 'axios';
 import instance from '@/app/api/axios';
 import { useState } from 'react';
 import ModalFooterButtons from '../ModalFooterButtons';
@@ -10,9 +9,11 @@ import { useModal } from '@/context/ModalContext';
 const NewColumnModal = ({
   dashboardId,
   columnTitles,
+  setIsColumnChange,
 }: {
   dashboardId: number;
   columnTitles: string[];
+  setIsColumnChange: any;
 }) => {
   const [value, setValue] = useState<string>('');
   const [errorMessage, setErrorMessage] = useState<string>('');
@@ -32,6 +33,8 @@ const NewColumnModal = ({
         closeModal();
       } catch (error: any) {
         setErrorMessage(error.message);
+      } finally {
+        setIsColumnChange(true);
       }
     }
   };

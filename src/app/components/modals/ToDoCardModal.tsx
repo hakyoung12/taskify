@@ -5,8 +5,7 @@ import CardHeader from '../ToDoCardModal/CardHeader';
 import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
-import { useEffect, useState } from 'react';
-import { getCommentsByCardId } from '../ToDoCardModal/api';
+import { useState } from 'react';
 
 interface assigner {
   profileImageUrl?: string;
@@ -24,6 +23,8 @@ export default function ToDoCardModal({
   assigner,
   imageUrl,
   cardId,
+  columnTitle,
+  setIsCardChange,
 }: {
   dashboardId: number;
   columnId: number;
@@ -34,26 +35,18 @@ export default function ToDoCardModal({
   imageUrl?: string;
   assigner: assigner;
   cardId: number;
+  columnTitle: string;
+  setIsCardChange: any;
 }) {
-  const [comments, setComments] = useState<string[]>([]);
-
-  const fetchComments = async () => {
-    try {
-      const res = await getCommentsByCardId(cardId);
-      setComments(res.comments);
-    } catch (error: any) {
-      console.log(error);
-    }
-  };
-
-  // console.log(comments);
-  useEffect(() => {
-    fetchComments();
-  }, []);
+  const [isCommentChange, setIsCommentChange] = useState(false);
 
   return (
     <div className='flex w-[682px] flex-col gap-[24px] p-[4px] max-xl:w-[632px] max-sm:w-full max-sm:gap-[16px]'>
-      <CardHeader cardId={cardId} title={title} />
+      <CardHeader
+        cardId={cardId}
+        title={title}
+        setIsCardChange={setIsCardChange}
+      />
       {/* 컨텐츠 */}
       <div className='flex gap-[24px] max-sm:flex-col'>
         <div className='flex w-[450px] flex-col gap-[16px] max-xl:w-[420px] max-sm:order-2 max-sm:w-full'>
@@ -61,13 +54,19 @@ export default function ToDoCardModal({
             imageUrl={imageUrl}
             description={description}
             tags={tags}
+            columntitle={columnTitle}
           />
           <CommentInput
             columnId={columnId}
             dashboardId={dashboardId}
             cardId={cardId}
+            setIsCommentChange={setIsCommentChange}
           />
-          {comments && <CommentsList comments={comments} />}
+          <CommentsList
+            cardId={cardId}
+            isCommentChange={isCommentChange}
+            setIsCommentChange={setIsCommentChange}
+          />
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>

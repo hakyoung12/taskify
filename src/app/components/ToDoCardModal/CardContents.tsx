@@ -4,10 +4,12 @@ const CardContents = ({
   imageUrl,
   description,
   tags,
+  columntitle,
 }: {
   imageUrl?: string;
   description: string;
   tags: string[];
+  columntitle: string;
 }) => {
   return (
     <>
@@ -20,7 +22,7 @@ const CardContents = ({
             alt='꾸미는 점'
           />
           <span className='text-[12px] text-[#5534DA] max-sm:text-[10px]'>
-            To Do
+            {columntitle}
           </span>
         </div>
         <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />

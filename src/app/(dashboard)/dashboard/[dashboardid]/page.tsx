@@ -10,6 +10,7 @@ import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/api';
 export default function dashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);
   const [columnTitles, setColumnTitles] = useState([]);
+  const [isColumnChange, setIsColumnChange] = useState(false);
   const { openModal } = useModal();
 
   const id = Number(dashboardid.params.dashboardid);
@@ -27,6 +28,8 @@ export default function dashboardPage(dashboardid: any) {
       setColumnTitles(titles);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsColumnChange(false);
     }
   }
 
@@ -34,40 +37,45 @@ export default function dashboardPage(dashboardid: any) {
     fetchColumns();
   }, []);
 
+  useEffect(() => {
+    if (isColumnChange) {
+      fetchColumns();
+    }
+  }, [isColumnChange]);
+
   return (
     <>
-      <div className='relative flex'>
-        <div className='w-screen'>
-          <div className='flex overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal'>
-            {/* 컬럼 컴포넌트 뿌리기 */}
-            {columnData &&
-              columnData.length > 0 &&
-              columnData.map((column: any, index: number) => {
-                return (
-                  <Column
-                    key={index}
-                    columnId={column.id}
-                    title={column.title}
-                    dashboardId={id}
-                  />
-                );
-              })}
-            <div
-              className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
-              onClick={() =>
-                handleOpenModal(
-                  <NewColumnModal
-                    dashboardId={id}
-                    columnTitles={columnTitles}
-                  />,
-                )
-              }
-            >
-              <p className='mr-[12px] text-[16px] font-bold'>
-                새로운 컬럼 추가하기
-              </p>
-              <ChipAddIcon size={'large'} />
-            </div>
+      <div className='flex'>
+        <div className='flex h-full w-[calc(100vw-250px)] overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:w-[calc(100vw-156px)] max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal max-sm:w-[calc(100vw-64px)]'>
+          {columnData &&
+            columnData.length > 0 &&
+            columnData.map((column: any, index: number) => {
+              return (
+                <Column
+                  setIsColumnChange={setIsColumnChange}
+                  key={index}
+                  columnId={column.id}
+                  title={column.title}
+                  dashboardId={id}
+                />
+              );
+            })}
+          <div
+            className='border-gray-_d9d9d9 ml-[20px] mt-[68px] flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white max-xl:ml-[0px] max-xl:mt-[0px]'
+            onClick={() =>
+              handleOpenModal(
+                <NewColumnModal
+                  dashboardId={id}
+                  columnTitles={columnTitles}
+                  setIsColumnChange={setIsColumnChange}
+                />,
+              )
+            }
+          >
+            <p className='mr-[12px] text-[16px] font-bold'>
+              새로운 컬럼 추가하기
+            </p>
+            <ChipAddIcon size={'large'} />
           </div>
         </div>
       </div>

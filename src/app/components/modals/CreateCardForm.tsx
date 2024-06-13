@@ -15,6 +15,7 @@ interface ModalProps {
   dashboardId: string | number;
   loginToken: string;
   closeModal: () => void;
+  setIsCardChange: any;
 }
 
 const BUTTON_STYLE =
@@ -27,6 +28,7 @@ const CreateCardForm = ({
   dashboardId,
   loginToken,
   closeModal,
+  setIsCardChange,
 }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
@@ -78,10 +80,12 @@ const CreateCardForm = ({
           Authorization: `Bearer ${loginToken}`,
         },
       });
+      setIsCardChange(true);
       closeModal();
     } catch (err) {
       console.log(err);
       alert('미안하지만 카드 생성은 실패다');
+    } finally {
     }
   };
 
@@ -105,6 +109,7 @@ const CreateCardForm = ({
   }, [isMounted, getMembers]);
 
   if (!isMounted) return;
+
   return (
     <div
       className='max-sm:mb=[-8px] mb-[-4px] mr-[-4px] flex w-[calc(100vw-96px)] max-w-[458px] flex-col gap-y-[16px] bg-white max-sm:mr-[-8px] max-sm:mt-[8px]'

@@ -10,13 +10,14 @@ const CommentInput = ({
   columnId,
   dashboardId,
   cardId,
+  setIsCommentChange,
 }: {
   columnId: number;
   dashboardId: number;
   cardId: number;
+  setIsCommentChange: any;
 }) => {
   const [value, setValue] = useState<string>('');
-  console.log(columnId, dashboardId);
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const newvalue = e.target.value;
@@ -25,7 +26,7 @@ const CommentInput = ({
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    postComment(value, cardId, columnId, dashboardId);
+    postComment(value, cardId, columnId, dashboardId, setIsCommentChange);
   };
 
   return (

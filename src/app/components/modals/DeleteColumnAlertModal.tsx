@@ -4,12 +4,19 @@ import { useModal } from '@/context/ModalContext';
 import { deleteColumnByID } from '../ToDoCardModal/api';
 import ModalFooterButtons from '../ModalFooterButtons';
 
-const DeleteColumnAlertModal = ({ columnId }: { columnId: number }) => {
+const DeleteColumnAlertModal = ({
+  columnId,
+  setIsColumnChange,
+}: {
+  columnId: number;
+  setIsColumnChange: any;
+}) => {
   const { closeModal } = useModal();
 
   const handleDeleteColumn = (columnId: number) => {
-    deleteColumnByID(columnId);
+    deleteColumnByID(columnId, setIsColumnChange);
     closeModal();
+    setIsColumnChange(true);
   };
 
   return (
@@ -25,8 +32,5 @@ const DeleteColumnAlertModal = ({ columnId }: { columnId: number }) => {
     </div>
   );
 };
-
-const modalButtonStyle =
-  'text-center w-[120px] h-[48px] text-[16px] rounded-lg border border-[#d9d9d9] max-sm:w-[138px]';
 
 export default DeleteColumnAlertModal;

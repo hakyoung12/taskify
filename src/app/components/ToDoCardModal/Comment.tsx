@@ -1,11 +1,12 @@
 import { ChangeEvent, useState } from 'react';
-import { deleteColumnByID, deleteComment, putComment } from './api';
+import { deleteComment, putComment } from './api';
 
 interface CommentProps {
   createdAt: string;
   content: string;
   commentId: number;
   commenterName: string;
+  setIsCommentChange: any;
 }
 
 const Comment = ({
@@ -13,6 +14,7 @@ const Comment = ({
   content,
   commentId,
   commenterName,
+  setIsCommentChange,
 }: CommentProps) => {
   const [value, setValue] = useState(content);
   const [isEditing, setIsEditing] = useState(false);
@@ -24,7 +26,7 @@ const Comment = ({
   const handleSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsEditing(false);
-    putComment(commentId, value);
+    putComment(commentId, value, setIsCommentChange);
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +35,7 @@ const Comment = ({
   };
 
   const handleDelete = () => {
-    deleteComment(commentId);
+    deleteComment(commentId, setIsCommentChange);
   };
 
   const cancelEdit = () => {

@@ -22,16 +22,16 @@ const getColumnsByDashBoardId = async (dashboardid: number) => {
   }
 };
 
-const getCardsByColumnId = async (columId: number) => {
+const getCardsByColumnId = async (columId: number, size?: number) => {
   const res = await instance.get(`cards`, {
-    params: { columnId: `${columId}` },
+    params: { columnId: `${columId}`, size: `${size}` },
   });
   return res.data;
 };
 
-const getCommentsByCardId = async (cardId: number) => {
+const getCommentsByCardId = async (cardId: number, size: number = 10) => {
   const res = await instance.get(`comments`, {
-    params: { cardId: `${cardId}` },
+    params: { cardId: `${cardId}`, size: `${size}` },
   });
   return res.data;
 };
@@ -54,19 +54,23 @@ const getCardsList = async (
   }
 };
 
-const deleteColumnByID = async (columnId: number) => {
+const deleteColumnByID = async (columnId: number, setIsColumnChange: any) => {
   try {
     const res = await instance.delete(`columns/${columnId}`);
   } catch (error) {
     console.log(error);
+  } finally {
+    setIsColumnChange(true);
   }
 };
 
-const deleteComment = async (commentId: number) => {
+const deleteComment = async (commentId: number, setIsCommentChange: any) => {
   try {
     const res = await instance.delete(`comments/${commentId}`);
   } catch (error) {
     console.log(error);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 
@@ -78,12 +82,18 @@ const deleteCard = async (cardId: number) => {
   }
 };
 
-const putColumnByID = async (columnId: number, title: string) => {
+const putColumnByID = async (
+  columnId: number,
+  title: string,
+  setIsColumnChange: any,
+) => {
   const data = { title: title };
   try {
     const res = await instance.put(`columns/${columnId}`, data);
   } catch (error) {
     console.log(axios.isAxiosError(error));
+  } finally {
+    setIsColumnChange(true);
   }
 };
 
@@ -92,6 +102,7 @@ const postComment = async (
   cardId: number,
   columnId: number,
   dashboardId: number,
+  setIsCommentChange: any,
 ) => {
   const data = {
     content: content,
@@ -99,27 +110,33 @@ const postComment = async (
     columnId: columnId,
     dashboardId: dashboardId,
   };
-  console.log(data);
   try {
     const res = await instance.post('comments', data);
   } catch (err) {
     console.log(err);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 
-const putComment = async (commentId: number, content: string) => {
+const putComment = async (
+  commentId: number,
+  content: string,
+  setIsCommentChange: any,
+) => {
   const data = { content: content };
   try {
     const res = await instance.put(`comments/${commentId}`, data);
   } catch (error) {
     console.error(error);
+  } finally {
+    setIsCommentChange(true);
   }
 };
 
 const getMyUserData = async () => {
   try {
     const res = await instance.get('users/me');
-    console.log(res.data);
   } catch (error) {
     console.error(error);
   }
