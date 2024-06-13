@@ -83,6 +83,8 @@ const CreateCardForm = ({
       setIsCardChange(true);
       closeModal();
     } catch (err) {
+      console.log('postBody 체크');
+      console.log(postBody);
       console.log(err);
       alert('미안하지만 카드 생성은 실패다');
     } finally {
