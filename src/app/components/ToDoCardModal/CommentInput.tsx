@@ -27,6 +27,7 @@ const CommentInput = ({
   const handleSubmit = (e: any) => {
     e.preventDefault();
     postComment(value, cardId, columnId, dashboardId, setIsCommentChange);
+    setValue('');
   };
 
   return (
@@ -35,6 +36,7 @@ const CommentInput = ({
       <textarea
         onChange={handleChange}
         placeholder='댓글 작성하기'
+        value={value}
         className='mt-[10px] h-[110px] w-full resize-none rounded-md border border-[#d9d9d9] p-[16px] text-[14px] max-sm:text-[12px]'
       ></textarea>
       <button

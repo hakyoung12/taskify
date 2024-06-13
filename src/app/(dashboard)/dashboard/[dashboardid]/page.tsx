@@ -4,7 +4,7 @@ import Column from '@/app/components/Column';
 import NewColumnModal from '@/app/components/modals/NewColumnModal';
 import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/api';
 
 export default function dashboardPage(dashboardid: any) {
@@ -43,6 +43,7 @@ export default function dashboardPage(dashboardid: any) {
     }
   }, [isColumnChange]);
 
+  console.log(isColumnChange);
   return (
     <>
       <div className='flex'>
