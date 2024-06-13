@@ -100,7 +100,7 @@ export default function Column({
   }, [isChange, size]);
 
   return (
-    <div className='border-gray-_eeeeee flex h-[900px] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
+    <div className='border-gray-_eeeeee flex h-[calc(100vh-80px)] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
       {/* 카드 info */}
       <div className='flex items-center justify-between'>
         <div className='flex items-center justify-center text-[16px] font-bold'>
