@@ -60,7 +60,7 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
       </div>
       <div className='relative'>
         <div
-          className='flex items-center gap-[8px]'
+          className='mr-5 flex items-center gap-[8px]'
           onClick={handleNicknameClick}
         >
           {userData && (
