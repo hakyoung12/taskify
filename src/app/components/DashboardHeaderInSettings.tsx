@@ -184,7 +184,7 @@ const DashboardHeaderInSettings = ({
                 size='medium'
               />
             )}
-            <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
+            <div className='mr-[80px] hidden w-[60px] cursor-pointer truncate sm:block'>
               {user && user.nickname}
             </div>
           </div>
