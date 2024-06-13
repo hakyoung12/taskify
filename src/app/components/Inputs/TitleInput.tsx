@@ -18,7 +18,7 @@ export default function TitleInput({ setData, initTitle }: Props) {
 
   useEffect(() => {
     setInputValue(initTitle);
-  }, []);
+  }, [initTitle]);
 
   return (
     <div className={LABLE_INPUT_STYLE}>
@@ -27,7 +27,6 @@ export default function TitleInput({ setData, initTitle }: Props) {
       </label>
       <input
         id='title'
-        placeholder='제목을 입력해주세요'
         type='text'
         onChange={(e) => {
           setInputValue(e.target.value || '');
