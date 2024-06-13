@@ -4,6 +4,7 @@ import Image from 'next/image';
 import CustomAvatar from './CustomAvatar';
 import ToDoCardModal from './modals/ToDoCardModal';
 import { useModal } from '@/context/ModalContext';
+import { dateFormat } from './ToDoCardModal/util';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -37,6 +38,8 @@ export default function ColumnCard({
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
   };
+
+  const dueDataByFomat = dateFormat('format1', new Date(dueDate));
 
   return (
     <div
@@ -90,7 +93,7 @@ export default function ColumnCard({
           <div className='relative flex w-full items-center justify-between text-[12px] text-custom_gray-_787486'>
             <div className='flex gap-[6px]'>
               <img src='/images/calender-icon.svg' alt='캘린더 아이콘' />
-              {dueDate}
+              {dueDataByFomat}
             </div>
             <CustomAvatar
               nickName={assigner.nickname}

@@ -5,7 +5,7 @@ import NewColumnModal from '@/app/components/modals/NewColumnModal';
 import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import { useEffect, useState } from 'react';
-import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/api';
+import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/util';
 
 export default function dashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { ChangeEvent, useState } from 'react';
-import { postComment } from './api';
+import { postComment } from './util';
 
 const modalButtonStyle =
   'text-center w-[83px] h-[32px] text-[12px] rounded-md bg-white text-[#5534DA] border border-[#D9D9D9] absolute right-[10px] bottom-[15px]';

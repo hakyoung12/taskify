@@ -1,7 +1,7 @@
 'use Client';
 
 import { useModal } from '@/context/ModalContext';
-import { deleteColumnByID } from '../ToDoCardModal/api';
+import { deleteColumnByID } from '../ToDoCardModal/util';
 import ModalFooterButtons from '../ModalFooterButtons';
 
 const DeleteColumnAlertModal = ({

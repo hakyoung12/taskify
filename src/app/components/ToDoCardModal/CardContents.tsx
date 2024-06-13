@@ -42,7 +42,7 @@ const CardContents = ({
 
       {/* 카드 컨텐츠(설명, 이미지) */}
       <div className='mb-[8px]'>
-        <div className='mb-[16px] text-[14px] leading-[24px]'>
+        <div className='mb-[16px] w-full whitespace-pre-wrap break-words text-[14px] leading-[24px]'>
           {description}
         </div>
         {imageUrl && (

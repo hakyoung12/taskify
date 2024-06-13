@@ -6,7 +6,7 @@ import ChipAddIcon from './ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getCardsByColumnId } from './ToDoCardModal/api';
+import { getCardsByColumnId } from './ToDoCardModal/util';
 import CreateCardForm from './modals/CreateCardForm';
 
 export default function Column({

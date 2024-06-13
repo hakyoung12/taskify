@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import CustomAvatar from '../CustomAvatar';
 import Comment from './Comment';
-import { getCommentsByCardId } from './api';
+import { getCommentsByCardId } from './util';
 
 export default function CommentsList({
   cardId,
