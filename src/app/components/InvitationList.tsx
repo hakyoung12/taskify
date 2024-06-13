@@ -10,6 +10,7 @@ import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
 import axios from 'axios';
 import InvitationModal from './modals/InvitationModal';
+import { useInvitationData } from '@/context/InvitationDataContext';
 
 export default function InvitationList({
   dashboardid,
@@ -18,14 +19,12 @@ export default function InvitationList({
 }) {
   const { openModal } = useModal();
   const [currentPage, setCurrentPage] = useState(1);
-  const [invitationList, setInvitationList] = useState<LoadInvitationsRes[]>(
-    [],
-  );
   const [totalCount, setTotalCount] = useState<number>(10);
   const totalPage = Math.ceil(totalCount / 5) || 1;
 
   /** 대시보드 조회 파라미터 */
   const queryParams = { page: currentPage, size: 5 };
+  const { invitationData, setInvitationData } = useInvitationData(); // 초대내역 컨텍스트
 
   const handleNextPage = () => {
     if (currentPage * 5 < mockData.length) {
@@ -52,8 +51,9 @@ export default function InvitationList({
         handleOpenModal(
           <SettingChangedModal>초대가 취소되었습니다.</SettingChangedModal>,
         );
-        setInvitationList(
-          (prev) => prev?.filter((invitation) => invitation.id !== id) || null,
+        setInvitationData(
+          (prev) =>
+            prev?.filter((invitation) => invitation.id !== id) || undefined,
         );
       }
     } catch (e: unknown) {
@@ -65,13 +65,13 @@ export default function InvitationList({
     }
   };
 
-  /** 멤버리스트 조회 */
+  /** 초대내역 조회 */
   useEffect(() => {
     const fetchInvitationListData = async () => {
       const res = await instance.get(`dashboards/${dashboardid}/invitations`, {
         params: queryParams,
       });
-      setInvitationList(res.data.invitations);
+      setInvitationData(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };
 
@@ -104,9 +104,9 @@ export default function InvitationList({
         </button>
       </div>
       <div className='flex flex-col px-[28px] pb-[28px]'>
-        {invitationList.length > 0 ? (
+        {invitationData.length > 0 ? (
           <div>
-            {invitationList.map((email) => {
+            {invitationData.map((email) => {
               return (
                 <div
                   key={email.id}

@@ -5,11 +5,13 @@ import { useModal } from '@/context/ModalContext';
 import axios, { AxiosError } from 'axios';
 import { useParams } from 'next/navigation';
 import { ChangeEvent, useState } from 'react';
+import { useInvitationData } from '@/context/InvitationDataContext';
 
 const InvitationModal: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const { closeModal } = useModal();
   const params = useParams();
+  const { invitationData, setInvitationData } = useInvitationData(); // 초대내역 컨텍스트
 
   const handleCloseModal = () => {
     closeModal();
@@ -20,16 +22,42 @@ const InvitationModal: React.FC = () => {
   };
 
   const handleInvitation = async () => {
-    if (!email) {
+    /** 초대 시 이메일이 초대내역에 있는지 확인하는 함수 */
+    const isEmailExists = invitationData.some(
+      (invitation) => invitation.invitee.email === email,
+    );
+
+    if (!email || isEmailExists) {
+      if (isEmailExists) {
+        alert('이미 초대한 멤버입니다.');
+      }
       return null;
     }
 
     try {
-      await instance.post(`dashboards/${params.dashboardid}/invitations`, {
-        email,
-      });
-
-      closeModal();
+      const response = await instance.post(
+        `dashboards/${params.dashboardid}/invitations`,
+        {
+          email,
+        },
+      );
+      if (response.status >= 200 && response.status < 300) {
+        if (invitationData.length >= 5) {
+          setInvitationData((prev) => {
+            const newData = [...prev];
+            newData.pop();
+            newData.unshift(response.data);
+            return newData;
+          });
+        } else {
+          setInvitationData((prev) => {
+            const newData = [...prev];
+            newData.unshift(response.data);
+            return newData;
+          });
+        }
+        closeModal();
+      }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         alert(error.response?.data.message);
