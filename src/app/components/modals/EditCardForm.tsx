@@ -10,10 +10,10 @@ import { Assignee, Datas, Members, State } from '../Inputs/InputTypes';
 import axios from '@/app/api/axios';
 import { Button } from '../ui/button';
 import StateInput from '../Inputs/StateInput';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 interface ModalProps {
   columnId: number;
-  dashboardId: string | number;
   loginToken: string;
   cardId: number | string;
   closeModal: () => void;
@@ -27,7 +27,6 @@ const MODAL_TITLE_STYLE =
 
 const EditCardForm = ({
   columnId,
-  dashboardId,
   loginToken,
   cardId,
   closeModal,
@@ -51,11 +50,12 @@ const EditCardForm = ({
   const [isMounted, setIsMounted] = useState<boolean>(false);
   const [initDatas, setInitDatas] = useState<Datas>();
   const [states, setStates] = useState<State[]>([]);
+  const { dashboardID } = useDashboardId();
 
   const getMembers = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `/members?size=409&dashboardId=${dashboardId}`,
+        `/members?size=409&dashboardId=${dashboardID}`,
         {
           headers: {
             Authorization: `Bearer ${loginToken}`,
@@ -67,7 +67,7 @@ const EditCardForm = ({
     } catch (err) {
       console.log(err);
     }
-  }, [dashboardId, loginToken]);
+  }, [dashboardID, loginToken]);
 
   const getCardDatas = useCallback(async () => {
     try {
@@ -104,7 +104,7 @@ const EditCardForm = ({
   //대시보드 컬럼 불러오기
   const getStates = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, {
+      const { data } = await axios.get(`/columns?dashboardId=${dashboardID}`, {
         headers: {
           Authorization: `Bearer ${loginToken}`,
         },
@@ -114,7 +114,7 @@ const EditCardForm = ({
     } catch (err) {
       console.log(err);
     }
-  }, [dashboardId, loginToken]);
+  }, [dashboardID, loginToken]);
 
   const editCard = async () => {
     console.log('put이 출발했어요');

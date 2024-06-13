@@ -4,18 +4,17 @@ import { useModal } from '@/context/ModalContext';
 import DeleteCardModal from '../modals/DeleteCardModal';
 import EditCardForm from '../modals/EditCardForm';
 import { useEffect, useState } from 'react';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 export default function ToDoCardDropDown({
   isOpen,
   cardId,
   setIsCardChange,
-  dashboardId,
   columnId,
 }: {
   isOpen: boolean;
   cardId: number;
   setIsCardChange: any;
-  dashboardId: number;
   columnId: number;
 }) {
   const [loginToken, setLoginToken] = useState<any>('');
@@ -40,7 +39,6 @@ export default function ToDoCardDropDown({
             handleOpenModal(
               <EditCardForm
                 cardId={cardId}
-                dashboardId={dashboardId}
                 columnId={columnId}
                 loginToken={loginToken}
                 closeModal={closeModal}

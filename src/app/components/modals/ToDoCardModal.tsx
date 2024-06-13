@@ -14,7 +14,6 @@ interface assigner {
 }
 
 export default function ToDoCardModal({
-  dashboardId,
   columnId,
   title,
   description,
@@ -26,7 +25,6 @@ export default function ToDoCardModal({
   columnTitle,
   setIsCardChange,
 }: {
-  dashboardId: number;
   columnId: number;
   title: string;
   description: string;
@@ -46,7 +44,6 @@ export default function ToDoCardModal({
         cardId={cardId}
         title={title}
         setIsCardChange={setIsCardChange}
-        dashboardId={dashboardId}
         columnId={columnId}
       />
       {/* 컨텐츠 */}
@@ -60,7 +57,6 @@ export default function ToDoCardModal({
           />
           <CommentInput
             columnId={columnId}
-            dashboardId={dashboardId}
             cardId={cardId}
             setIsCommentChange={setIsCommentChange}
           />

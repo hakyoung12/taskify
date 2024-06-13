@@ -8,16 +8,15 @@ import UpdateColumnModal from './modals/UpdateColumnModal';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { getCardsByColumnId } from './ToDoCardModal/util';
 import CreateCardForm from './modals/CreateCardForm';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 export default function Column({
   title,
   columnId,
-  dashboardId,
   setIsColumnChange,
 }: {
   title: string;
   columnId: number;
-  dashboardId: number;
   setIsColumnChange: any;
 }) {
   const [cards, setCards] = useState<string[]>([]);
@@ -137,7 +136,6 @@ export default function Column({
           onClick={() =>
             handleOpenModal(
               <CreateCardForm
-                dashboardId={dashboardId}
                 columnId={columnId}
                 loginToken={loginToken}
                 closeModal={closeModal}
@@ -154,7 +152,6 @@ export default function Column({
             return (
               <ColumnCard
                 columnId={columnId}
-                dashboardId={dashboardId}
                 key={index}
                 imageUrl={card.imageUrl}
                 title={card.title}

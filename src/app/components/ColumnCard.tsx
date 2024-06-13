@@ -5,6 +5,7 @@ import CustomAvatar from './CustomAvatar';
 import ToDoCardModal from './modals/ToDoCardModal';
 import { useModal } from '@/context/ModalContext';
 import { dateFormat } from './ToDoCardModal/util';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -15,13 +16,11 @@ interface ColumnCardProps {
   assigner: any;
   cardId: number;
   columnId: number;
-  dashboardId: number;
   columnTitle: string;
   setIsCardChange: any;
 }
 
 export default function ColumnCard({
-  dashboardId,
   cardId,
   description,
   imageUrl,
@@ -48,7 +47,6 @@ export default function ColumnCard({
         handleOpenModal(
           <ToDoCardModal
             columnId={columnId}
-            dashboardId={dashboardId}
             cardId={cardId}
             title={title}
             description={description}

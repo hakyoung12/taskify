@@ -6,14 +6,17 @@ import ChipAddIcon from '@/app/components/ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import { useEffect, useState } from 'react';
 import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/util';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 export default function dashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);
   const [columnTitles, setColumnTitles] = useState([]);
   const [isColumnChange, setIsColumnChange] = useState(false);
   const { openModal } = useModal();
+  const { dashboardID, setDashboardID } = useDashboardId();
 
   const id = Number(dashboardid.params.dashboardid);
+  setDashboardID(id);
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -42,21 +45,19 @@ export default function dashboardPage(dashboardid: any) {
     }
   }, [isColumnChange]);
 
-  console.log(isColumnChange);
   return (
     <>
       <div className='flex'>
         <div className='flex h-full w-[calc(100vw-250px)] overflow-x-auto whitespace-nowrap bg-custom_gray-_fafafa max-xl:w-[calc(100vw-156px)] max-xl:flex-col max-xl:overflow-x-visible max-xl:whitespace-normal max-sm:w-[calc(100vw-64px)]'>
           {columnData &&
             columnData.length > 0 &&
-            columnData.map((column: any, index: number) => {
+            columnData.map((column: any) => {
               return (
                 <Column
                   setIsColumnChange={setIsColumnChange}
-                  key={index}
+                  key={column.id}
                   columnId={column.id}
                   title={column.title}
-                  dashboardId={id}
                 />
               );
             })}
@@ -65,7 +66,7 @@ export default function dashboardPage(dashboardid: any) {
             onClick={() =>
               handleOpenModal(
                 <NewColumnModal
-                  dashboardId={id}
+                  dashboardId={dashboardID}
                   columnTitles={columnTitles}
                   setIsColumnChange={setIsColumnChange}
                 />,

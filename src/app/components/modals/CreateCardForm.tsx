@@ -9,10 +9,10 @@ import ImageInput from '../Inputs/ImageInput';
 import { Assignee, Datas, Members } from '../Inputs/InputTypes';
 import axios from '@/app/api/axios';
 import { Button } from '../ui/button';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 interface ModalProps {
   columnId: number;
-  dashboardId: string | number;
   loginToken: string;
   closeModal: () => void;
   setIsCardChange: any;
@@ -25,7 +25,6 @@ const MODAL_TITLE_STYLE =
 
 const CreateCardForm = ({
   columnId,
-  dashboardId,
   loginToken,
   closeModal,
   setIsCardChange,
@@ -45,11 +44,12 @@ const CreateCardForm = ({
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const [members, setMembers] = useState<Members>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
+  const { dashboardID } = useDashboardId();
 
   const getMembers = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `/members?size=409&dashboardId=${dashboardId}`,
+        `/members?size=409&dashboardId=${dashboardID}`,
         {
           headers: {
             Authorization: `Bearer ${loginToken}`,
@@ -61,12 +61,12 @@ const CreateCardForm = ({
     } catch (err) {
       console.log(err);
     }
-  }, [dashboardId, loginToken]);
+  }, [dashboardID, loginToken]);
 
   const createCard = async () => {
     const postBody = {
       assigneeUserId: datas.assignee.userId,
-      dashboardId: dashboardId,
+      dashboardId: dashboardID,
       columnId: columnId,
       title: datas.title,
       description: datas.description,
