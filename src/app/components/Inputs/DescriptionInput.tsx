@@ -18,7 +18,7 @@ export default function DescriptionInput({ setData, initDescription }: Props) {
 
   useEffect(() => {
     setInputValue(initDescription);
-  }, [initDescription]);
+  }, []);
 
   return (
     <div className={LABLE_INPUT_STYLE}>

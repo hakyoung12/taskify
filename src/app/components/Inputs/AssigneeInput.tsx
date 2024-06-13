@@ -21,7 +21,7 @@ interface AssigneeProps {
 }
 
 const CIRCLE =
-  'flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
+  'flex-shrink-0 flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
 
 export default function AssigneeInput({
   assignee,
@@ -39,16 +39,17 @@ export default function AssigneeInput({
       (member) => String(member.userId) === e.currentTarget.value,
     );
     setData({ assignee: selected[0] });
+    setInputValue(assignee.nickname);
     setIsFocused(false);
   };
 
   const chooseAssignee = () => {
     if (searchedMembers.length === 1) {
       setData({ assignee: searchedMembers[0] });
+      setInputValue(assignee.nickname);
     } else {
       setInputValue('');
     }
-    setIsFocused(false);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {

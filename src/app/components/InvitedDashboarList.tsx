@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
+import { useDashboardData } from '@/context/DashboardDataContext';
+import { useRouter } from 'next/navigation';
 import instance from '../api/axios';
 import Image from 'next/image';
 
@@ -15,9 +17,14 @@ const InvitedDashboardList = () => {
   >([]);
   const [cursorId, setCursorId] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const size = 6;
+  const { setDashboardsData } = useDashboardData();
+  const router = useRouter();
 
   const fetchInvitations = async (cursorId: number | null) => {
+    if (!hasMore) return;
+
     setLoading(true);
     try {
       const res = await instance.get('invitations', {
@@ -48,6 +55,8 @@ const InvitedDashboardList = () => {
 
       if (newInvitations.length > 0) {
         setCursorId(newInvitations[newInvitations.length - 1].id);
+      } else {
+        setHasMore(false);
       }
     } catch (error) {
       console.error(error);
@@ -59,11 +68,11 @@ const InvitedDashboardList = () => {
   const handleIntersection = useCallback(
     (entries: IntersectionObserverEntry[]) => {
       const target = entries[0];
-      if (target.isIntersecting && !loading) {
+      if (target.isIntersecting && !loading && hasMore) {
         fetchInvitations(cursorId);
       }
     },
-    [cursorId, loading],
+    [cursorId, loading, hasMore],
   );
 
   useEffect(() => {
@@ -102,7 +111,7 @@ const InvitedDashboardList = () => {
     inviteAccepted: boolean,
   ) => {
     try {
-      await instance.put(`invitations/${invitationId}`, {
+      const res = await instance.put(`invitations/${invitationId}`, {
         inviteAccepted,
       });
       setInvitations((prev) =>
@@ -111,6 +120,18 @@ const InvitedDashboardList = () => {
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+      if (inviteAccepted) {
+        const dashboardRes = await instance.get(
+          `/dashboards/${res.data.dashboard.id}`,
+        );
+        setDashboardsData((prev) => {
+          const newData = [...prev];
+          newData.pop();
+          newData.unshift(dashboardRes.data);
+          return newData;
+        });
+        router.push(`/dashboard/${dashboardRes.data.id}`);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -191,9 +212,9 @@ const InvitedDashboardList = () => {
                   <div className='flex space-x-2'>
                     <button
                       className='rounded bg-custom_violet-_5534da px-7 py-2 text-white'
-                      onClick={() =>
-                        handleInvitationResponse(invitation.id, true)
-                      }
+                      onClick={() => {
+                        handleInvitationResponse(invitation.id, true);
+                      }}
                     >
                       수락
                     </button>

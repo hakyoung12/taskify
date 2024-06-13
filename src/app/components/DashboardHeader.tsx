@@ -49,10 +49,6 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
   return (
     <div className='flex h-[60px] items-center justify-between border-b border-r border-t border-custom_gray-_d9d9d9 py-1'>
       <div className='ml-10 text-lg font-bold text-custom_black-_333236'>
@@ -60,7 +56,7 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
       </div>
       <div className='relative'>
         <div
-          className='flex items-center gap-[8px]'
+          className='mr-5 flex items-center gap-[8px]'
           onClick={handleNicknameClick}
         >
           {userData && (
@@ -70,7 +66,7 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
               size='medium'
             />
           )}
-          <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
+          <div className='mr-[80px] hidden w-[60px] cursor-pointer truncate sm:block'>
             {userData && userData.nickname}
           </div>
         </div>

@@ -71,7 +71,7 @@ const DashboardHeaderInSettings = ({
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
         dashboardsData.map((data) => {
-          if (data.id == dashboardId) {
+          if (data.id == params.dashboardid) {
             setTitle(data.title);
           }
         });
@@ -103,9 +103,9 @@ const DashboardHeaderInSettings = ({
   return (
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
-        <span className='ml-10 text-lg font-bold'>{title}</span>
+        <span className='ml-10 hidden text-lg font-bold xl:block'>{title}</span>
         {createdByMe === true ? (
-          <span className='ml-2 text-yellow-500'>
+          <span className='ml-2 hidden text-yellow-500 xl:block'>
             <Image
               src='/images/createByMe.svg'
               alt='crown'
@@ -118,21 +118,23 @@ const DashboardHeaderInSettings = ({
       <div className='flex items-center space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
           {/* 대시보드 설정페이지에서 비활성화 */}
-          {createdByMe === true && link && (
-            <Link
-              href={link}
-              className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
-            >
-              <Image
-                className='mr-2 hidden sm:block'
-                src='/images/settings.svg'
-                alt='settings'
-                width={20}
-                height={20}
-              />
-              <p>관리</p>
-            </Link>
-          )}
+          <div className='ml-5'>
+            {createdByMe === true && link && (
+              <Link
+                href={link}
+                className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
+              >
+                <Image
+                  className='mr-2 hidden sm:block'
+                  src='/images/settings.svg'
+                  alt='settings'
+                  width={20}
+                  height={20}
+                />
+                <p>관리</p>
+              </Link>
+            )}
+          </div>
           {createdByMe && (
             <button
               className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
@@ -184,7 +186,7 @@ const DashboardHeaderInSettings = ({
                 size='medium'
               />
             )}
-            <div className='mr-[80px] hidden w-[45px] cursor-pointer sm:block'>
+            <div className='mr-[80px] hidden w-[60px] cursor-pointer truncate sm:block'>
               {user && user.nickname}
             </div>
           </div>
