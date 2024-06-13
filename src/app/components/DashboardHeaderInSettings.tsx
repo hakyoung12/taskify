@@ -156,6 +156,7 @@ const DashboardHeaderInSettings = ({
             {members?.map((member: CheckMembersRes, index: number) =>
               index < 4 ? (
                 <CustomAvatar
+                  key={member.id}
                   nickName={member.nickname}
                   profileUrl={member.profileImageUrl}
                   size='medium'
