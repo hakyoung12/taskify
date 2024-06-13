@@ -30,7 +30,7 @@ const CommentInput = ({
   };
 
   return (
-    <form className='relative' onSubmit={handleSubmit}>
+    <form className='relative flex flex-col' onSubmit={handleSubmit}>
       <label className='text-[16px] font-medium max-sm:text-[14px]'>댓글</label>
       <textarea
         onChange={handleChange}
