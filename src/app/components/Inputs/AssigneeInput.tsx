@@ -21,7 +21,7 @@ interface AssigneeProps {
 }
 
 const CIRCLE =
-  'flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
+  'flex-shrink-0 flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
 
 export default function AssigneeInput({
   assignee,
