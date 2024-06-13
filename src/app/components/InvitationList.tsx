@@ -74,6 +74,7 @@ export default function InvitationList({
       setInvitationList(res.data.invitations);
       setTotalCount(res.data.totalCount);
     };
+
     fetchInvitationListData();
   }, [currentPage]);
 

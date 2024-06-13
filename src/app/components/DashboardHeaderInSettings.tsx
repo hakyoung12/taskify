@@ -104,7 +104,6 @@ const DashboardHeaderInSettings = ({
     <nav className='flex h-[60px] items-center justify-between border-b'>
       <div className='hidden items-center sm:flex'>
         <span className='ml-10 text-lg font-bold'>{title}</span>
-        {/* TODO: 내가 만든 부분에서만 crown 설정 */}
         {createdByMe === true ? (
           <span className='ml-2 text-yellow-500'>
             <Image
@@ -119,7 +118,7 @@ const DashboardHeaderInSettings = ({
       <div className='flex items-center space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
           {/* 대시보드 설정페이지에서 비활성화 */}
-          {link && (
+          {createdByMe === true && link && (
             <Link
               href={link}
               className='flex w-[50px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[88px]'
@@ -134,19 +133,21 @@ const DashboardHeaderInSettings = ({
               <p>관리</p>
             </Link>
           )}
-          <button
-            className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
-            onClick={() => handleOpenModal(<InvitationModal />)}
-          >
-            <Image
-              className='mr-2 hidden sm:block'
-              src='/images/addTaskButton.svg'
-              alt='add'
-              width={20}
-              height={20}
-            />
-            <p>초대하기</p>
-          </button>
+          {createdByMe && (
+            <button
+              className='flex w-[70px] items-center justify-center rounded-md border bg-white px-2 py-1 sm:w-[116px]'
+              onClick={() => handleOpenModal(<InvitationModal />)}
+            >
+              <Image
+                className='mr-2 hidden sm:block'
+                src='/images/addTaskButton.svg'
+                alt='add'
+                width={20}
+                height={20}
+              />
+              <p>초대하기</p>
+            </button>
+          )}
         </div>
         <div className='ml-6 flex items-center sm:-space-x-2'>
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
