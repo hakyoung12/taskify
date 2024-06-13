@@ -35,10 +35,9 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
     setData({ dueDate: inputValue });
   }, [inputValue, setData]);
 
-
   useEffect(() => {
     setInputValue(addT(initDueDate));
-  }, [initDueDate]);
+  }, []);
 
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>
