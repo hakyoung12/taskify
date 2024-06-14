@@ -3,11 +3,11 @@
 import { useModal } from '@/context/ModalContext';
 import DeleteCardModal from '../modals/DeleteCardModal';
 import EditCardForm from '../modals/EditCardForm';
-import { useEffect, useState } from 'react';
-import { useDashboardId } from '@/context/DashBoardIdContext';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ToDoCardDropDown({
   isOpen,
+  setisOpen,
   cardId,
   setIsCardChange,
   columnId,
@@ -16,8 +16,10 @@ export default function ToDoCardDropDown({
   cardId: number;
   setIsCardChange: any;
   columnId: number;
+  setisOpen: any;
 }) {
   const [loginToken, setLoginToken] = useState<any>('');
+  const dropDownRef = useRef<HTMLDivElement>(null);
 
   const { closeModal, openModal } = useModal();
 
@@ -30,9 +32,29 @@ export default function ToDoCardDropDown({
     setLoginToken(token);
   }, []);
 
+  //외부 클릭시 dropdown 끄기
+  useEffect(() => {
+    const onCheckClickOutside = (e: MouseEvent) => {
+      if (
+        isOpen &&
+        dropDownRef.current &&
+        !dropDownRef.current.contains(e.target as Node)
+      ) {
+        setisOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', onCheckClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', onCheckClickOutside);
+    };
+  }, [isOpen]);
+
   return (
     isOpen && (
-      <div className='absolute right-[40px] top-[40px] flex w-[93px] flex-col items-center justify-center gap-[6px] rounded-md border border-[#D9D9D9] bg-white p-[6px] text-[14px] shadow-lg'>
+      <div
+        className='absolute right-[60px] top-[40px] z-[9999] flex w-[93px] flex-col items-center justify-center gap-[6px] rounded-md border border-[#D9D9D9] bg-white p-[6px] text-[14px] shadow-lg'
+        ref={dropDownRef}
+      >
         <button
           className={buttonStyle}
           onClick={() =>

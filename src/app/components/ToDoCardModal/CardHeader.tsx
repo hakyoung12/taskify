@@ -26,7 +26,7 @@ const CardHeader = ({
       <h2 className='text-[24px] font-bold max-sm:mt-[12px] max-sm:text-[20px]'>
         {title}
       </h2>
-      <div className='flex gap-[24px] max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:h-auto max-sm:gap-[16px] max-sm:p-[12px]'>
+      <div className='relative flex gap-[24px] max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:h-auto max-sm:gap-[16px] max-sm:p-[12px]'>
         <button onClick={handleToggle}>
           <img
             src='/images/card-setting.svg'
@@ -39,6 +39,7 @@ const CardHeader = ({
           cardId={cardId}
           columnId={columnId}
           setIsCardChange={setIsCardChange}
+          setisOpen={setIsOpen}
         />
         <button onClick={closeModal}>
           <img
