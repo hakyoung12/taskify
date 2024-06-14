@@ -2,19 +2,19 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 import Image from 'next/image';
 import axios from '@/app/api/axios';
 
 interface Props {
-  setData: SetData;
+  onUpdate: OnUpdate;
   columnId: number;
-  initImageUrl: string;
+  initImageUrl?: string;
   loginToken: string;
 }
 
 export default function ImageInput({
-  setData,
+  onUpdate,
   columnId,
   initImageUrl,
   loginToken,
@@ -46,11 +46,11 @@ export default function ImageInput({
   };
 
   useEffect(() => {
-    setData({ imageUrl: imageUrl });
-  }, [imageUrl, setData]);
+    onUpdate('imageUrl', imageUrl);
+  }, [imageUrl, onUpdate]);
 
   useEffect(() => {
-    setImageUrl(initImageUrl);
+    if (initImageUrl) setImageUrl(initImageUrl);
   }, [initImageUrl]);
 
   return (

@@ -2,23 +2,23 @@
 
 import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 
 interface Props {
-  setData: SetData;
-  initTitle: string;
+  onUpdate: OnUpdate;
+  initTitle?: string;
 }
 
-export default function TitleInput({ setData, initTitle }: Props) {
+export default function TitleInput({ onUpdate, initTitle }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    setData({ title: inputValue.trim() });
-  }, [inputValue, setData]);
+    onUpdate('title', inputValue.trim());
+  }, [inputValue, onUpdate]);
 
   useEffect(() => {
-    setInputValue(initTitle);
-  }, []);
+    if (initTitle) setInputValue(initTitle);
+  }, [initTitle]);
 
   return (
     <div className={LABLE_INPUT_STYLE}>

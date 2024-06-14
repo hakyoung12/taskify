@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { InputHTMLAttributes, useCallback, useEffect, useState } from 'react';
 import AssigneeInput from '../Inputs/AssigneeInput';
 import TitleInput from '../Inputs/TitleInput';
 import DescriptionInput from '../Inputs/DescriptionInput';
@@ -91,10 +91,10 @@ const CreateCardForm = ({
     }
   };
 
-  const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] | number }) => {
+  const onUpdate = useCallback(
+    <T extends keyof Datas>(key: T, value: Datas[T]) => {
       setDatas((prev) => {
-        return { ...prev, ...data };
+        return { ...prev, [key]: value };
       });
     },
     [],
@@ -110,7 +110,7 @@ const CreateCardForm = ({
     }
   }, [isMounted, getMembers]);
 
-  if (!isMounted) return;
+  if (!members.length) return;
 
   return (
     <div
@@ -123,17 +123,16 @@ const CreateCardForm = ({
       <AssigneeInput
         assignee={datas.assignee}
         members={members}
-        setData={setData}
+        onUpdate={onUpdate}
         controlFocus={{ isFocused, setIsFocused }}
       />
-      <TitleInput setData={setData} initTitle={datas.title} />
-      <DescriptionInput setData={setData} initDescription={datas.description} />
-      <DueDateInput setData={setData} initDueDate={datas.dueDate} />
-      <TagInput setData={setData} initTags={datas.tags} />
+      <TitleInput onUpdate={onUpdate} />
+      <DescriptionInput onUpdate={onUpdate} />
+      <DueDateInput onUpdate={onUpdate} />
+      <TagInput onUpdate={onUpdate} />
       <ImageInput
-        setData={setData}
+        onUpdate={onUpdate}
         columnId={columnId}
-        initImageUrl={datas.imageUrl}
         loginToken={loginToken}
       />
       <div className='flex flex-row-reverse gap-x-[12px]'>
