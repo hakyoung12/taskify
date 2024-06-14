@@ -1,5 +1,6 @@
 'use Client';
 
+import { useEffect, useState } from 'react';
 import CustomAvatar from '../CustomAvatar';
 
 interface assignee {
@@ -15,8 +16,25 @@ const CardInfo = ({
   assignee: assignee;
   dueDate: string;
 }) => {
-  const isMobile = window.innerWidth < 768;
+  const [isMobile, setIsMobile] = useState(false);
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const handleResize = () => {
+        setIsMobile(window.innerWidth <= 640);
+      };
+
+      handleResize();
+
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+        window.removeEventListener('resize', handleResize);
+      };
+    }
+  }, []);
+
+  console.log(isMobile);
   return (
     <div className='flex max-h-[155px] w-[200px] flex-col gap-[20px] rounded-lg border p-[16px] text-[14px] max-xl:w-[180px] max-sm:w-full max-sm:flex-row max-sm:text-[12px]'>
       {/* 담당자 */}

@@ -26,7 +26,7 @@ const CardContents = ({
             src='/images/Ellipse-puple.svg'
             alt='꾸미는 점'
           />
-          <span className='text-[12px] text-[#5534DA] max-sm:text-[10px]'>
+          <span className='max-w-[125px] overflow-hidden overflow-ellipsis text-[12px] text-[#5534DA] max-sm:text-[10px]'>
             {columntitle}
           </span>
         </div>

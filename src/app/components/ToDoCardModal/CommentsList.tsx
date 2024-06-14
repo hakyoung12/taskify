@@ -83,8 +83,8 @@ export default function CommentsList({
   const isMobile = window.innerWidth < 768;
   return (
     comments.length > 0 && (
-      <div className='max max-h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
-        {comments.map((comment: any) => {
+      <div className='flex max-h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
+        {comments.map((comment: any, index: number) => {
           return (
             <div key={comment.id} className='flex gap-[12px]'>
               <div className='flex flex-col items-center'>
@@ -93,10 +93,7 @@ export default function CommentsList({
                   nickName={comment.author.nickname}
                   size={isMobile ? 'small' : 'medium'}
                 />
-                {/* 댓글이 1개면 구분선을 붙이지 않습니다 */}
-                {comments.length > 1 && (
-                  <div className='my-[5px] h-[40px] w-[1px] bg-gray-300'></div>
-                )}
+                <div className='my-[5px] h-full w-[1px] bg-gray-300'></div>
               </div>
               <Comment
                 commentId={comment.id}

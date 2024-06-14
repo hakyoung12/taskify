@@ -23,7 +23,7 @@ const CardHeader = ({
 
   return (
     <div className='max-sm:justify-initial right-1 flex justify-between max-sm:flex-col'>
-      <h2 className='text-[24px] font-bold max-sm:mt-[12px] max-sm:text-[20px]'>
+      <h2 className='max-w-[450px] whitespace-pre-wrap break-words text-[24px] font-bold max-xl:max-w-[420px] max-sm:mt-[12px] max-sm:text-[20px]'>
         {title}
       </h2>
       <div className='relative flex gap-[24px] max-sm:absolute max-sm:right-0 max-sm:top-0 max-sm:h-auto max-sm:gap-[16px] max-sm:p-[12px]'>
