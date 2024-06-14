@@ -73,7 +73,11 @@ export default function ProfileSetting() {
     try {
       const response = await instance.put('users/me', formData);
       if (response.status >= 200 && response.status < 300) {
-        setUserData(formData);
+        setUserData((prevUserData: any) => ({
+          ...prevUserData,
+          nickname: formData.nickname,
+          profileImageUrl: formData.profileImageUrl,
+        }));
         handleOpenModal(
           <SettingChangedModal> 프로필이 변경되었습니다. </SettingChangedModal>,
         );
