@@ -67,7 +67,7 @@ export default function DashboardList() {
       setTotalCount(res.data.totalCount);
     };
     fetchdashboardData();
-  }, [currentPage]);
+  }, [currentPage, dashboardID]);
 
   return (
     <div className='p-0 max-sm:hidden'>
