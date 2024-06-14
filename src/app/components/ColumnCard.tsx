@@ -7,6 +7,12 @@ import { useModal } from '@/context/ModalContext';
 import { dateFormat } from './ToDoCardModal/util';
 import { useDashboardId } from '@/context/DashBoardIdContext';
 
+const tagPink = 'bg-[#f7dbf0] text-[#d549b6]';
+const tagBrown = 'bg-[#f9eee3] text-[#d58d49]';
+const tagBlue = 'bg-[#dbe6f7] text-[#4981d5]';
+const tagGreen = 'bg-[#e7f7db] text-[#86d549]';
+const colors = [tagBlue, tagGreen, tagPink, tagBrown];
+
 interface ColumnCardProps {
   imageUrl: string;
   title: string;
@@ -77,9 +83,11 @@ export default function ColumnCard({
         <div className='flex flex-col justify-center gap-[16px] max-xl:flex-row max-xl:items-center max-sm:flex-col max-sm:items-start'>
           <div className='flex'>
             {tags.map((tag: any, index: number) => {
+              const colorSelector = tag.length % 4;
+              const selecetedColor = colors[colorSelector];
               return (
                 <div
-                  className='mr-[6px] flex h-[22px] items-center justify-center whitespace-nowrap rounded bg-[#F9EEE3] px-[6px] text-[12px] text-[#D58D49]'
+                  className={`${selecetedColor} mr-[6px] flex h-[22px] items-center justify-center whitespace-nowrap rounded bg-[#F9EEE3] px-[6px] text-[12px]`}
                   key={index}
                 >
                   {tag}
