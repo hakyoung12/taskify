@@ -107,7 +107,9 @@ export default function Column({
             src='/images/Ellipse-puple.svg'
             alt='꾸미는 점'
           />
-          <span className='mr-[12px]'>{title}</span>
+          <p className='mr-[12px] max-w-[150px] overflow-hidden overflow-ellipsis'>
+            {title}
+          </p>
           <div className='flex h-[20px] w-[20px] items-center justify-center rounded bg-custom_gray-_eeeeee text-center text-[12px] font-normal text-custom_gray-_787486'>
             <p>{totalCount}</p>
           </div>
