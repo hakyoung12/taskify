@@ -18,10 +18,6 @@ interface DashboardDataContextType {
   setDashboardsData: React.Dispatch<
     React.SetStateAction<DashboardDataContextProps[]>
   >;
-  dashboardCard: DashboardDataContextProps[];
-  setDashboardCard: React.Dispatch<
-    React.SetStateAction<DashboardDataContextProps[]>
-  >;
 }
 
 // 대시보드 데이터 컨텍스트 생성
@@ -36,17 +32,11 @@ export const DashboardDataProvider = ({
   const [dashboardsData, setDashboardsData] = useState<
     DashboardDataContextProps[]
   >([]);
-  const [dashboardCard, setDashboardCard] = useState<
-    DashboardDataContextProps[]
-  >([]);
-
   return (
     <DashboardDataContext.Provider
       value={{
         dashboardsData,
         setDashboardsData,
-        dashboardCard,
-        setDashboardCard,
       }}
     >
       {children}
@@ -58,9 +48,7 @@ export const DashboardDataProvider = ({
 export const useDashboardData = () => {
   const context = useContext(DashboardDataContext);
   if (context === undefined) {
-    throw new Error(
-      'useDashboardData must be used within a DashboardDataProvider',
-    );
+    throw new Error('대시보드 데이터 사용 불가능!');
   }
   return context;
 };
