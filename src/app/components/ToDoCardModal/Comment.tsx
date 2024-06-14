@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from 'react';
-import { deleteComment, putComment } from './api';
+import { dateFormat, deleteComment, putComment } from './util';
 
 interface CommentProps {
   createdAt: string;
@@ -43,12 +43,14 @@ const Comment = ({
     setIsEditing(false);
   };
 
+  const createdAtByFormat = dateFormat('format2', new Date(createdAt));
+
   return (
     <div className='w-full text-[14px] max-sm:text-[12px]'>
       <div className='mt-[6px] flex items-center gap-[8px]'>
         <span className='font-semibold'>{commenterName}</span>
         <span className='text-[12px] text-[#9FA6B2] max-sm:text-[10px]'>
-          {createdAt}
+          {createdAtByFormat}
         </span>
       </div>
       {isEditing ? (

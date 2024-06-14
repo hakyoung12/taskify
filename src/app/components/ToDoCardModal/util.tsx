@@ -70,7 +70,36 @@ const deleteComment = async (commentId: number, setIsCommentChange: any) => {
   } catch (error) {
     console.log(error);
   } finally {
+    console.log();
     setIsCommentChange(true);
+  }
+};
+
+const dateFormat = (type: string, date: Date) => {
+  if (type === 'format1') {
+    let dateFormat1 =
+      date.getFullYear() +
+      '-' +
+      (date.getMonth() + 1 < 9
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1) +
+      '-' +
+      (date.getDate() < 9 ? '0' + date.getDate() : date.getDate());
+    return dateFormat1;
+  } else {
+    let dateFormat2 =
+      date.getFullYear() +
+      '-' +
+      (date.getMonth() + 1 < 9
+        ? '0' + (date.getMonth() + 1)
+        : date.getMonth() + 1) +
+      '-' +
+      (date.getDate() < 10 ? '0' + date.getDate() : date.getDate()) +
+      ' ' +
+      (date.getHours() < 10 ? '0' + date.getHours() : date.getHours()) +
+      ':' +
+      (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
+    return dateFormat2;
   }
 };
 
@@ -155,4 +184,5 @@ export {
   putComment,
   deleteComment,
   deleteCard,
+  dateFormat,
 };

@@ -1,15 +1,18 @@
 import { useModal } from '@/context/ModalContext';
 import ToDoCardDropDown from './ToDoCardDropDown';
 import { useState } from 'react';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 const CardHeader = ({
   title,
   cardId,
   setIsCardChange,
+  columnId,
 }: {
   title: string;
   cardId: number;
   setIsCardChange: void;
+  columnId: number;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const { closeModal } = useModal();
@@ -34,6 +37,7 @@ const CardHeader = ({
         <ToDoCardDropDown
           isOpen={isOpen}
           cardId={cardId}
+          columnId={columnId}
           setIsCardChange={setIsCardChange}
         />
         <button onClick={closeModal}>
