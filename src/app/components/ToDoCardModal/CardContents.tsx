@@ -31,14 +31,13 @@ const CardContents = ({
           </span>
         </div>
         <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />
-        <div className='flex'>
+        <div className='flex flex-wrap overflow-x-hidden'>
           {tags.map((tag: any, index: number) => {
             const colorSelector = tag.length % 4;
             const selecetedColor = colors[colorSelector];
-            console.log(`index: ${selecetedColor}`);
             return (
               <div
-                className={`${selecetedColor} mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
+                className={`${selecetedColor} mb-[6px] mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
                 key={index}
               >
                 {tag}

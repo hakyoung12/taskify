@@ -79,21 +79,22 @@ export default function ColumnCard({
       )}
       {/* 제목 */}
       <div className='flex w-full flex-col gap-[10px]'>
-        <span className='h-[19px]'>{title}</span>
+        <span className='h-[19px] overflow-hidden overflow-ellipsis'>
+          {title}
+        </span>
         <div className='flex flex-col justify-center gap-[16px] max-xl:flex-row max-xl:items-center max-sm:flex-col max-sm:items-start'>
-          <div className='flex'>
+          <div className='flex flex-wrap overflow-x-hidden'>
             {tags.map((tag: any, index: number) => {
               const colorSelector = tag.length % 4;
               const selecetedColor = colors[colorSelector];
               return (
                 <div
-                  className={`${selecetedColor} mr-[6px] flex h-[22px] items-center justify-center whitespace-nowrap rounded bg-[#F9EEE3] px-[6px] text-[12px]`}
+                  className={`${selecetedColor} mb-[6px] mr-[6px] flex h-[22px] items-center justify-center whitespace-nowrap rounded bg-[#F9EEE3] px-[6px] text-[12px]`}
                   key={index}
                 >
                   {tag}
                 </div>
               );
-              1;
             })}
           </div>
           <div className='relative flex w-full items-center justify-between text-[12px] text-custom_gray-_787486'>
