@@ -186,25 +186,32 @@ const EditCardForm = ({
       }}
     >
       <h2 className={MODAL_TITLE_STYLE}>할 일 수정</h2>
-      <div className='flex gap-[16px] max-sm:flex-col'>
-        <StateInput
-          states={states}
-          columnId={columnId}
-          onUpdate={onUpdate}
-          controlFocus={{
-            isFocused: isStateFocused,
-            setIsFocused: setIsStateFocused,
-          }}
-        />
-        <AssigneeInput
-          assignee={datas.assignee}
-          members={members}
-          onUpdate={onUpdate}
-          controlFocus={{
-            isFocused: isAssigneeFocused,
-            setIsFocused: setIsAssigneeFocused,
-          }}
-        />
+      <div
+        className='flex gap-[16px] max-sm:flex-col'
+        onClick={(e) => e.stopPropagation()}
+      >
+        <div onClick={() => setIsAssigneeFocused(false)}>
+          <StateInput
+            states={states}
+            columnId={columnId}
+            onUpdate={onUpdate}
+            controlFocus={{
+              isFocused: isStateFocused,
+              setIsFocused: setIsStateFocused,
+            }}
+          />
+        </div>
+        <div onClick={() => setIsStateFocused(false)}>
+          <AssigneeInput
+            assignee={datas.assignee}
+            members={members}
+            onUpdate={onUpdate}
+            controlFocus={{
+              isFocused: isAssigneeFocused,
+              setIsFocused: setIsAssigneeFocused,
+            }}
+          />
+        </div>
       </div>
       <TitleInput onUpdate={onUpdate} initTitle={initDatas.title} />
       <DescriptionInput
