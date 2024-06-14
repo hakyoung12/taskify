@@ -20,17 +20,6 @@ const addT = (time: string) => {
 export default function DueDateInput({ onUpdate, initDueDate }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
-  function getToday() {
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = ('0' + (1 + date.getMonth())).slice(-2);
-    const day = ('0' + date.getDate()).slice(-2);
-    const hour = ('0' + date.getHours()).slice(-2);
-    const min = ('0' + date.getMinutes()).slice(-2);
-
-    return year + '-' + month + '-' + day + 'T' + hour + ':' + min;
-  }
-
   useEffect(() => {
     onUpdate('dueDate', removeT(inputValue));
   }, [inputValue, onUpdate]);
@@ -48,7 +37,6 @@ export default function DueDateInput({ onUpdate, initDueDate }: Props) {
         id='dueDate'
         data-placeholder='날짜를 입력해주세요'
         type='datetime-local'
-        min={getToday()}
         onChange={(e) => {
           setInputValue(e.target.value || '');
         }}
