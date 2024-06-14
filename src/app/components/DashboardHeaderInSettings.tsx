@@ -196,9 +196,15 @@ const DashboardHeaderInSettings = ({
               <ul>
                 <li
                   onClick={handleLogout}
-                  className='cursor-pointer px-4 py-2 hover:bg-gray-100'
+                  className='w-[50px] cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:w-[90px] sm:px-4 sm:py-2 sm:text-base'
                 >
                   로그아웃
+                </li>
+                <li
+                  className='cursor-pointer px-1 py-1 text-center text-[10px] hover:bg-gray-100 sm:px-4 sm:py-2 sm:text-base'
+                  onClick={() => router.push('/mypage')}
+                >
+                  마이페이지
                 </li>
               </ul>
             </div>
