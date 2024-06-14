@@ -34,6 +34,9 @@ const DashboardHeaderInSettings = ({
   );
   const [members, setMembers] = useState<CheckMembersRes[]>();
   const [createdByMe, setCreatedByMe] = useState<boolean | null>(null);
+  const [hoveredMemberId, setHoveredMemberId] = useState<
+    string | null | number
+  >(null);
   const { dashboardsData } = useDashboardData();
   const { openModal } = useModal();
 
@@ -155,12 +158,28 @@ const DashboardHeaderInSettings = ({
           <div className='ml-[100px] flex items-center -space-x-2 sm:ml-0'>
             {members?.map((member: CheckMembersRes, index: number) =>
               index < 4 ? (
-                <CustomAvatar
+                <div
                   key={member.id}
-                  nickName={member.nickname}
-                  profileUrl={member.profileImageUrl}
-                  size='medium'
-                />
+                  onMouseEnter={() => setHoveredMemberId(member.id)}
+                  onMouseLeave={() => setHoveredMemberId(null)}
+                >
+                  <CustomAvatar
+                    nickName={member.nickname}
+                    profileUrl={member.profileImageUrl}
+                    size='medium'
+                  />
+                  {hoveredMemberId === member.id && (
+                    <div className='absolute rounded border border-gray-300 bg-white p-2 shadow-md'>
+                      <ul>
+                        {members.map((member) => (
+                          <li key={member.id} className='py-1'>
+                            {member.nickname}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                </div>
               ) : null,
             )}
             {members && members.length > 4 && (
