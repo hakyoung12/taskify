@@ -1,3 +1,7 @@
+/**TODO:
+ * 1) 초대받은 대시보드의 스크롤 부분을 input 밑으로 변경
+ */
+
 'use client';
 
 import { useEffect, useState, useCallback, useRef } from 'react';
@@ -6,6 +10,7 @@ import { useDashboardData } from '@/context/DashboardDataContext';
 import { useRouter } from 'next/navigation';
 import instance from '../api/axios';
 import Image from 'next/image';
+import axios from 'axios';
 
 const InvitedDashboardList = () => {
   const [invitations, setInvitations] = useState<
@@ -99,7 +104,6 @@ const InvitedDashboardList = () => {
     fetchInvitations(null);
   }, []);
 
-  // 디바운스와 쓰로틀링 차이 => 사용방법의 차이점 위주로 정리
   const debounce = (func: Function, delay: number) => {
     let timer: ReturnType<typeof setTimeout>;
     return (...args: any[]) => {
@@ -137,7 +141,11 @@ const InvitedDashboardList = () => {
         router.push(`/dashboard/${dashboardRes.data.id}`);
       }
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.message);
+      } else {
+        console.log('알 수 없는 에러가 발생했습니다.', error);
+      }
     }
   };
 
@@ -163,7 +171,6 @@ const InvitedDashboardList = () => {
     [invitations],
   );
 
-  // 스크롤 부분을 input 밑
   return (
     <div className='ml-6 mt-6 hidden h-[600px] overflow-scroll rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
