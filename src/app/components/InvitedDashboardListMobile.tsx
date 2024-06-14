@@ -140,7 +140,9 @@ const InvitedDashboardListMobile = () => {
             }
           });
 
-          return newData;
+          const slicedData = newData.slice(0, 10);
+
+          return slicedData;
         });
 
         router.push(`/dashboard/${dashboardRes.data.id}`);
