@@ -2,17 +2,17 @@
 
 import React, { KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 import InputTags from '../InputTags';
 
 interface Props {
-  setData: SetData;
-  initTags: string[];
+  onUpdate: OnUpdate;
+  initTags?: string[];
 }
 
-export default function TagInput({ setData, initTags }: Props) {
+export default function TagInput({ onUpdate, initTags }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
-  const [tags, setTags] = useState<string[]>(initTags);
+  const [tags, setTags] = useState<string[]>([]);
   const [isFocused, setIsFocused] = useState<boolean>(false);
   const tagInput = useRef<HTMLInputElement>(null);
 
@@ -37,11 +37,11 @@ export default function TagInput({ setData, initTags }: Props) {
   };
 
   useEffect(() => {
-    setData({ tags: tags });
-  }, [tags, setData]);
+    onUpdate('tags', tags);
+  }, [tags, onUpdate]);
 
   useEffect(() => {
-    setTags(initTags);
+    if (initTags?.length) setTags(initTags);
   }, [initTags]);
 
   return (

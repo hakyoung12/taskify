@@ -48,7 +48,18 @@ const EditCardForm = ({
   const [isStateFocused, setIsStateFocused] = useState<boolean>(false);
   const [members, setMembers] = useState<Members>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [initDatas, setInitDatas] = useState<Datas>();
+  const [initDatas, setInitDatas] = useState<Datas>({
+    assignee: {
+      userId: 0,
+      nickname: '',
+    },
+    title: '',
+    description: '',
+    dueDate: '',
+    tags: [],
+    imageUrl: '',
+    columnId: 0,
+  });
   const [states, setStates] = useState<State[]>([]);
   const { dashboardID } = useDashboardId();
 
@@ -144,10 +155,10 @@ const EditCardForm = ({
     }
   };
 
-  const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] | number }) => {
+  const onUpdate = useCallback(
+    <T extends keyof Datas>(key: T, value: Datas[T]) => {
       setDatas((prev) => {
-        return { ...prev, ...data };
+        return { ...prev, [key]: value };
       });
     },
     [],
@@ -179,7 +190,7 @@ const EditCardForm = ({
         <StateInput
           states={states}
           columnId={columnId}
-          setData={setData}
+          onUpdate={onUpdate}
           controlFocus={{
             isFocused: isStateFocused,
             setIsFocused: setIsStateFocused,
@@ -188,21 +199,24 @@ const EditCardForm = ({
         <AssigneeInput
           assignee={datas.assignee}
           members={members}
-          setData={setData}
+          onUpdate={onUpdate}
           controlFocus={{
             isFocused: isAssigneeFocused,
             setIsFocused: setIsAssigneeFocused,
           }}
         />
       </div>
-      <TitleInput setData={setData} initTitle={datas.title} />
-      <DescriptionInput setData={setData} initDescription={datas.description} />
-      <DueDateInput setData={setData} initDueDate={datas.dueDate} />
-      <TagInput setData={setData} initTags={datas.tags} />
+      <TitleInput onUpdate={onUpdate} initTitle={initDatas.title} />
+      <DescriptionInput
+        onUpdate={onUpdate}
+        initDescription={initDatas.description}
+      />
+      <DueDateInput onUpdate={onUpdate} initDueDate={initDatas.dueDate} />
+      <TagInput onUpdate={onUpdate} initTags={initDatas.tags} />
       <ImageInput
-        setData={setData}
+        onUpdate={onUpdate}
         columnId={columnId}
-        initImageUrl={datas.imageUrl}
+        initImageUrl={initDatas.imageUrl}
         loginToken={loginToken}
       />
       <div className='flex flex-row-reverse gap-x-[12px]'>
@@ -210,11 +224,11 @@ const EditCardForm = ({
           onClick={editCard}
           type='button'
           disabled={
-            datas.assignee === initDatas?.assignee &&
+            datas.assignee.userId === initDatas.assignee.userId &&
             datas.columnId === initDatas.columnId &&
             datas.description === initDatas.description &&
-            datas.dueDate === initDatas.dueDate &&
             datas.imageUrl === initDatas.imageUrl &&
+            datas.dueDate === initDatas.dueDate &&
             datas.tags.length === initDatas.tags.length &&
             datas.tags.every((v, i) => v === initDatas.tags[i]) &&
             datas.title === initDatas.title

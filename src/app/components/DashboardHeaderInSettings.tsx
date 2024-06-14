@@ -115,7 +115,7 @@ const DashboardHeaderInSettings = ({
           </span>
         ) : null}
       </div>
-      <div className='flex items-center space-x-2'>
+      <div className='mr-4 flex flex-1 items-center justify-end space-x-2'>
         <div className='mr-10 flex space-x-4 text-[14px] text-custom_gray-_787486 sm:text-[16px]'>
           {/* 대시보드 설정페이지에서 비활성화 */}
           <div className='ml-5'>
@@ -156,6 +156,7 @@ const DashboardHeaderInSettings = ({
             {members?.map((member: CheckMembersRes, index: number) =>
               index < 4 ? (
                 <CustomAvatar
+                  key={member.id}
                   nickName={member.nickname}
                   profileUrl={member.profileImageUrl}
                   size='medium'

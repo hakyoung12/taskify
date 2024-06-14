@@ -9,11 +9,11 @@ import React, {
   useState,
 } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData, State } from './InputTypes';
+import { OnUpdate, State } from './InputTypes';
 
 interface StateProps {
   columnId: number;
-  setData: SetData;
+  onUpdate: OnUpdate;
   states: State[];
   controlFocus: {
     isFocused: boolean;
@@ -23,7 +23,7 @@ interface StateProps {
 
 export default function StateInput({
   columnId,
-  setData,
+  onUpdate,
   states,
   controlFocus,
 }: StateProps) {
@@ -33,17 +33,17 @@ export default function StateInput({
   const { isFocused, setIsFocused } = controlFocus;
 
   const clickState = (e: MouseEvent<HTMLButtonElement>) => {
-    const selected = states.filter(
-      (state) => state.title === e.currentTarget.value,
-    );
-    setData({ columnId: selected[0]?.id });
+    const selected = states.filter((state) => {
+      return String(state.id) === e.currentTarget.value;
+    });
+    onUpdate('columnId', selected[0]?.id);
     setInputValue(selected[0]?.title);
     setIsFocused(false);
   };
 
   const chooseState = () => {
     if (searchedStates.length === 1) {
-      setData({ columnId: searchedStates[0].id });
+      onUpdate('columnId', searchedStates[0].id);
       setInputValue(searchedStates[0].title);
     } else {
       setInputValue('');
@@ -60,6 +60,7 @@ export default function StateInput({
   }, [columnId, states]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!isFocused) setIsFocused(true);
     if (e.key === 'Enter') {
       chooseState();
       e.currentTarget.blur();

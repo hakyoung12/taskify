@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 
 interface Props {
-  setData: SetData;
-  initDueDate: string;
+  onUpdate: OnUpdate;
+  initDueDate?: string;
 }
 
 const removeT = (time: string) => {
@@ -17,7 +17,7 @@ const addT = (time: string) => {
   return time.replace(' ', 'T');
 };
 
-export default function DueDateInput({ setData, initDueDate }: Props) {
+export default function DueDateInput({ onUpdate, initDueDate }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   function getToday() {
@@ -32,12 +32,12 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
   }
 
   useEffect(() => {
-    setData({ dueDate: inputValue });
-  }, [inputValue, setData]);
+    onUpdate('dueDate', removeT(inputValue));
+  }, [inputValue, onUpdate]);
 
   useEffect(() => {
-    setInputValue(addT(initDueDate));
-  }, []);
+    if (initDueDate) setInputValue(addT(initDueDate));
+  }, [initDueDate]);
 
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>
@@ -50,10 +50,10 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
         type='datetime-local'
         min={getToday()}
         onChange={(e) => {
-          setInputValue(removeT(e.target.value) || '');
+          setInputValue(e.target.value || '');
         }}
         required
-        value={inputValue}
+        value={addT(inputValue)}
         className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
       />
     </div>
