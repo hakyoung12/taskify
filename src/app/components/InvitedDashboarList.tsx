@@ -123,14 +123,25 @@ const InvitedDashboardList = () => {
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+      /** 수락했을 시 */
       if (inviteAccepted) {
         const dashboardRes = await instance.get(
           `/dashboards/${res.data.dashboard.id}`,
         );
         setDashboardsData((prev) => {
-          const newData = [...prev];
-          newData.pop();
-          newData.unshift(dashboardRes.data);
+          const newData = [];
+          prev.forEach((item) => {
+            if (item.createdByMe) {
+              newData.push(item);
+            }
+          });
+          newData.push(dashboardRes.data);
+          prev.forEach((item) => {
+            if (!item.createdByMe) {
+              newData.push(item);
+            }
+          });
+
           return newData;
         });
         router.push(`/dashboard/${dashboardRes.data.id}`);

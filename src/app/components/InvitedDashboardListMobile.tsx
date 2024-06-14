@@ -127,9 +127,19 @@ const InvitedDashboardListMobile = () => {
           `/dashboards/${res.data.dashboard.id}`,
         );
         setDashboardsData((prev) => {
-          const newData = [...prev];
-          newData.pop();
-          newData.unshift(dashboardRes.data);
+          const newData = [];
+          prev.forEach((item) => {
+            if (item.createdByMe) {
+              newData.push(item);
+            }
+          });
+          newData.push(dashboardRes.data);
+          prev.forEach((item) => {
+            if (!item.createdByMe) {
+              newData.push(item);
+            }
+          });
+
           return newData;
         });
 

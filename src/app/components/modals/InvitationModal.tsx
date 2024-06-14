@@ -42,20 +42,12 @@ const InvitationModal: React.FC = () => {
         },
       );
       if (response.status >= 200 && response.status < 300) {
-        if (invitationData.length >= 5) {
-          setInvitationData((prev) => {
-            const newData = [...prev];
-            newData.pop();
-            newData.unshift(response.data);
-            return newData;
-          });
-        } else {
-          setInvitationData((prev) => {
-            const newData = [...prev];
-            newData.unshift(response.data);
-            return newData;
-          });
-        }
+        setInvitationData((prev) => {
+          const newData = [...prev];
+          newData.pop();
+          newData.unshift(response.data);
+          return newData;
+        });
         closeModal();
       }
     } catch (error) {
