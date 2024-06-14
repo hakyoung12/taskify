@@ -98,8 +98,8 @@ export default function Column({
   }, [isChange, size]);
 
   return (
-    <div className='border-gray-_eeeeee flex h-[calc(100vh-80px)] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full max-xl:border-b'>
-      {/* 카드 info */}
+    <div className='border-gray-_eeeeee flex min-w-[354px] flex-col gap-[25px] border-r p-[20px] max-xl:h-[346px] max-xl:w-full max-xl:border-b'>
+      {/* 컬럼 Info (title, totalCount) */}
       <div className='flex items-center justify-between'>
         <div className='flex items-center justify-center text-[16px] font-bold'>
           <img
@@ -147,24 +147,26 @@ export default function Column({
           <ChipAddIcon size={'large'} />
         </div>
         {/* 카드 배열 뿌리기 */}
-        {cards &&
-          cards.map((card: any, index: number) => {
-            return (
-              <ColumnCard
-                columnId={columnId}
-                key={index}
-                imageUrl={card.imageUrl}
-                title={card.title}
-                tags={card.tags}
-                description={card.description}
-                dueDate={card.dueDate}
-                assigner={card.assignee}
-                cardId={card.id}
-                columnTitle={title}
-                setIsCardChange={setIsCardChange}
-              />
-            );
-          })}
+        <div className='flex h-[calc(100vh-250px)] flex-col gap-[16px] overflow-y-auto whitespace-nowrap max-xl:max-h-[202px]'>
+          {cards &&
+            cards.map((card: any, index: number) => {
+              return (
+                <ColumnCard
+                  columnId={columnId}
+                  key={index}
+                  imageUrl={card.imageUrl}
+                  title={card.title}
+                  tags={card.tags}
+                  description={card.description}
+                  dueDate={card.dueDate}
+                  assigner={card.assignee}
+                  cardId={card.id}
+                  columnTitle={title}
+                  setIsCardChange={setIsCardChange}
+                />
+              );
+            })}
+        </div>
         <div id={`intersection-target${columnId}`}></div>
       </div>
     </div>
