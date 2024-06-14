@@ -98,11 +98,16 @@ export default function StateInput({
           input.current?.focus();
         }}
       >
+        {!isFocused && searchedStates[0]?.title === inputValue && (
+          <div className='flex flex-shrink-0 items-center rounded-[11px] bg-custom_violet-_8 px-[8px] py-[4px] text-[12px] text-custom_violet-_5534da before:mr-[6px] before:h-[6px] before:w-[6px] before:rounded-full before:bg-custom_violet-_5534da before:content-[""]'>
+            {inputValue}
+          </div>
+        )}
         <input
           id='state'
           placeholder='상태를 입력해주세요'
           type='text'
-          className='no-autofill flex-grow bg-transparent outline-none'
+          className={`no-autofill flex-grow bg-transparent outline-none ${!isFocused && searchedStates[0]?.title === inputValue && 'text-transparent'}`}
           autoComplete='off'
           onChange={(e) => {
             setInputValue(e.target.value || '');
