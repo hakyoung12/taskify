@@ -32,7 +32,7 @@ export default function DueDateInput({ onUpdate, initDueDate }: Props) {
   }
 
   useEffect(() => {
-    onUpdate('dueDate', inputValue);
+    onUpdate('dueDate', removeT(inputValue));
   }, [inputValue, onUpdate]);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ export default function DueDateInput({ onUpdate, initDueDate }: Props) {
         type='datetime-local'
         min={getToday()}
         onChange={(e) => {
-          setInputValue(removeT(e.target.value) || '');
+          setInputValue(e.target.value || '');
         }}
         required
         value={addT(inputValue)}
