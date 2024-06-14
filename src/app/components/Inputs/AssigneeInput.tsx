@@ -8,26 +8,23 @@ import React, {
   useState,
 } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { Assignee, SetData, Members } from './InputTypes';
+import { Assignee, OnUpdate, Members } from './InputTypes';
 import CustomAvatar from '../CustomAvatar';
 
 interface AssigneeProps {
   assignee: Assignee;
   members: Members;
-  setData: SetData;
+  onUpdate: OnUpdate;
   controlFocus: {
     isFocused: boolean;
     setIsFocused: React.Dispatch<React.SetStateAction<boolean>>;
   };
 }
 
-const CIRCLE =
-  'flex-shrink-0 flex h-[22px] w-[22px] mr-[6px] items-center justify-center rounded-full bg-[#A3C4A2] text-[12px] font-bold text-custom_white';
-
 export default function AssigneeInput({
   assignee,
   members,
-  setData,
+  onUpdate,
   controlFocus,
 }: AssigneeProps) {
   const [inputValue, setInputValue] = useState<string>(assignee.nickname);
@@ -36,17 +33,19 @@ export default function AssigneeInput({
   const { isFocused, setIsFocused } = controlFocus;
 
   const clickAssignee = (e: MouseEvent<HTMLButtonElement>) => {
-    const selected = members.filter(
-      (member) => String(member.userId) === e.currentTarget.value,
-    );
-    setData({ assignee: selected[0] });
-    setInputValue(assignee.nickname);
+    const selected = members.filter((member) => {
+      return String(member.userId) === e.currentTarget.value;
+    });
+    console.log(selected);
+    console.log(assignee);
+    onUpdate('assignee', selected[0]);
+    setInputValue(selected[0].nickname);
     setIsFocused(false);
   };
 
   const chooseAssignee = () => {
     if (searchedMembers.length === 1) {
-      setData({ assignee: searchedMembers[0] });
+      onUpdate('assignee', searchedMembers[0]);
       setInputValue(assignee.nickname);
     } else {
       setInputValue('');
@@ -54,9 +53,13 @@ export default function AssigneeInput({
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (!isFocused) {
+      setIsFocused(true);
+    }
     if (e.key === 'Enter') {
       chooseAssignee();
       e.currentTarget.blur();
+      setIsFocused(false);
     }
   };
 
@@ -128,8 +131,8 @@ export default function AssigneeInput({
               >
                 <div className='mr-[4px] flex flex-shrink-0 items-center justify-center'>
                   <CustomAvatar
-                    profileUrl={assignee.profileImageUrl}
-                    nickName={assignee.nickname}
+                    profileUrl={member.profileImageUrl}
+                    nickName={member.nickname}
                   />
                 </div>
                 {member.nickname}

@@ -38,6 +38,4 @@ export type Members = {
   isOwner?: boolean;
 }[];
 
-export type SetData = (data: {
-  [key: string]: string | Assignee | string[] | number;
-}) => void;
+export type OnUpdate = <T extends keyof Datas>(key: T, value: Datas[T]) => void;

@@ -147,10 +147,10 @@ const EditCardForm = ({
     }
   };
 
-  const setData = useCallback(
-    (data: { [key: string]: string | Assignee | string[] | number }) => {
+  const onUpdate = useCallback(
+    <T extends keyof Datas>(key: T, value: Datas[T]) => {
       setDatas((prev) => {
-        return { ...prev, ...data };
+        return { ...prev, [key]: value };
       });
     },
     [],
@@ -182,31 +182,31 @@ const EditCardForm = ({
         <StateInput
           states={states}
           columnId={columnId}
-          setData={setData}
+          onUpdate={onUpdate}
           controlFocus={{
             isFocused: isStateFocused,
             setIsFocused: setIsStateFocused,
           }}
         />
         <AssigneeInput
-          assignee={initDatas.assignee}
+          assignee={datas.assignee}
           members={members}
-          setData={setData}
+          onUpdate={onUpdate}
           controlFocus={{
             isFocused: isAssigneeFocused,
             setIsFocused: setIsAssigneeFocused,
           }}
         />
       </div>
-      <TitleInput setData={setData} initTitle={initDatas.title} />
+      <TitleInput onUpdate={onUpdate} initTitle={initDatas.title} />
       <DescriptionInput
-        setData={setData}
+        onUpdate={onUpdate}
         initDescription={initDatas.description}
       />
-      <DueDateInput setData={setData} initDueDate={initDatas.dueDate} />
-      <TagInput setData={setData} initTags={initDatas.tags} />
+      <DueDateInput onUpdate={onUpdate} initDueDate={initDatas.dueDate} />
+      <TagInput onUpdate={onUpdate} initTags={initDatas.tags} />
       <ImageInput
-        setData={setData}
+        onUpdate={onUpdate}
         columnId={columnId}
         initImageUrl={initDatas.imageUrl}
         loginToken={loginToken}
@@ -216,10 +216,8 @@ const EditCardForm = ({
           onClick={editCard}
           type='button'
           disabled={
-            datas.assignee === initDatas?.assignee &&
             datas.columnId === initDatas.columnId &&
             datas.description === initDatas.description &&
-            datas.dueDate === initDatas.dueDate &&
             datas.imageUrl === initDatas.imageUrl &&
             datas.tags.length === initDatas.tags.length &&
             datas.tags.every((v, i) => v === initDatas.tags[i]) &&

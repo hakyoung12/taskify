@@ -2,22 +2,22 @@
 
 import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 
 interface Props {
-  setData: SetData;
-  initDescription: string;
+  onUpdate: OnUpdate;
+  initDescription?: string;
 }
 
-export default function DescriptionInput({ setData, initDescription }: Props) {
-  const [inputValue, setInputValue] = useState<string>(initDescription);
+export default function DescriptionInput({ onUpdate, initDescription }: Props) {
+  const [inputValue, setInputValue] = useState<string>('');
 
   useEffect(() => {
-    setData({ description: inputValue.trim() });
-  }, [inputValue, setData]);
+    onUpdate('description', inputValue.trim());
+  }, [inputValue, onUpdate]);
 
   useEffect(() => {
-    setInputValue(initDescription);
+    if (initDescription) setInputValue(initDescription);
   }, [initDescription]);
 
   return (

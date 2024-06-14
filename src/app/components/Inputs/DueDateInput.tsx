@@ -2,11 +2,11 @@
 
 import React, { useEffect, useState } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
-import { SetData } from './InputTypes';
+import { OnUpdate } from './InputTypes';
 
 interface Props {
-  setData: SetData;
-  initDueDate: string;
+  onUpdate: OnUpdate;
+  initDueDate?: string;
 }
 
 const removeT = (time: string) => {
@@ -17,7 +17,7 @@ const addT = (time: string) => {
   return time.replace(' ', 'T');
 };
 
-export default function DueDateInput({ setData, initDueDate }: Props) {
+export default function DueDateInput({ onUpdate, initDueDate }: Props) {
   const [inputValue, setInputValue] = useState<string>('');
 
   function getToday() {
@@ -32,11 +32,11 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
   }
 
   useEffect(() => {
-    setData({ dueDate: inputValue });
-  }, [inputValue, setData]);
+    onUpdate('dueDate', inputValue);
+  }, [inputValue, onUpdate]);
 
   useEffect(() => {
-    setInputValue(addT(initDueDate));
+    if (initDueDate) setInputValue(addT(initDueDate));
   }, [initDueDate]);
 
   return (
