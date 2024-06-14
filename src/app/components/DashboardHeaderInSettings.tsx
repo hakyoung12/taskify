@@ -192,16 +192,16 @@ const DashboardHeaderInSettings = ({
             </div>
           </div>
           {showDropdown && (
-            <div className='absolute right-0 top-full mt-1 rounded border border-gray-300 bg-white shadow-md'>
+            <div className='absolute right-0 top-full mt-1 w-[70px] rounded border border-gray-300 bg-white shadow-md sm:w-[100px]'>
               <ul>
                 <li
                   onClick={handleLogout}
-                  className='w-[50px] cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:w-[90px] sm:px-4 sm:py-2 sm:text-base'
+                  className='cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:text-base'
                 >
                   로그아웃
                 </li>
                 <li
-                  className='cursor-pointer px-1 py-1 text-center text-[10px] hover:bg-gray-100 sm:px-4 sm:py-2 sm:text-base'
+                  className='cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:text-base'
                   onClick={() => router.push('/mypage')}
                 >
                   마이페이지
