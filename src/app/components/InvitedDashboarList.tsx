@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
 import { useDashboardData } from '@/context/DashboardDataContext';
 import { useRouter } from 'next/navigation';
@@ -21,6 +21,8 @@ const InvitedDashboardList = () => {
   const size = 6;
   const { setDashboardsData } = useDashboardData();
   const router = useRouter();
+
+  const intersectionTargetRef = useRef<HTMLDivElement | null>(null);
 
   const fetchInvitations = async (cursorId: number | null) => {
     if (!hasMore) return;
@@ -83,8 +85,7 @@ const InvitedDashboardList = () => {
       threshold: 1.0,
     });
 
-    // useRef 로 수정
-    const target = document.getElementById('intersection-target');
+    const target = intersectionTargetRef.current;
     if (target) {
       observer.observe(target);
     }
@@ -237,7 +238,7 @@ const InvitedDashboardList = () => {
           </div>
         </>
       )}
-      <div id='intersection-target' style={{ height: '1px' }}></div>
+      <div ref={intersectionTargetRef} style={{ height: '1px' }}></div>
     </div>
   );
 };
