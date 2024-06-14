@@ -6,7 +6,6 @@ import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
 import { useState } from 'react';
-import EditCardForm from './EditCardForm';
 
 interface assigner {
   profileImageUrl?: string;
