@@ -45,7 +45,7 @@ export default function StateInput({
     if (searchedStates.length === 1) {
       onUpdate('columnId', searchedStates[0].id);
       setInputValue(searchedStates[0].title);
-    } else {
+    } else if (searchedStates.length === 0) {
       setInputValue('');
     }
   };
@@ -71,7 +71,10 @@ export default function StateInput({
       if (!inputValue?.trim()) {
         return true;
       } else {
-        return state.title.indexOf(inputValue.trim()) !== -1;
+        return (
+          state.title.toUpperCase().indexOf(inputValue.trim().toUpperCase()) !==
+          -1
+        );
       }
     });
     setSearchedStates(searched);
@@ -84,7 +87,6 @@ export default function StateInput({
   return (
     <div
       className={`${LABLE_INPUT_STYLE} relative max-w-[217px] text-black max-sm:w-auto max-sm:max-w-none`}
-      onClick={(e) => e.stopPropagation()}
     >
       <label htmlFor='state' className={LABLE_STYLE}>
         상태
@@ -115,14 +117,14 @@ export default function StateInput({
         />
       </div>
       {isFocused && (
-        <div className='absolute top-[83px] max-h-[96px] w-full overflow-y-scroll rounded-sm bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
+        <div className='custom-scrollbar absolute top-[83px] max-h-[96px] w-full overflow-y-scroll rounded-sm bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
           {searchedStates.map((state) => {
             return (
               <button
                 key={state.title}
                 value={state.id}
                 type='button'
-                className='flex items-center'
+                className='flex w-full items-center hover:bg-custom_gray-_d9d9d9'
                 onClick={clickState}
               >
                 {state.title}

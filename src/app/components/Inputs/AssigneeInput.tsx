@@ -36,8 +36,6 @@ export default function AssigneeInput({
     const selected = members.filter((member) => {
       return String(member.userId) === e.currentTarget.value;
     });
-    console.log(selected);
-    console.log(assignee);
     onUpdate('assignee', selected[0]);
     setInputValue(selected[0].nickname);
     setIsFocused(false);
@@ -47,7 +45,7 @@ export default function AssigneeInput({
     if (searchedMembers.length === 1) {
       onUpdate('assignee', searchedMembers[0]);
       setInputValue(assignee.nickname);
-    } else {
+    } else if (searchedMembers.length === 0) {
       setInputValue('');
     }
   };
@@ -81,7 +79,6 @@ export default function AssigneeInput({
   return (
     <div
       className={`${LABLE_INPUT_STYLE} relative max-w-[217px] text-black max-sm:max-w-none`}
-      onClick={(e) => e.stopPropagation()}
     >
       <label htmlFor='assignee' className={LABLE_STYLE}>
         담당자
@@ -119,14 +116,14 @@ export default function AssigneeInput({
         />
       </div>
       {isFocused && (
-        <div className='absolute top-[83px] max-h-[96px] w-full overflow-y-scroll rounded-sm bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
+        <div className='custom-scrollbar absolute top-[83px] max-h-[96px] w-full overflow-y-scroll rounded-sm bg-white text-[16px] max-sm:top-[73px] max-sm:max-h-[84px] max-sm:text-[14px]'>
           {searchedMembers.map((member) => {
             return (
               <button
                 key={member.userId * -5}
                 value={member.userId}
                 type='button'
-                className='flex items-center'
+                className='flex w-full items-center hover:bg-custom_gray-_d9d9d9'
                 onClick={clickAssignee}
               >
                 <div className='mr-[4px] flex flex-shrink-0 items-center justify-center'>
