@@ -1,4 +1,9 @@
 import Image from 'next/image';
+const tagPink = 'bg-[#f7dbf0] text-[#d549b6]';
+const tagBrown = 'bg-[#f9eee3] text-[#d58d49]';
+const tagBlue = 'bg-[#dbe6f7] text-[#4981d5]';
+const tagGreen = 'bg-[#e7f7db] text-[#86d549]';
+const colors = [tagBlue, tagGreen, tagPink, tagBrown];
 
 const CardContents = ({
   imageUrl,
@@ -28,9 +33,12 @@ const CardContents = ({
         <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />
         <div className='flex'>
           {tags.map((tag: any, index: number) => {
+            const colorSelector = tag.length % 4;
+            const selecetedColor = colors[colorSelector];
+            console.log(`index: ${selecetedColor}`);
             return (
               <div
-                className='mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] text-[#D58D49] max-sm:text-[10px]'
+                className={`${selecetedColor} mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
                 key={index}
               >
                 {tag}
