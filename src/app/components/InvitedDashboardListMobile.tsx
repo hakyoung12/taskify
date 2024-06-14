@@ -57,7 +57,7 @@ const InvitedDashboardListMobile = () => {
         setHasMore(false);
       }
     } catch (error) {
-      console.error('Error fetching invitations:', error);
+      console.error('초대 목록을 불러오는 데 실패했습니다.', error);
     } finally {
       setLoading(false);
     }
@@ -114,12 +114,14 @@ const InvitedDashboardListMobile = () => {
       const res = await instance.put(`invitations/${invitationId}`, {
         inviteAccepted,
       });
+
       setInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+
       if (inviteAccepted) {
         const dashboardRes = await instance.get(
           `/dashboards/${res.data.dashboard.id}`,
@@ -130,10 +132,11 @@ const InvitedDashboardListMobile = () => {
           newData.unshift(dashboardRes.data);
           return newData;
         });
+
         router.push(`/dashboard/${dashboardRes.data.id}`);
       }
     } catch (error) {
-      console.error('Error responding to invitation:', error);
+      console.error('초대 목록을 불러오는데 실패했습니다.', error);
     }
   };
 

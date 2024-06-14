@@ -86,7 +86,7 @@ export default function CommentsList({
       <div className='max max-h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
         {comments.map((comment: any, index: number) => {
           return (
-            <div key={index} className='flex gap-[12px]'>
+            <div key={comment.id} className='flex gap-[12px]'>
               <div className='flex flex-col items-center'>
                 <CustomAvatar
                   profileUrl={comment.author.profileImageUrl}

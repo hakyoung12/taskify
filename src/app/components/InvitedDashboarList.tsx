@@ -44,6 +44,7 @@ const InvitedDashboardList = () => {
         return uniqueInvitations;
       });
 
+      // setInvitations 로만 api 전송을 받아서 filter 하는 방법으로 수정
       setFilteredInvitations((prev) => {
         const mergedFilteredInvitations = [...prev, ...newInvitations];
         const uniqueFilteredInvitations = mergedFilteredInvitations.filter(
@@ -82,6 +83,7 @@ const InvitedDashboardList = () => {
       threshold: 1.0,
     });
 
+    // useRef 로 수정
     const target = document.getElementById('intersection-target');
     if (target) {
       observer.observe(target);
@@ -96,6 +98,7 @@ const InvitedDashboardList = () => {
     fetchInvitations(null);
   }, []);
 
+  // 디바운스와 쓰로틀링 차이 => 사용방법의 차이점 위주로 정리
   const debounce = (func: Function, delay: number) => {
     let timer: ReturnType<typeof setTimeout>;
     return (...args: any[]) => {
@@ -159,6 +162,7 @@ const InvitedDashboardList = () => {
     [invitations],
   );
 
+  // 스크롤 부분을 input 밑
   return (
     <div className='ml-6 mt-6 hidden h-[600px] overflow-scroll rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
