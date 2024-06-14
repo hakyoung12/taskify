@@ -47,7 +47,7 @@ export default function ColumnCard({
   const dueDataByFomat = dateFormat('format1', new Date(dueDate));
 
   return (
-    <div
+    <button
       className='flex flex-col items-center gap-[10px] rounded-md border border-custom_gray-_d9d9d9 bg-white p-[20px] max-xl:flex-row max-sm:flex-col'
       onClick={() =>
         handleOpenModal(
@@ -110,6 +110,6 @@ export default function ColumnCard({
         </div>
       </div>
       {/* 태그 */}
-    </div>
+    </button>
   );
 }

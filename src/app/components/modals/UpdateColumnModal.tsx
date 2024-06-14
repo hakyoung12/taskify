@@ -2,7 +2,7 @@
 
 import { useModal } from '@/context/ModalContext';
 import { putColumnByID } from '../ToDoCardModal/util';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DeleteColumnAlertModal from './DeleteColumnAlertModal';
 import ModalFooterButtons from '../ModalFooterButtons';
 import ModalInput from '../ModalInput';
@@ -11,13 +11,16 @@ const UpdateColumnModal = ({
   columnId,
   title,
   setIsColumnChange,
+  columnTitles,
 }: {
   columnId: number;
   title: string;
   setIsColumnChange: any;
+  columnTitles: string[];
 }) => {
   const { openModal, closeModal } = useModal();
   const [value, setValue] = useState<string>(title);
+  const [errorMessage, setErrorMessage] = useState<string>('');
 
   const handleOpenModal = (content: React.ReactNode) => {
     openModal(content);
@@ -27,10 +30,23 @@ const UpdateColumnModal = ({
     return originData !== changeData;
   };
 
-  const handleUpdateColumn = (inputTitleData: string) => {
+  const handleOnCick = async (inputTitleData: string) => {
     if (isValueChange(title, inputTitleData)) {
-      putColumnByID(columnId, inputTitleData, setIsColumnChange);
-      closeModal();
+      try {
+        if (columnTitles.includes(inputTitleData)) {
+          return setErrorMessage('중복된 칼럼 이름입니다.');
+        }
+        const res = await putColumnByID(
+          columnId,
+          inputTitleData,
+          setIsColumnChange,
+        );
+        closeModal();
+      } catch (error: any) {
+        setErrorMessage(error.response.data.message);
+      } finally {
+        setIsColumnChange(true);
+      }
     }
   };
 
@@ -43,9 +59,10 @@ const UpdateColumnModal = ({
         <ModalInput
           labelName='이름'
           inputId='title'
-          placeFolder={title}
           value={value}
           setValue={setValue}
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
         {/* 하단 버튼 (삭제하기, 취소, 변경) */}
         <div className='mt-5 flex flex-col sm:flex-row sm:justify-between'>
@@ -64,7 +81,7 @@ const UpdateColumnModal = ({
           </div>
           <ModalFooterButtons
             actionName={'변경'}
-            onAction={() => handleUpdateColumn(value)}
+            onAction={() => handleOnCick(value)}
             value={value}
             isDisabled={isValueChange(title, value)}
           />

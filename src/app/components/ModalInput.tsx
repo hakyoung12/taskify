@@ -21,11 +21,11 @@ const ModalInput = ({
 }: {
   labelName: string;
   inputId: string;
-  placeFolder: string;
+  placeFolder?: string;
   value: string;
   setValue: any;
   errorMessage?: string;
-  setErrorMessage: any;
+  setErrorMessage?: any;
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newvalue = e.target.value;

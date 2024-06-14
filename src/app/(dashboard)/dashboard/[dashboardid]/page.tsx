@@ -58,11 +58,12 @@ export default function dashboardPage(dashboardid: any) {
                   key={column.id}
                   columnId={column.id}
                   title={column.title}
+                  columnTitles={columnTitles}
                 />
               );
             })}
           <div className='px-[20px] pt-[68px] max-xl:p-[10px]'>
-            <div
+            <button
               className='border-gray-_d9d9d9flex flex h-[70px] min-w-[354px] items-center justify-center rounded-lg border bg-white'
               onClick={() =>
                 handleOpenModal(
@@ -78,7 +79,7 @@ export default function dashboardPage(dashboardid: any) {
                 새로운 컬럼 추가하기
               </p>
               <ChipAddIcon size={'large'} />
-            </div>
+            </button>
           </div>
         </div>
       </div>
