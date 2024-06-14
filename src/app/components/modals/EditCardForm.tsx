@@ -231,6 +231,12 @@ const EditCardForm = ({
           onClick={editCard}
           type='button'
           disabled={
+            (datas.assignee.nickname === '' ||
+              datas.title === '' ||
+              datas.description === '' ||
+              datas.dueDate === '' ||
+              datas.tags.length === 0 ||
+              datas.imageUrl === '') &&
             datas.assignee.userId === initDatas.assignee.userId &&
             datas.columnId === initDatas.columnId &&
             datas.description === initDatas.description &&

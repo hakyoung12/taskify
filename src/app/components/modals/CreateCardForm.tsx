@@ -120,12 +120,14 @@ const CreateCardForm = ({
       }}
     >
       <h2 className={MODAL_TITLE_STYLE}>할 일 생성</h2>
-      <AssigneeInput
-        assignee={datas.assignee}
-        members={members}
-        onUpdate={onUpdate}
-        controlFocus={{ isFocused, setIsFocused }}
-      />
+      <div onClick={(e) => e.stopPropagation()}>
+        <AssigneeInput
+          assignee={datas.assignee}
+          members={members}
+          onUpdate={onUpdate}
+          controlFocus={{ isFocused, setIsFocused }}
+        />
+      </div>
       <TitleInput onUpdate={onUpdate} />
       <DescriptionInput onUpdate={onUpdate} />
       <DueDateInput onUpdate={onUpdate} />
