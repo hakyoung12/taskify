@@ -18,7 +18,7 @@ export default function TitleInput({ setData, initTitle }: Props) {
 
   useEffect(() => {
     setInputValue(initTitle);
-  }, []);
+  }, [initTitle]);
 
   return (
     <div className={LABLE_INPUT_STYLE}>

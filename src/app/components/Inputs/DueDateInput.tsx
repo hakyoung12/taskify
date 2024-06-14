@@ -37,7 +37,7 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
 
   useEffect(() => {
     setInputValue(addT(initDueDate));
-  }, []);
+  }, [initDueDate]);
 
   return (
     <div className={`${LABLE_INPUT_STYLE} text-black`}>
@@ -53,7 +53,7 @@ export default function DueDateInput({ setData, initDueDate }: Props) {
           setInputValue(removeT(e.target.value) || '');
         }}
         required
-        value={inputValue}
+        value={addT(inputValue)}
         className={`${INPUT_STYLE} customDate delDate relative flex h-[56px] whitespace-nowrap bg-[url('/images/calender-icon.svg')] bg-[center_left_16px] bg-no-repeat pl-[44px] before:text-custom_gray-_9fa6b2 before:content-[attr(data-placeholder)] valid:before:hidden max-sm:h-[53px] max-sm:pl-[42px]`}
       />
     </div>

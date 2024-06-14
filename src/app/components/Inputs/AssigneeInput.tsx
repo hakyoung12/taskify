@@ -9,6 +9,7 @@ import React, {
 } from 'react';
 import { INPUT_STYLE, LABLE_INPUT_STYLE, LABLE_STYLE } from './InputStyles';
 import { Assignee, SetData, Members } from './InputTypes';
+import CustomAvatar from '../CustomAvatar';
 
 interface AssigneeProps {
   assignee: Assignee;
@@ -89,7 +90,12 @@ export default function AssigneeInput({
         }}
       >
         {!isFocused && inputValue && (
-          <div className={CIRCLE}>{assignee.nickname?.charAt(0)}</div>
+          <div className='mr-[4px] flex flex-shrink-0 items-center justify-center'>
+            <CustomAvatar
+              profileUrl={assignee.profileImageUrl}
+              nickName={assignee.nickname}
+            />
+          </div>
         )}
         <input
           id='assignee'
@@ -120,7 +126,12 @@ export default function AssigneeInput({
                 className='flex items-center'
                 onClick={clickAssignee}
               >
-                <div className={CIRCLE}>{member.nickname.charAt(0)}</div>
+                <div className='mr-[4px] flex flex-shrink-0 items-center justify-center'>
+                  <CustomAvatar
+                    profileUrl={assignee.profileImageUrl}
+                    nickName={assignee.nickname}
+                  />
+                </div>
                 {member.nickname}
               </button>
             );

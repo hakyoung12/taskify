@@ -6,6 +6,7 @@ import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
 import { useState } from 'react';
+import EditCardForm from './EditCardForm';
 
 interface assigner {
   profileImageUrl?: string;
@@ -70,6 +71,15 @@ export default function ToDoCardModal({
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>
+      <EditCardForm
+        columnId={columnId}
+        cardId={cardId}
+        dashboardId={dashboardId}
+        closeModal={() => {
+          '아이!';
+        }}
+        loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYxNSwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MjYxMjIzLCJpc3MiOiJzcC10YXNraWZ5In0.RSOjsOUsiiTnyFXv4Lt9n2MxSRW0xhb8ud5VCsdSRL4'
+      />
     </div>
   );
 }

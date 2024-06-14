@@ -47,7 +47,18 @@ const EditCardForm = ({
   const [isStateFocused, setIsStateFocused] = useState<boolean>(false);
   const [members, setMembers] = useState<Members>([]);
   const [isMounted, setIsMounted] = useState<boolean>(false);
-  const [initDatas, setInitDatas] = useState<Datas>();
+  const [initDatas, setInitDatas] = useState<Datas>({
+    assignee: {
+      userId: 0,
+      nickname: '',
+    },
+    title: '',
+    description: '',
+    dueDate: '',
+    tags: [],
+    imageUrl: '',
+    columnId: 0,
+  });
   const [states, setStates] = useState<State[]>([]);
 
   const getMembers = useCallback(async () => {
@@ -178,7 +189,7 @@ const EditCardForm = ({
           }}
         />
         <AssigneeInput
-          assignee={datas.assignee}
+          assignee={initDatas.assignee}
           members={members}
           setData={setData}
           controlFocus={{
@@ -187,14 +198,17 @@ const EditCardForm = ({
           }}
         />
       </div>
-      <TitleInput setData={setData} initTitle={datas.title} />
-      <DescriptionInput setData={setData} initDescription={datas.description} />
-      <DueDateInput setData={setData} initDueDate={datas.dueDate} />
-      <TagInput setData={setData} initTags={datas.tags} />
+      <TitleInput setData={setData} initTitle={initDatas.title} />
+      <DescriptionInput
+        setData={setData}
+        initDescription={initDatas.description}
+      />
+      <DueDateInput setData={setData} initDueDate={initDatas.dueDate} />
+      <TagInput setData={setData} initTags={initDatas.tags} />
       <ImageInput
         setData={setData}
         columnId={columnId}
-        initImageUrl={datas.imageUrl}
+        initImageUrl={initDatas.imageUrl}
         loginToken={loginToken}
       />
       <div className='flex flex-row-reverse gap-x-[12px]'>
