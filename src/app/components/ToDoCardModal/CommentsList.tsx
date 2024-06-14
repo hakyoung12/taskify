@@ -87,7 +87,7 @@ export default function CommentsList({
         {comments.map((comment: any, index: number) => {
           return (
             <div key={comment.id} className='flex gap-[12px]'>
-              <div className='flex flex-col items-center'>
+              <div className='flex h-full flex-col items-center'>
                 <CustomAvatar
                   profileUrl={comment.author.profileImageUrl}
                   nickName={comment.author.nickname}

@@ -37,7 +37,7 @@ const CardContents = ({
             const selecetedColor = colors[colorSelector];
             return (
               <div
-                className={`${selecetedColor} mb-[6px] mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
+                className={`${selecetedColor} my-[3px] mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
                 key={index}
               >
                 {tag}

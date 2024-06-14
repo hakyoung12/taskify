@@ -14,11 +14,11 @@ const colors = ['#FFC85A', '#FDD446', '#9DD7ED', '#C4B1A2', '#A3C4A2'];
 const getSizeClasses = (size: 'small' | 'medium' | 'large') => {
   switch (size) {
     case 'small':
-      return 'h-[24px] w-[24px] text-[12px]';
+      return 'min-h-[24px] h-[24px] w-[24px] text-[12px]';
     case 'medium':
-      return 'h-[34px] w-[34px] text-[16px]';
+      return 'min-h-[34px] h-[34px] w-[34px] text-[16px]';
     case 'large':
-      return 'h-[38px] w-[38px] text-[16px]';
+      return 'min-h-[38px] h-[38px] w-[38px] text-[16px]';
   }
 };
 
