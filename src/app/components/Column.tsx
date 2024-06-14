@@ -6,18 +6,17 @@ import ChipAddIcon from './ui/chipAddIcon';
 import { useModal } from '@/context/ModalContext';
 import UpdateColumnModal from './modals/UpdateColumnModal';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { getCardsByColumnId } from './ToDoCardModal/api';
+import { getCardsByColumnId } from './ToDoCardModal/util';
 import CreateCardForm from './modals/CreateCardForm';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 export default function Column({
   title,
   columnId,
-  dashboardId,
   setIsColumnChange,
 }: {
   title: string;
   columnId: number;
-  dashboardId: number;
   setIsColumnChange: any;
 }) {
   const [cards, setCards] = useState<string[]>([]);
@@ -88,7 +87,6 @@ export default function Column({
   // 빈 배열로 변경하여 초기 렌더링 시 한 번만 실행되도록 변경
   useEffect(() => {
     const token = window.localStorage.getItem('loginToken'); // 수정된 부분
-    console.log(token);
     setLoginToken(token);
   }, []); // 빈 배열로 변경하여 초기 렌더링 시 한 번만 실행되도록 변경
 
@@ -100,7 +98,7 @@ export default function Column({
   }, [isChange, size]);
 
   return (
-    <div className='border-gray-_eeeeee flex h-[calc(100vh-80px)] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full'>
+    <div className='border-gray-_eeeeee flex h-[calc(100vh-80px)] min-w-[354px] flex-col gap-[25px] overflow-y-auto whitespace-nowrap border-r p-[20px] max-xl:h-[346px] max-xl:w-full max-xl:border-b'>
       {/* 카드 info */}
       <div className='flex items-center justify-between'>
         <div className='flex items-center justify-center text-[16px] font-bold'>
@@ -138,7 +136,6 @@ export default function Column({
           onClick={() =>
             handleOpenModal(
               <CreateCardForm
-                dashboardId={dashboardId}
                 columnId={columnId}
                 loginToken={loginToken}
                 closeModal={closeModal}
@@ -155,7 +152,6 @@ export default function Column({
             return (
               <ColumnCard
                 columnId={columnId}
-                dashboardId={dashboardId}
                 key={index}
                 imageUrl={card.imageUrl}
                 title={card.title}

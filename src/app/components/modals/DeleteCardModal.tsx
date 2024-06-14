@@ -1,7 +1,7 @@
 'use Client';
 
 import { useModal } from '@/context/ModalContext';
-import { deleteCard } from '../ToDoCardModal/api';
+import { deleteCard } from '../ToDoCardModal/util';
 import ModalFooterButtons from '../ModalFooterButtons';
 
 const DeleteCardModal = ({

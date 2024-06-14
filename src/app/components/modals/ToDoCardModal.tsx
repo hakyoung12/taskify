@@ -6,7 +6,6 @@ import CardInfo from '../ToDoCardModal/CardInfo';
 import CommentInput from '../ToDoCardModal/CommentInput';
 import CardContents from '../ToDoCardModal/CardContents';
 import { useState } from 'react';
-import EditCardForm from './EditCardForm';
 
 interface assigner {
   profileImageUrl?: string;
@@ -15,7 +14,6 @@ interface assigner {
 }
 
 export default function ToDoCardModal({
-  dashboardId,
   columnId,
   title,
   description,
@@ -27,7 +25,6 @@ export default function ToDoCardModal({
   columnTitle,
   setIsCardChange,
 }: {
-  dashboardId: number;
   columnId: number;
   title: string;
   description: string;
@@ -47,6 +44,7 @@ export default function ToDoCardModal({
         cardId={cardId}
         title={title}
         setIsCardChange={setIsCardChange}
+        columnId={columnId}
       />
       {/* 컨텐츠 */}
       <div className='flex gap-[24px] max-sm:flex-col'>
@@ -59,7 +57,6 @@ export default function ToDoCardModal({
           />
           <CommentInput
             columnId={columnId}
-            dashboardId={dashboardId}
             cardId={cardId}
             setIsCommentChange={setIsCommentChange}
           />
@@ -71,15 +68,6 @@ export default function ToDoCardModal({
         </div>
         <CardInfo assignee={assigner} dueDate={dueDate} />
       </div>
-      <EditCardForm
-        columnId={columnId}
-        cardId={cardId}
-        dashboardId={dashboardId}
-        closeModal={() => {
-          '아이!';
-        }}
-        loginToken='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzYxNSwidGVhbUlkIjoiNS05IiwiaWF0IjoxNzE4MjYxMjIzLCJpc3MiOiJzcC10YXNraWZ5In0.RSOjsOUsiiTnyFXv4Lt9n2MxSRW0xhb8ud5VCsdSRL4'
-      />
     </div>
   );
 }

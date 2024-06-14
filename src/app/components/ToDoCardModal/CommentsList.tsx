@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import CustomAvatar from '../CustomAvatar';
 import Comment from './Comment';
-import { getCommentsByCardId } from './api';
+import { getCommentsByCardId } from './util';
 
 export default function CommentsList({
   cardId,
@@ -23,14 +23,15 @@ export default function CommentsList({
     setLoading(true);
     try {
       const resBysize = await getCommentsByCardId(cardId, size);
+      console.log(resBysize);
       setComments(resBysize.comments);
       const res = await getCommentsByCardId(cardId);
       setTotalCount(res.comments.length);
     } catch (error: any) {
       console.log(error);
     } finally {
-      setLoading(false);
       setIsCommentChange(false);
+      setLoading(false);
     }
   };
 
@@ -76,7 +77,6 @@ export default function CommentsList({
   useEffect(() => {
     if (isCommentChange) {
       fetchComments(size);
-      setIsCommentChange(false);
     }
   }, [isCommentChange, size]);
 
@@ -84,9 +84,9 @@ export default function CommentsList({
   return (
     comments.length > 0 && (
       <div className='max max-h-[230px] flex-col overflow-y-auto whitespace-nowrap'>
-        {comments.map((comment: any, index: number) => {
+        {comments.map((comment: any) => {
           return (
-            <div key={index} className='flex gap-[12px]'>
+            <div key={comment.id} className='flex gap-[12px]'>
               <div className='flex flex-col items-center'>
                 <CustomAvatar
                   profileUrl={comment.author.profileImageUrl}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useModal } from '@/context/ModalContext';
-import { putColumnByID } from '../ToDoCardModal/api';
+import { putColumnByID } from '../ToDoCardModal/util';
 import { useState } from 'react';
 import DeleteColumnAlertModal from './DeleteColumnAlertModal';
 import ModalFooterButtons from '../ModalFooterButtons';

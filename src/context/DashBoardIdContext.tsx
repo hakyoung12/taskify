@@ -1,3 +1,5 @@
+'use client';
+
 import React, {
   createContext,
   useState,
@@ -24,6 +26,7 @@ export const DashboardIdProvider: React.FC<DashboardIdProviderProps> = ({
   children,
 }) => {
   const [dashboardID, setDashboardID] = useState<number>(0);
+  console.log(dashboardID);
 
   return (
     <DashboardIdContext.Provider value={{ dashboardID, setDashboardID }}>
@@ -39,3 +42,7 @@ export const useDashboardId = () => {
   }
   return context;
 };
+
+/* 
+const {dashboardID} = useDashboardId();
+*/

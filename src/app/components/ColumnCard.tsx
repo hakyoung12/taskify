@@ -4,6 +4,8 @@ import Image from 'next/image';
 import CustomAvatar from './CustomAvatar';
 import ToDoCardModal from './modals/ToDoCardModal';
 import { useModal } from '@/context/ModalContext';
+import { dateFormat } from './ToDoCardModal/util';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 interface ColumnCardProps {
   imageUrl: string;
@@ -14,13 +16,11 @@ interface ColumnCardProps {
   assigner: any;
   cardId: number;
   columnId: number;
-  dashboardId: number;
   columnTitle: string;
   setIsCardChange: any;
 }
 
 export default function ColumnCard({
-  dashboardId,
   cardId,
   description,
   imageUrl,
@@ -38,6 +38,8 @@ export default function ColumnCard({
     openModal(content);
   };
 
+  const dueDataByFomat = dateFormat('format1', new Date(dueDate));
+
   return (
     <div
       className='flex flex-col items-center gap-[10px] rounded-md border border-custom_gray-_d9d9d9 bg-white p-[20px] max-xl:flex-row max-sm:flex-col'
@@ -45,7 +47,6 @@ export default function ColumnCard({
         handleOpenModal(
           <ToDoCardModal
             columnId={columnId}
-            dashboardId={dashboardId}
             cardId={cardId}
             title={title}
             description={description}
@@ -90,7 +91,7 @@ export default function ColumnCard({
           <div className='relative flex w-full items-center justify-between text-[12px] text-custom_gray-_787486'>
             <div className='flex gap-[6px]'>
               <img src='/images/calender-icon.svg' alt='캘린더 아이콘' />
-              {dueDate}
+              {dueDataByFomat}
             </div>
             <CustomAvatar
               nickName={assigner.nickname}

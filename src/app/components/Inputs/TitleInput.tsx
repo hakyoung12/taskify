@@ -27,7 +27,6 @@ export default function TitleInput({ onUpdate, initTitle }: Props) {
       </label>
       <input
         id='title'
-        placeholder='제목을 입력해주세요'
         type='text'
         onChange={(e) => {
           setInputValue(e.target.value || '');

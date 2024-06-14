@@ -10,13 +10,14 @@ import { Assignee, Datas, Members, State } from '../Inputs/InputTypes';
 import axios from '@/app/api/axios';
 import { Button } from '../ui/button';
 import StateInput from '../Inputs/StateInput';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 
 interface ModalProps {
   columnId: number;
-  dashboardId: string | number;
   loginToken: string;
   cardId: number | string;
   closeModal: () => void;
+  setIsCardChange: any;
 }
 
 const BUTTON_STYLE =
@@ -26,10 +27,10 @@ const MODAL_TITLE_STYLE =
 
 const EditCardForm = ({
   columnId,
-  dashboardId,
   loginToken,
   cardId,
   closeModal,
+  setIsCardChange,
 }: ModalProps) => {
   const [datas, setDatas] = useState<Datas>({
     assignee: {
@@ -60,11 +61,12 @@ const EditCardForm = ({
     columnId: 0,
   });
   const [states, setStates] = useState<State[]>([]);
+  const { dashboardID } = useDashboardId();
 
   const getMembers = useCallback(async () => {
     try {
       const { data } = await axios.get(
-        `/members?size=409&dashboardId=${dashboardId}`,
+        `/members?size=409&dashboardId=${dashboardID}`,
         {
           headers: {
             Authorization: `Bearer ${loginToken}`,
@@ -76,7 +78,7 @@ const EditCardForm = ({
     } catch (err) {
       console.log(err);
     }
-  }, [dashboardId, loginToken]);
+  }, [dashboardID, loginToken]);
 
   const getCardDatas = useCallback(async () => {
     try {
@@ -110,9 +112,10 @@ const EditCardForm = ({
     }
   }, [cardId, loginToken]);
 
+  //대시보드 컬럼 불러오기
   const getStates = useCallback(async () => {
     try {
-      const { data } = await axios.get(`/columns?dashboardId=${dashboardId}`, {
+      const { data } = await axios.get(`/columns?dashboardId=${dashboardID}`, {
         headers: {
           Authorization: `Bearer ${loginToken}`,
         },
@@ -122,9 +125,10 @@ const EditCardForm = ({
     } catch (err) {
       console.log(err);
     }
-  }, [dashboardId, loginToken]);
+  }, [dashboardID, loginToken]);
 
   const editCard = async () => {
+    console.log('put이 출발했어요');
     const postBody = {
       assigneeUserId: datas.assignee.userId,
       columnId: datas.columnId,
@@ -140,10 +144,14 @@ const EditCardForm = ({
           Authorization: `Bearer ${loginToken}`,
         },
       });
-      closeModal();
     } catch (err) {
       console.log(err);
       alert('미안하지만 카드 수정은 실패다');
+    } finally {
+      setIsCardChange(true);
+
+      //수정한 컬럼 바로 랜더링 할 수 있도록 수정하겠습니다.
+      window.location.reload();
     }
   };
 
@@ -219,7 +227,7 @@ const EditCardForm = ({
         loginToken={loginToken}
       />
       <div className='flex flex-row-reverse gap-x-[12px]'>
-        <Button
+        <button
           onClick={editCard}
           type='button'
           disabled={
@@ -235,7 +243,7 @@ const EditCardForm = ({
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
           수정
-        </Button>
+        </button>
         <Button
           onClick={closeModal}
           type='button'
