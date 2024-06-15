@@ -71,16 +71,16 @@ const DashboardHeader = ({ title }: DashboardHeaderProps) => {
           </div>
         </div>
         {showDropdown && (
-          <div className='absolute right-0 top-full z-10 mt-1 rounded border border-gray-300 bg-white shadow-md'>
+          <div className='absolute right-0 top-full mt-1 w-[70px] rounded border border-gray-300 bg-white shadow-md sm:w-[100px]'>
             <ul>
               <li
                 onClick={handleLogout}
-                className='cursor-pointer px-4 py-2 hover:bg-gray-100'
+                className='cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:text-base'
               >
                 로그아웃
               </li>
               <li
-                className='cursor-pointer px-4 py-2 hover:bg-gray-100'
+                className='cursor-pointer px-1 py-1 text-center text-xs hover:bg-gray-100 sm:text-base'
                 onClick={() => router.push('/mypage')}
               >
                 마이페이지
