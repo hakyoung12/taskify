@@ -65,7 +65,7 @@ export default function Column({
     const observer = new IntersectionObserver(handleIntersection, {
       root: null,
       rootMargin: '0px',
-      threshold: 1.0,
+      threshold: 0.5,
     });
 
     const target = document.getElementById(`intersection-target${columnId}`);
@@ -173,8 +173,8 @@ export default function Column({
                 />
               );
             })}
+          <div id={`intersection-target${columnId}`}></div>
         </div>
-        <div id={`intersection-target${columnId}`}></div>
       </div>
     </div>
   );
