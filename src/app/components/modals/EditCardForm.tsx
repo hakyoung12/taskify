@@ -237,7 +237,7 @@ const EditCardForm = ({
             datas.dueDate === '' ||
             datas.tags.length === 0 ||
             datas.imageUrl === '' ||
-            (datas.assignee.userId === initDatas.assignee.userId &&
+            (datas.assignee.userId === initDatas.assignee.id &&
               datas.columnId === initDatas.columnId &&
               datas.description === initDatas.description &&
               datas.imageUrl === initDatas.imageUrl &&
