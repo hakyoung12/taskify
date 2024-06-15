@@ -64,9 +64,9 @@ const Comment = ({
           </form>
         </div>
       ) : (
-        <p>{value}</p>
+        <p className='whitespace-pre-wrap break-words'>{value}</p>
       )}
-      <div className='mt-[3px] flex gap-[10px] text-[10px] text-[#9FA6B2] underline'>
+      <div className='mb-[20px] mt-[3px] flex gap-[10px] text-[10px] text-[#9FA6B2] underline'>
         {/* 댓글이 수정중이면, 수정버튼 -> 취소버튼으로 변경 */}
         {isEditing ? (
           <button onClick={cancelEdit}>취소</button>

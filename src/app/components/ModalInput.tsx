@@ -16,19 +16,28 @@ const ModalInput = ({
   placeFolder,
   value,
   setValue,
-  error,
+  errorMessage,
+  setErrorMessage,
 }: {
   labelName: string;
   inputId: string;
-  placeFolder: string;
-  value: any;
+  placeFolder?: string;
+  value: string;
   setValue: any;
-  error?: any;
+  errorMessage?: string;
+  setErrorMessage?: any;
 }) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newvalue = e.target.value;
     setValue(newvalue);
+    if (errorMessage) {
+      setErrorMessage('');
+    }
   };
+
+  const inputStyle = errorMessage
+    ? `${baseInputStyle} border border-red-600`
+    : baseInputStyle;
 
   return (
     <div className='mt-[32px]'>
@@ -41,13 +50,16 @@ const ModalInput = ({
       <input
         id={inputId}
         value={value}
-        className='mt-[10px] w-full rounded-md border border-custom_gray-_d9d9d9 px-4 py-4'
+        className={inputStyle}
         onChange={handleChange}
         placeholder={placeFolder}
       />
-      {error}
+      <span className='mt-[8px] text-[14px] text-red-600'>{errorMessage}</span>
     </div>
   );
 };
+
+const baseInputStyle =
+  'mt-[10px] w-full rounded-md border border-custom_gray-_d9d9d9 px-4 py-4';
 
 export default ModalInput;

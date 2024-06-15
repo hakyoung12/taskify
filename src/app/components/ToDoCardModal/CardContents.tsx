@@ -26,19 +26,18 @@ const CardContents = ({
             src='/images/Ellipse-puple.svg'
             alt='꾸미는 점'
           />
-          <span className='text-[12px] text-[#5534DA] max-sm:text-[10px]'>
+          <span className='max-w-[125px] overflow-hidden overflow-ellipsis text-[12px] text-[#5534DA] max-sm:text-[10px]'>
             {columntitle}
           </span>
         </div>
         <img src='/images/Vector.svg' className='h-[20px]' alt='구분선' />
-        <div className='flex'>
+        <div className='flex flex-wrap overflow-x-hidden'>
           {tags.map((tag: any, index: number) => {
             const colorSelector = tag.length % 4;
             const selecetedColor = colors[colorSelector];
-            console.log(`index: ${selecetedColor}`);
             return (
               <div
-                className={`${selecetedColor} mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
+                className={`${selecetedColor} my-[3px] mr-[6px] rounded bg-[#F9EEE3] px-[6px] py-[4px] text-[12px] max-sm:text-[10px]`}
                 key={index}
               >
                 {tag}
