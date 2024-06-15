@@ -1,12 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useDashboardId } from '@/context/DashBoardIdContext';
 import DashboardCard from '@/app/components/DashboardCard';
 import InvitedDashboardListMobile from '@/app/components/InvitedDashboardListMobile';
 import InvitedDashboardList from '@/app/components/InvitedDashboarList';
 
 const MyDashboard = () => {
   const [isMobile, setIsMobile] = useState(false);
+  const { setDashboardID } = useDashboardId();
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -15,7 +17,7 @@ const MyDashboard = () => {
       };
 
       handleResize();
-
+      setDashboardID(0);
       window.addEventListener('resize', handleResize);
 
       return () => {

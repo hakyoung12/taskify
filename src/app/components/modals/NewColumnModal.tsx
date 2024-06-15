@@ -27,12 +27,12 @@ const NewColumnModal = ({
       };
       try {
         if (columnTitles.includes(title)) {
-          throw new Error('중복된 칼럼 이름입니다.');
+          return setErrorMessage('중복된 칼럼 이름입니다.');
         }
         const res = await instance.post(`columns`, data);
         closeModal();
       } catch (error: any) {
-        setErrorMessage(error.message);
+        setErrorMessage(error.response.data.message);
       } finally {
         setIsColumnChange(true);
       }
@@ -49,11 +49,8 @@ const NewColumnModal = ({
           placeFolder='새로운 프로젝트'
           value={value}
           setValue={setValue}
-          error={
-            <span className='mt-[8px] text-[14px] text-red-600'>
-              {errorMessage}
-            </span>
-          }
+          errorMessage={errorMessage}
+          setErrorMessage={setErrorMessage}
         />
         <ModalFooterButtons
           value={value}

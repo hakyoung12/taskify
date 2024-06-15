@@ -1,11 +1,16 @@
+/**TODO:
+ * 1) 초대받은 대시보드의 스크롤 부분을 input 밑으로 변경
+ */
+
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useRef } from 'react';
 import { CheckInvitationsRes } from '../api/apiTypes/invitationsType';
 import { useDashboardData } from '@/context/DashboardDataContext';
 import { useRouter } from 'next/navigation';
 import instance from '../api/axios';
 import Image from 'next/image';
+import axios from 'axios';
 
 const InvitedDashboardList = () => {
   const [invitations, setInvitations] = useState<
@@ -21,6 +26,8 @@ const InvitedDashboardList = () => {
   const size = 6;
   const { setDashboardsData } = useDashboardData();
   const router = useRouter();
+
+  const intersectionTargetRef = useRef<HTMLDivElement | null>(null);
 
   const fetchInvitations = async (cursorId: number | null) => {
     if (!hasMore) return;
@@ -83,8 +90,7 @@ const InvitedDashboardList = () => {
       threshold: 1.0,
     });
 
-    // useRef 로 수정
-    const target = document.getElementById('intersection-target');
+    const target = intersectionTargetRef.current;
     if (target) {
       observer.observe(target);
     }
@@ -98,7 +104,6 @@ const InvitedDashboardList = () => {
     fetchInvitations(null);
   }, []);
 
-  // 디바운스와 쓰로틀링 차이 => 사용방법의 차이점 위주로 정리
   const debounce = (func: Function, delay: number) => {
     let timer: ReturnType<typeof setTimeout>;
     return (...args: any[]) => {
@@ -123,20 +128,37 @@ const InvitedDashboardList = () => {
       setFilteredInvitations((prev) =>
         prev.filter((invitation) => invitation.id !== invitationId),
       );
+      /** 수락했을 시 */
       if (inviteAccepted) {
         const dashboardRes = await instance.get(
           `/dashboards/${res.data.dashboard.id}`,
         );
         setDashboardsData((prev) => {
-          const newData = [...prev];
-          newData.pop();
-          newData.unshift(dashboardRes.data);
-          return newData;
+          const newData = [];
+          prev.forEach((item) => {
+            if (item.createdByMe) {
+              newData.push(item);
+            }
+          });
+          newData.push(dashboardRes.data);
+          prev.forEach((item) => {
+            if (!item.createdByMe) {
+              newData.push(item);
+            }
+          });
+
+          const slicedData = newData.slice(0, 10);
+
+          return slicedData;
         });
         router.push(`/dashboard/${dashboardRes.data.id}`);
       }
     } catch (error) {
-      console.error(error);
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.message);
+      } else {
+        console.log('알 수 없는 에러가 발생했습니다.', error);
+      }
     }
   };
 
@@ -162,7 +184,6 @@ const InvitedDashboardList = () => {
     [invitations],
   );
 
-  // 스크롤 부분을 input 밑
   return (
     <div className='ml-6 mt-6 hidden h-[600px] overflow-scroll rounded-lg bg-custom_white px-7 py-8 sm:block xl:w-[1000px]'>
       <div className='text-2xl font-bold text-custom_black-_333236'>
@@ -237,7 +258,7 @@ const InvitedDashboardList = () => {
           </div>
         </>
       )}
-      <div id='intersection-target' style={{ height: '1px' }}></div>
+      <div ref={intersectionTargetRef} style={{ height: '1px' }}></div>
     </div>
   );
 };

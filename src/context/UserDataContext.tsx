@@ -10,8 +10,12 @@ import React, {
 } from 'react';
 
 interface UserDataContextProps {
+  id: number;
+  email: string;
   nickname: string;
-  profileImageUrl?: string | undefined;
+  profileImageUrl?: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 interface UserDataProviderProps {
