@@ -15,7 +15,7 @@ interface PageProps {
   };
 }
 
-export default function dashboardEditPage({ params }: PageProps) {
+export default function DashboardEditPage({ params }: PageProps) {
   const router = useRouter();
   const { dashboardid } = params;
   const { dashboardsData, setDashboardsData } = useDashboardData();
