@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import { getColumnsByDashBoardId } from '@/app/components/ToDoCardModal/util';
 import { useDashboardId } from '@/context/DashBoardIdContext';
 
-export default function dashboardPage(dashboardid: any) {
+export default function DashboardPage(dashboardid: any) {
   const [columnData, setColumnData] = useState([]);
   const [columnTitles, setColumnTitles] = useState([]);
   const [isColumnChange, setIsColumnChange] = useState(false);
