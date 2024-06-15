@@ -94,7 +94,7 @@ export default function SignupForm() {
           {...register('nickname', {
             required: '닉네임을 입력해주세요',
             pattern: {
-              value: /^[?a-zA-Z0-9#?!@$ %^&*-/].{0,9}$/,
+              value: /^[?a-zA-Z0-9ㄱ-ㅎ가-힣#?!@$ %^&*-/].{0,9}$/,
               message: '열 자 이하로 작성해주세요',
             },
           })}
