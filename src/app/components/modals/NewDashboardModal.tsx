@@ -111,7 +111,8 @@ const NewDashboardModal: React.FC = () => {
         </button>
         <button
           onClick={onClick}
-          className='w-1/2 rounded-md border-custom_gray-_d9d9d9 bg-custom_violet-_5534da px-[46px] py-[14px] text-white sm:w-auto'
+          className='w-1/2 rounded-md border-custom_gray-_d9d9d9 bg-custom_violet-_5534da px-[46px] py-[14px] text-white disabled:bg-custom_gray-_9fa6b2 sm:w-auto'
+          disabled={!dashboardName}
         >
           생성
         </button>
