@@ -79,7 +79,7 @@ export default function ColumnCard({
       )}
       {/* 제목 */}
       <div className='flex w-full flex-col gap-[10px]'>
-        <span className='h-[19px] overflow-hidden overflow-ellipsis'>
+        <span className='h-[19px] overflow-hidden overflow-ellipsis text-left'>
           {title}
         </span>
         <div className='flex flex-col justify-center gap-[16px] max-xl:flex-row max-xl:items-center max-sm:flex-col max-sm:items-start'>
