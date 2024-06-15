@@ -231,20 +231,21 @@ const EditCardForm = ({
           onClick={editCard}
           type='button'
           disabled={
-            (datas.assignee.nickname === '' ||
-              datas.title === '' ||
-              datas.description === '' ||
-              datas.dueDate === '' ||
-              datas.tags.length === 0 ||
-              datas.imageUrl === '') &&
-            datas.assignee.userId === initDatas.assignee.userId &&
-            datas.columnId === initDatas.columnId &&
-            datas.description === initDatas.description &&
-            datas.imageUrl === initDatas.imageUrl &&
-            datas.dueDate === initDatas.dueDate &&
-            datas.tags.length === initDatas.tags.length &&
-            datas.tags.every((v, i) => v === initDatas.tags[i]) &&
-            datas.title === initDatas.title
+            datas.assignee.nickname === '' ||
+            datas.title === '' ||
+            datas.description === '' ||
+            datas.dueDate === '' ||
+            datas.tags.length === 0 ||
+            datas.imageUrl === '' ||
+            ((datas.assignee.userId === initDatas.assignee.id ||
+              datas.assignee.userId === undefined) &&
+              datas.columnId === initDatas.columnId &&
+              datas.description === initDatas.description &&
+              datas.imageUrl === initDatas.imageUrl &&
+              datas.dueDate === initDatas.dueDate &&
+              datas.tags.length === initDatas.tags.length &&
+              datas.tags.every((v, i) => v === initDatas.tags[i]) &&
+              datas.title === initDatas.title)
           }
           className={`${BUTTON_STYLE} bg-custom_violet-_5534da text-custom_white hover:bg-[#4423c8] disabled:bg-custom_gray-_9fa6b2`}
         >
