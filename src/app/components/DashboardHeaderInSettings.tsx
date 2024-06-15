@@ -72,7 +72,6 @@ const DashboardHeaderInSettings = ({
     const fetchDashboardData = async () => {
       try {
         const res = await instance.get(`dashboards/${params.dashboardid}`);
-        console.log(res.data.title);
         setTitle(res.data.title);
         setCreatedByMe(res.data.createdByMe);
       } catch (error) {

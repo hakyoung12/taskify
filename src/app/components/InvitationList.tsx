@@ -5,7 +5,6 @@ import EditMenuTitle from './EditMenuTitle';
 import { mockData } from './mockdata/InvitationMock';
 import Image from 'next/image';
 import instance from '@/app/api/axios';
-import { LoadInvitationsRes } from '../api/apiTypes/dashboardsType';
 import { useModal } from '@/context/ModalContext';
 import SettingChangedModal from './modals/SettingChangedModal';
 import axios from 'axios';
@@ -76,7 +75,7 @@ export default function InvitationList({
     };
 
     fetchInvitationListData();
-  }, [currentPage]);
+  }, [currentPage, invitationData]);
 
   return (
     <div className='m-5 w-[620px] rounded-lg bg-custom_white max-xl:w-auto max-xl:max-w-[620px] max-sm:mx-3'>
